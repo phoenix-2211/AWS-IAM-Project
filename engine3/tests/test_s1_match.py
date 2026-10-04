@@ -61,3 +61,77 @@ def test_s1_matcher_negative_no_match():
     res_map = {r.rule_id: r for r in results}
 
     assert res_map["RULE-IAM-004"].status == "NO_MATCH"
+
+
+def test_s1_matcher_all_draft_rules():
+    fixture_path = Path("docs/contracts/iamgraph_fixture.json")
+    rulebook_path = Path("rulebook/active_rulebook.json")
+
+    with open(fixture_path, "r", encoding="utf-8") as f:
+        graph_data = json.load(f)
+    with open(rulebook_path, "r", encoding="utf-8") as f:
+        rules_data = json.load(f)
+
+    # Set all rules to DRAFT
+    for r in rules_data:
+        r["status"] = "DRAFT"
+
+    graph = GraphAdapter.from_json(graph_data)
+    rules = RuleAdapter.from_json_list(rules_data)
+
+    active_rules = [r for r in rules if r.status == "ACTIVE"]
+    assert len(active_rules) == 0
+
+    matcher = Stage1Matcher()
+    results = matcher.match_rules(graph, active_rules)
+    assert len(results) == 0
+
+
+def test_s1_matcher_empty_graph():
+    rulebook_path = Path("rulebook/active_rulebook.json")
+    with open(rulebook_path, "r", encoding="utf-8") as f:
+        rules_data = json.load(f)
+
+    empty_graph_data = {
+        "contract_name": "IAMGraph",
+        "contract_version": "0.1",
+        "snapshot": {"snapshot_id": "snap-empty", "account_id": "1111", "collected_at": "", "origin": "", "collection_status": "complete"},
+        "principals": [],
+        "permissions": [],
+        "resources": [],
+        "edges": []
+    }
+    graph = GraphAdapter.from_json(empty_graph_data)
+    rules = RuleAdapter.from_json_list(rules_data)
+
+    matcher = Stage1Matcher()
+    results = matcher.match_rules(graph, rules)
+    assert len(results) == len(rules)
+    for r in results:
+        if r.status != "NOT_REPRESENTABLE":
+            assert r.status == "NO_MATCH"
+            assert len(r.matches) == 0
+
+
+def test_s1_matcher_deterministic_ordering():
+    fixture_path = Path("docs/contracts/iamgraph_fixture.json")
+    rulebook_path = Path("rulebook/active_rulebook.json")
+
+    with open(fixture_path, "r", encoding="utf-8") as f:
+        graph_data = json.load(f)
+    with open(rulebook_path, "r", encoding="utf-8") as f:
+        rules_data = json.load(f)
+
+    graph = GraphAdapter.from_json(graph_data)
+    rules = RuleAdapter.from_json_list(rules_data)
+
+    matcher = Stage1Matcher()
+    results = matcher.match_rules(graph, rules)
+
+    rule_ids = [r.rule_id for r in results]
+    assert rule_ids == sorted(rule_ids)
+
+    for r in results:
+        principal_ids = [m.principal_id for m in r.matches]
+        assert principal_ids == sorted(principal_ids)
+

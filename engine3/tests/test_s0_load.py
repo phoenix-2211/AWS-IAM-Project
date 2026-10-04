@@ -275,6 +275,24 @@ def test_mutation_20_unknown_edge_type(base_inputs):
     assert codes == ["ERR_SCHEMA_VALIDATION"]
 
 
+def test_mutation_15_tamper_contract_file(base_inputs):
+    iamgraph_data, rulebook_data = base_inputs
+    raw_bytes = json.dumps(iamgraph_data).encode("utf-8")
+    tampered_bytes = raw_bytes + b"tamper"
+
+    loader = Stage0Loader()
+    res = loader.load_and_validate(
+        iamgraph_data,
+        rulebook_data,
+        iamgraph_raw_bytes=tampered_bytes,
+        iamgraph_sha256_expected="0000000000000000000000000000000000000000000000000000000000000000",
+    )
+
+    assert res.is_valid is False
+    codes = [e.code for e in res.errors]
+    assert codes == ["ERR_MANIFEST_HASH_MISMATCH"]
+
+
 def test_negative_verification_result_schema():
     import jsonschema
     schema_path = Path("schemas/verification_result_v0.1.schema.json")
@@ -284,10 +302,12 @@ def test_negative_verification_result_schema():
     with open(handoff_path) as f:
         doc = json.load(f)
 
-    # Negative 21: Bad status
+    # Negative 21: Bad status (non-enum)
     bad_status_doc = json.loads(json.dumps(doc))
     bad_status_doc["paths"][0]["status"] = "SUPER_EXPLOITABLE_INVALID"
-    # Note: verification_result_v0.1 schema requires string for status currently
+    with pytest.raises(jsonschema.ValidationError):
+        jsonschema.validate(instance=bad_status_doc, schema=schema)
+
     # Negative 22: Missing hop field
     missing_hop_doc = json.loads(json.dumps(doc))
     del missing_hop_doc["paths"][0]["hops"][0]["action_used"]
