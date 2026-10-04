@@ -10,3 +10,5 @@ __pycache__/
 *.tfvars
 credentials*
 sandbox.yaml
+cloudgoat/
+
