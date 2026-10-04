@@ -1,4 +1,7 @@
 runs/
+.venv/
+__pycache__/
+*.pyc
 *.pem
 *.key
 .env*
@@ -6,3 +9,4 @@ runs/
 *.tfstate*
 *.tfvars
 credentials*
+sandbox.yaml
