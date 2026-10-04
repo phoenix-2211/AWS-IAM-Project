@@ -22,7 +22,12 @@
 
 ---
 
-## 3. End-to-End Live Pipeline Demo Script
+## 3. Open Questions for Engine 4 Owner
+- **Status Enum Granularity**: Currently top-level `status` is restricted strictly to `VERIFIED_EXPLOITABLE | POLICY_DENIED | SANDBOX_FAILED`. Offline-only paths emit `SANDBOX_FAILED` with `verification_scope: "policy_simulated_only"`. Should a 4th top-level status (e.g. `NOT_VERIFIED` or `POLICY_ALLOWED_UNCONFIRMED`) be formally added to the Engine 4 schema contract to cleanly separate "sandbox attempted and failed" from "sandbox never attempted"?
+
+---
+
+## 4. End-to-End Live Pipeline Demo Script
 To demonstrate the pipeline execution live:
 ```powershell
 python -m engine3.cli run --graph docs/contracts/iamgraph_fixture.json --rules rulebook/active_rulebook.json --out runs/demo_run

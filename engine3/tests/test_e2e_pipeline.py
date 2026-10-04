@@ -33,6 +33,7 @@ def test_end_to_end_pipeline_execution(tmp_path):
     assert vr_doc["contract_version"] == "0.1"
     assert vr_doc["stats"]["paths_total"] >= 2
     assert "SANDBOX_FAILED" in vr_doc["stats"]["by_status"]
+    assert vr_doc["paths"][0]["verification_scope"] == "policy_simulated_only"
 
 
 def test_schema_rejects_non_enum_status():

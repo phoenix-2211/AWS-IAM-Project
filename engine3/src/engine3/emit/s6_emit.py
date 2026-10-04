@@ -41,15 +41,19 @@ class Stage6Assembler:
             if sim_res and sim_res.status == "POLICY_DENIED":
                 status = "POLICY_DENIED"
                 status_reason = sim_res.status_reason
+                verification_scope = "policy_simulated_only"
             elif sb_res and sb_res.status == "VERIFIED_EXPLOITABLE":
                 status = "VERIFIED_EXPLOITABLE"
                 status_reason = "Exploit successfully verified in CloudGoat sandbox."
+                verification_scope = "live_verified"
             elif sb_res and sb_res.sandbox_attempted:
                 status = "SANDBOX_FAILED"
                 status_reason = sb_res.reason or "Sandbox execution failed."
+                verification_scope = "sandbox_attempted"
             else:
                 status = "SANDBOX_FAILED"
-                status_reason = "Sandbox execution unconfirmed (offline mode)."
+                status_reason = "Path structurally allowed by local evaluator; unverified against live AWS policy simulator or sandbox."
+                verification_scope = "policy_simulated_only"
 
             status_counts[status] = status_counts.get(status, 0) + 1
 
@@ -90,7 +94,7 @@ class Stage6Assembler:
                     "path_id": path_id,
                     "status": status,
                     "status_reason": status_reason,
-                    "verification_scope": "offline_fixture",
+                    "verification_scope": verification_scope,
                     "hops": hops_formatted,
                     "assumptions": q_p.path.assumptions,
                     "queue_rank": q_p.queue_rank,
