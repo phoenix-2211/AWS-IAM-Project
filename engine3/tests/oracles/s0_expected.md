@@ -28,6 +28,15 @@ This document defines the hand-derived expected behavior of the Stage 0 loader (
 | 8 | Warning references missing node ID (`"arn:aws:iam::111122223333:role/nonexistent"`) | IAMGraph `warnings` | Reject load (`is_valid=False`) | `ERR_DANGLING_WARNING_REFERENCE` |
 | 9 | Permission node specifies both `actions` and `not_actions` | IAMGraph `nodes` | Reject load (`is_valid=False`) | `ERR_BOTH_ACTIONS_AND_NOT_ACTIONS` |
 | 10 | Removed `x_provenance` top-level field | IAMGraph root | Accept load (`is_valid=True`) with note | `x_provenance field is absent` in notes |
-| 11 | Node ID contains `|` (e.g., `arn:aws:iam::111122223333:role|dev|role`) | IAMGraph `nodes` | Accept load (`is_valid=True`), no collision | `is_valid=True` |
+| 11 | Naive pipe join collision: node `a|b` + `c` vs node `a` + `b|c` | IAMGraph `nodes` & `edges` | Accept load (`is_valid=True`), no dedup, no collision | `is_valid=True` |
 | 12 | SecurityRule with unknown severity (`"APOCALYPTIC"`) | SecurityRule item | Reject load (`is_valid=False`) | `ERR_UNKNOWN_RULE_SEVERITY` |
-| 13 | SecurityRule with `DRAFT` status | SecurityRule item | Accept load (`is_valid=True`), skip DRAFT rule | `rules_active=4`, `rules_skipped=1` |
+| 13 | Flip one ACTIVE rule to DRAFT | SecurityRule item | Accept load (`is_valid=True`), skip DRAFT rules | `rules_active=3`, `rules_skipped=2` |
+| 14 | `collection_status == "complete"` while a coverage item is `"partial"` | IAMGraph `snapshot` | Reject load (`is_valid=False`) | `ERR_INCONSISTENT_COVERAGE` |
+| 15 | MANIFEST contract file tampered by 1 byte | Contract file | Reject load (`is_valid=False`) | `ERR_MANIFEST_HASH_MISMATCH` |
+| 16 | SecurityRule missing required field (`title`) | SecurityRule item | Reject load (`is_valid=False`) | `ERR_SCHEMA_VALIDATION` |
+| 17 | SecurityRule duplicate `rule_id` | SecurityRule list | Reject load (`is_valid=False`) | `ERR_DUPLICATE_RULE_ID` |
+| 18 | SecurityRule bad status (`"INVALID_STATUS"`) | SecurityRule item | Reject load (`is_valid=False`) | `ERR_UNKNOWN_RULE_STATUS` |
+| 19 | Node with unknown node type (`"SuperUser"`) | IAMGraph `nodes` | Reject load (`is_valid=False`) | `ERR_SCHEMA_VALIDATION` |
+| 20 | Edge with unknown edge type (`"SUPER_CONNECT"`) | IAMGraph `edges` | Reject load (`is_valid=False`) | `ERR_SCHEMA_VALIDATION` |
+| 21 | VerificationResult Schema Negative Test: Bad status | VerificationResult doc | Reject validation | `jsonschema.ValidationError` |
+| 22 | VerificationResult Schema Negative Test: Missing hop field (`action_used`) | VerificationResult doc | Reject validation | `jsonschema.ValidationError` |
