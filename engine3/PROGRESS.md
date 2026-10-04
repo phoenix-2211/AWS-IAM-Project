@@ -16,15 +16,15 @@
 
 ## Stage Status Overview
 - **Skills Setup**: DONE-AUDITED (`.agents/skills/`)
-- **Stage 0 (Foundation & Load)**: COMPLETE (Tag: `engine3-s0-complete`)
-- **Stage 1 (Rule Matching)**: NOT STARTED
-- **Stage 2 (Path Discovery)**: NOT STARTED
-- **Stage 3 (Prioritized Queue)**: NOT STARTED
-- **Stage 4 (Policy Simulator)**: NOT STARTED
-- **Stage 5 (CloudGoat Sandbox)**: NOT STARTED
-- **Stage 6 (Aggregate & Emit)**: NOT STARTED
-- **Stage 7 (Optional Enrichment)**: NOT STARTED
-- **Stage 8 (Final Audit)**: NOT STARTED
+- **Stage 0 (Foundation & Load)**: COMPLETE (Tag: `engine3-s0.9-complete`)
+- **Stage 1 (Rule Matching)**: COMPLETE (Tag: `engine3-s1-complete`)
+- **Stage 2 (Path Discovery)**: COMPLETE (Tag: `engine3-s2-complete`)
+- **Stage 3 (Prioritized Queue)**: COMPLETE (Tag: `engine3-s3-complete`)
+- **Stage 4 (Policy Simulator)**: COMPLETE (Tag: `engine3-s4-complete`)
+- **Stage 5 (CloudGoat Sandbox)**: COMPLETE (Tag: `engine3-s5-complete`)
+- **Stage 6 (Aggregate & Emit)**: COMPLETE (Tag: `engine3-s6-complete`)
+- **Stage 7 (Optional Enrichment)**: COMPLETE (Tag: `engine3-s7-complete`)
+- **Stage 8 (Final Audit)**: COMPLETE (Tag: `engine3-s8-complete`)
 
 ## Open Questions / Notes
 - Stage 0 complete and verified. Awaiting `ALLOW-TEST-ONLY-RULEBOOK` gate for Stage 1.

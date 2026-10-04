@@ -2,8 +2,8 @@
   "contract_name": "VerificationResult",
   "contract_version": "0.1",
   "run": {
-    "run_id": "run-EXAMPLE",
-    "origin": "synthetic_example",
+    "run_id": "run-1791112748",
+    "origin": "engine3_pipeline",
     "started_at": null,
     "finished_at": null,
     "git_sha": null,
@@ -13,64 +13,70 @@
     "enrichment": "off"
   },
   "inputs": {
-    "iamgraph_snapshot_id": "snap-EXAMPLE",
-    "iamgraph_content_sha256": "<sha256>",
+    "iamgraph_snapshot_id": "ENGINE3-DRAFT-FIXTURE-0001",
+    "iamgraph_content_sha256": "22685f5a32abe39f3ffc42d915d2102f42a04acfd186a907f603e8bc6ee551ea",
     "iamgraph_collection_status": "complete",
-    "rulebook_sha256": "<sha256>",
-    "rulebook_origin": "engine3_authored_standin",
-    "rules_active": 0,
+    "rulebook_sha256": "56dfee1734c8f5827b0cfed707a354466cac60f506612816ebca0cf8c89c64e2",
+    "rulebook_origin": "active",
+    "rules_active": 12,
     "rules_skipped": 0
   },
   "degraded": false,
   "degraded_reasons": [],
   "paths": [
     {
-      "path_id": "<deterministic-hash>",
+      "path_id": "1997ec24d1dc01f7",
       "status": "POLICY_ALLOWED_UNCONFIRMED",
       "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
-      "verification_scope": "none",
+      "verification_scope": "offline_fixture",
       "hops": [
         {
-          "from_node": "arn:aws:iam::111122223333:user/dev",
-          "to_node": "arn:aws:iam::111122223333:role/build-role",
+          "from_node": "arn:aws:iam::111122223333:user/dev-alice",
+          "to_node": "arn:aws:iam::111122223333:role/DeployRole",
           "action_used": "sts:AssumeRole",
           "matched_rule_id": null,
-          "edge_id": "<edge-id>",
+          "edge_id": "edge:TRUSTED_BY:04",
           "edge_type": "TRUSTED_BY",
-          "flags": []
-        },
-        {
-          "from_node": "arn:aws:iam::111122223333:role/build-role",
-          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod-db-EXAMPLE",
-          "action_used": "secretsmanager:GetSecretValue",
-          "matched_rule_id": "AWS-IAM-0XX",
-          "edge_id": "<edge-id>",
-          "edge_type": "APPLIES_TO",
           "flags": [
             "condition_unevaluated"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password-AbCdEf",
+          "action_used": "rule_target:RULE-IAM-003",
+          "matched_rule_id": "RULE-IAM-003",
+          "edge_id": "edge:APPLIES_TO:05",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "deny_present"
           ]
         }
       ],
       "assumptions": [
-        "condition_unevaluated"
+        "condition_unevaluated",
+        "deny_present"
       ],
       "queue_rank": 1,
-      "queue_reason": "severity HIGH, 2 hops, 1 assumption",
+      "queue_reason": "severity CRITICAL, 2 hops, 2 assumptions",
       "evidence": {
         "policy_simulator_result": "ALLOWED",
         "policy_simulator_details": [
           {
             "hop_index": 0,
             "decision": "ALLOWED",
-            "note": "trust checked structurally, simulator does not evaluate trust policies"
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Trust checked structurally, simulator does not evaluate trust policies",
+            "raw_ref": null
           },
           {
             "hop_index": 1,
             "decision": "ALLOWED",
-            "missing_context": [
-              "<condition key>"
-            ],
-            "raw_ref": "runs/<id>/04_simulator/raw/<file>"
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
           }
         ],
         "sandbox_scenario_name": null,
@@ -81,20 +87,1684 @@
         "sandbox_evidence_ref": null
       },
       "limitations": [
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated",
+        "Permissions boundaries beyond ARN not checked",
         "SCP/RCP/session policies not evaluated"
       ],
       "runtime_metrics": {
-        "policy_sim_time_ms": null,
-        "sandbox_time_ms": null
+        "policy_sim_time_ms": 2.994537353515625,
+        "sandbox_time_ms": 0.0
+      }
+    },
+    {
+      "path_id": "33ba008c77e4be2c",
+      "status": "POLICY_ALLOWED_UNCONFIRMED",
+      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "verification_scope": "offline_fixture",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/dev-alice",
+          "to_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "action_used": "rule_target:RULE-IAM-002",
+          "matched_rule_id": "RULE-IAM-002",
+          "edge_id": "edge:APPLIES_TO:03",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "condition_unevaluated"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password-AbCdEf",
+          "action_used": "rule_target:RULE-IAM-003",
+          "matched_rule_id": "RULE-IAM-003",
+          "edge_id": "edge:APPLIES_TO:05",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "deny_present"
+          ]
+        }
+      ],
+      "assumptions": [
+        "condition_unevaluated",
+        "deny_present"
+      ],
+      "queue_rank": 2,
+      "queue_reason": "severity CRITICAL, 2 hops, 2 assumptions",
+      "evidence": {
+        "policy_simulator_result": "ALLOWED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          }
+        ],
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": false,
+        "sandbox_execution_success": null,
+        "sandbox_logs": [],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": null
+      },
+      "limitations": [
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/session policies not evaluated"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": 2.994537353515625,
+        "sandbox_time_ms": 0.0
+      }
+    },
+    {
+      "path_id": "2c14c5d11f78ef5e",
+      "status": "POLICY_ALLOWED_UNCONFIRMED",
+      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "verification_scope": "offline_fixture",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/dev-alice",
+          "to_node": "arn:aws:iam::111122223333:role/DevRole",
+          "action_used": "rule_target:RULE-IAM-011",
+          "matched_rule_id": "RULE-IAM-011",
+          "edge_id": "edge:APPLIES_TO:01",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DevRole",
+          "to_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "action_used": "rule_target:RULE-IAM-010",
+          "matched_rule_id": "RULE-IAM-010",
+          "edge_id": "edge:APPLIES_TO:04",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password-AbCdEf",
+          "action_used": "rule_target:RULE-IAM-003",
+          "matched_rule_id": "RULE-IAM-003",
+          "edge_id": "edge:APPLIES_TO:05",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "deny_present"
+          ]
+        }
+      ],
+      "assumptions": [
+        "deny_present"
+      ],
+      "queue_rank": 3,
+      "queue_reason": "severity CRITICAL, 3 hops, 1 assumption",
+      "evidence": {
+        "policy_simulator_result": "ALLOWED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          }
+        ],
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": false,
+        "sandbox_execution_success": null,
+        "sandbox_logs": [],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": null
+      },
+      "limitations": [
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/session policies not evaluated"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": 2.994537353515625,
+        "sandbox_time_ms": 0.0
+      }
+    },
+    {
+      "path_id": "0bfd4cb155f497ae",
+      "status": "POLICY_ALLOWED_UNCONFIRMED",
+      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "verification_scope": "offline_fixture",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/dev-alice",
+          "to_node": "arn:aws:iam::111122223333:role/DevRole",
+          "action_used": "rule_target:RULE-IAM-011",
+          "matched_rule_id": "RULE-IAM-011",
+          "edge_id": "edge:APPLIES_TO:01",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DevRole",
+          "to_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:02",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password-AbCdEf",
+          "action_used": "rule_target:RULE-IAM-003",
+          "matched_rule_id": "RULE-IAM-003",
+          "edge_id": "edge:APPLIES_TO:05",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "deny_present"
+          ]
+        }
+      ],
+      "assumptions": [
+        "deny_present",
+        "trust_structural_only"
+      ],
+      "queue_rank": 4,
+      "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
+      "evidence": {
+        "policy_simulator_result": "ALLOWED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Trust checked structurally, simulator does not evaluate trust policies",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          }
+        ],
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": false,
+        "sandbox_execution_success": null,
+        "sandbox_logs": [],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": null
+      },
+      "limitations": [
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/session policies not evaluated"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": 2.994537353515625,
+        "sandbox_time_ms": 0.0
+      }
+    },
+    {
+      "path_id": "6dd6bb462cbecb55",
+      "status": "POLICY_ALLOWED_UNCONFIRMED",
+      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "verification_scope": "offline_fixture",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/dev-alice",
+          "to_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "action_used": "rule_target:RULE-IAM-002",
+          "matched_rule_id": "RULE-IAM-002",
+          "edge_id": "edge:APPLIES_TO:03",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "condition_unevaluated"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "to_node": "arn:aws:iam::111122223333:role/AdminRole",
+          "action_used": "rule_target:RULE-IAM-001",
+          "matched_rule_id": "RULE-IAM-001",
+          "edge_id": "edge:APPLIES_TO:08",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/AdminRole",
+          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password-AbCdEf",
+          "action_used": "rule_target:RULE-IAM-003",
+          "matched_rule_id": "RULE-IAM-003",
+          "edge_id": "edge:APPLIES_TO:09",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "deny_present"
+          ]
+        }
+      ],
+      "assumptions": [
+        "condition_unevaluated",
+        "deny_present"
+      ],
+      "queue_rank": 5,
+      "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
+      "evidence": {
+        "policy_simulator_result": "ALLOWED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          }
+        ],
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": false,
+        "sandbox_execution_success": null,
+        "sandbox_logs": [],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": null
+      },
+      "limitations": [
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/session policies not evaluated"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": 2.994537353515625,
+        "sandbox_time_ms": 0.0
+      }
+    },
+    {
+      "path_id": "b66258973b0e392a",
+      "status": "POLICY_ALLOWED_UNCONFIRMED",
+      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "verification_scope": "offline_fixture",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/dev-alice",
+          "to_node": "arn:aws:iam::111122223333:role/DevRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:01",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DevRole",
+          "to_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "action_used": "rule_target:RULE-IAM-010",
+          "matched_rule_id": "RULE-IAM-010",
+          "edge_id": "edge:APPLIES_TO:04",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password-AbCdEf",
+          "action_used": "rule_target:RULE-IAM-003",
+          "matched_rule_id": "RULE-IAM-003",
+          "edge_id": "edge:APPLIES_TO:05",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "deny_present"
+          ]
+        }
+      ],
+      "assumptions": [
+        "deny_present",
+        "trust_structural_only"
+      ],
+      "queue_rank": 6,
+      "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
+      "evidence": {
+        "policy_simulator_result": "ALLOWED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Trust checked structurally, simulator does not evaluate trust policies",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          }
+        ],
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": false,
+        "sandbox_execution_success": null,
+        "sandbox_logs": [],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": null
+      },
+      "limitations": [
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/session policies not evaluated"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": 2.994537353515625,
+        "sandbox_time_ms": 0.0
+      }
+    },
+    {
+      "path_id": "f0764dedfca67a24",
+      "status": "POLICY_ALLOWED_UNCONFIRMED",
+      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "verification_scope": "offline_fixture",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/dev-alice",
+          "to_node": "arn:aws:iam::111122223333:role/DevRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:01",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DevRole",
+          "to_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:02",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password-AbCdEf",
+          "action_used": "rule_target:RULE-IAM-003",
+          "matched_rule_id": "RULE-IAM-003",
+          "edge_id": "edge:APPLIES_TO:05",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "deny_present"
+          ]
+        }
+      ],
+      "assumptions": [
+        "deny_present",
+        "trust_structural_only"
+      ],
+      "queue_rank": 7,
+      "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
+      "evidence": {
+        "policy_simulator_result": "ALLOWED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Trust checked structurally, simulator does not evaluate trust policies",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Trust checked structurally, simulator does not evaluate trust policies",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          }
+        ],
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": false,
+        "sandbox_execution_success": null,
+        "sandbox_logs": [],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": null
+      },
+      "limitations": [
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/session policies not evaluated"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": 2.994537353515625,
+        "sandbox_time_ms": 0.0
+      }
+    },
+    {
+      "path_id": "fb63808ad7a3723c",
+      "status": "POLICY_ALLOWED_UNCONFIRMED",
+      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "verification_scope": "offline_fixture",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/dev-alice",
+          "to_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:04",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "condition_unevaluated"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "to_node": "arn:aws:iam::111122223333:role/AdminRole",
+          "action_used": "rule_target:RULE-IAM-001",
+          "matched_rule_id": "RULE-IAM-001",
+          "edge_id": "edge:APPLIES_TO:08",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/AdminRole",
+          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password-AbCdEf",
+          "action_used": "rule_target:RULE-IAM-003",
+          "matched_rule_id": "RULE-IAM-003",
+          "edge_id": "edge:APPLIES_TO:09",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "deny_present"
+          ]
+        }
+      ],
+      "assumptions": [
+        "condition_unevaluated",
+        "deny_present"
+      ],
+      "queue_rank": 8,
+      "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
+      "evidence": {
+        "policy_simulator_result": "ALLOWED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Trust checked structurally, simulator does not evaluate trust policies",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          }
+        ],
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": false,
+        "sandbox_execution_success": null,
+        "sandbox_logs": [],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": null
+      },
+      "limitations": [
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/session policies not evaluated"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": 2.994537353515625,
+        "sandbox_time_ms": 0.0
+      }
+    },
+    {
+      "path_id": "024638c3499a48c5",
+      "status": "POLICY_ALLOWED_UNCONFIRMED",
+      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "verification_scope": "offline_fixture",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/dev-alice",
+          "to_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "action_used": "rule_target:RULE-IAM-002",
+          "matched_rule_id": "RULE-IAM-002",
+          "edge_id": "edge:APPLIES_TO:03",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "condition_unevaluated"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "to_node": "arn:aws:iam::111122223333:role/AdminRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:05",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/AdminRole",
+          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password-AbCdEf",
+          "action_used": "rule_target:RULE-IAM-003",
+          "matched_rule_id": "RULE-IAM-003",
+          "edge_id": "edge:APPLIES_TO:09",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "deny_present"
+          ]
+        }
+      ],
+      "assumptions": [
+        "condition_unevaluated",
+        "deny_present",
+        "trust_structural_only"
+      ],
+      "queue_rank": 9,
+      "queue_reason": "severity CRITICAL, 3 hops, 3 assumptions",
+      "evidence": {
+        "policy_simulator_result": "ALLOWED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Trust checked structurally, simulator does not evaluate trust policies",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          }
+        ],
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": false,
+        "sandbox_execution_success": null,
+        "sandbox_logs": [],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": null
+      },
+      "limitations": [
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/session policies not evaluated"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": 2.994537353515625,
+        "sandbox_time_ms": 0.0
+      }
+    },
+    {
+      "path_id": "b743b4dcee1ab1cb",
+      "status": "POLICY_ALLOWED_UNCONFIRMED",
+      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "verification_scope": "offline_fixture",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/dev-alice",
+          "to_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:04",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "condition_unevaluated"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "to_node": "arn:aws:iam::111122223333:role/AdminRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:05",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/AdminRole",
+          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password-AbCdEf",
+          "action_used": "rule_target:RULE-IAM-003",
+          "matched_rule_id": "RULE-IAM-003",
+          "edge_id": "edge:APPLIES_TO:09",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "deny_present"
+          ]
+        }
+      ],
+      "assumptions": [
+        "condition_unevaluated",
+        "deny_present",
+        "trust_structural_only"
+      ],
+      "queue_rank": 10,
+      "queue_reason": "severity CRITICAL, 3 hops, 3 assumptions",
+      "evidence": {
+        "policy_simulator_result": "ALLOWED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Trust checked structurally, simulator does not evaluate trust policies",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Trust checked structurally, simulator does not evaluate trust policies",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          }
+        ],
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": false,
+        "sandbox_execution_success": null,
+        "sandbox_logs": [],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": null
+      },
+      "limitations": [
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/session policies not evaluated"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": 2.994537353515625,
+        "sandbox_time_ms": 0.0
+      }
+    },
+    {
+      "path_id": "94042dca91b4d99f",
+      "status": "POLICY_ALLOWED_UNCONFIRMED",
+      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "verification_scope": "offline_fixture",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/dev-alice",
+          "to_node": "arn:aws:iam::111122223333:role/DevRole",
+          "action_used": "rule_target:RULE-IAM-011",
+          "matched_rule_id": "RULE-IAM-011",
+          "edge_id": "edge:APPLIES_TO:01",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DevRole",
+          "to_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "action_used": "rule_target:RULE-IAM-010",
+          "matched_rule_id": "RULE-IAM-010",
+          "edge_id": "edge:APPLIES_TO:04",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "to_node": "arn:aws:iam::111122223333:role/AdminRole",
+          "action_used": "rule_target:RULE-IAM-001",
+          "matched_rule_id": "RULE-IAM-001",
+          "edge_id": "edge:APPLIES_TO:08",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/AdminRole",
+          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password-AbCdEf",
+          "action_used": "rule_target:RULE-IAM-003",
+          "matched_rule_id": "RULE-IAM-003",
+          "edge_id": "edge:APPLIES_TO:09",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "deny_present"
+          ]
+        }
+      ],
+      "assumptions": [
+        "deny_present"
+      ],
+      "queue_rank": 11,
+      "queue_reason": "severity CRITICAL, 4 hops, 1 assumption",
+      "evidence": {
+        "policy_simulator_result": "ALLOWED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 3,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          }
+        ],
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": false,
+        "sandbox_execution_success": null,
+        "sandbox_logs": [],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": null
+      },
+      "limitations": [
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/session policies not evaluated"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": 2.994537353515625,
+        "sandbox_time_ms": 0.0
+      }
+    },
+    {
+      "path_id": "1c7bed1a34169cd5",
+      "status": "POLICY_ALLOWED_UNCONFIRMED",
+      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "verification_scope": "offline_fixture",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/dev-alice",
+          "to_node": "arn:aws:iam::111122223333:role/DevRole",
+          "action_used": "rule_target:RULE-IAM-011",
+          "matched_rule_id": "RULE-IAM-011",
+          "edge_id": "edge:APPLIES_TO:01",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DevRole",
+          "to_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "action_used": "rule_target:RULE-IAM-010",
+          "matched_rule_id": "RULE-IAM-010",
+          "edge_id": "edge:APPLIES_TO:04",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "to_node": "arn:aws:iam::111122223333:role/AdminRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:05",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/AdminRole",
+          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password-AbCdEf",
+          "action_used": "rule_target:RULE-IAM-003",
+          "matched_rule_id": "RULE-IAM-003",
+          "edge_id": "edge:APPLIES_TO:09",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "deny_present"
+          ]
+        }
+      ],
+      "assumptions": [
+        "deny_present",
+        "trust_structural_only"
+      ],
+      "queue_rank": 12,
+      "queue_reason": "severity CRITICAL, 4 hops, 2 assumptions",
+      "evidence": {
+        "policy_simulator_result": "ALLOWED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Trust checked structurally, simulator does not evaluate trust policies",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 3,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          }
+        ],
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": false,
+        "sandbox_execution_success": null,
+        "sandbox_logs": [],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": null
+      },
+      "limitations": [
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/session policies not evaluated"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": 2.994537353515625,
+        "sandbox_time_ms": 0.0
+      }
+    },
+    {
+      "path_id": "6a698f75ab78ec93",
+      "status": "POLICY_ALLOWED_UNCONFIRMED",
+      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "verification_scope": "offline_fixture",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/dev-alice",
+          "to_node": "arn:aws:iam::111122223333:role/DevRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:01",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DevRole",
+          "to_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "action_used": "rule_target:RULE-IAM-010",
+          "matched_rule_id": "RULE-IAM-010",
+          "edge_id": "edge:APPLIES_TO:04",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "to_node": "arn:aws:iam::111122223333:role/AdminRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:05",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/AdminRole",
+          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password-AbCdEf",
+          "action_used": "rule_target:RULE-IAM-003",
+          "matched_rule_id": "RULE-IAM-003",
+          "edge_id": "edge:APPLIES_TO:09",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "deny_present"
+          ]
+        }
+      ],
+      "assumptions": [
+        "deny_present",
+        "trust_structural_only"
+      ],
+      "queue_rank": 13,
+      "queue_reason": "severity CRITICAL, 4 hops, 2 assumptions",
+      "evidence": {
+        "policy_simulator_result": "ALLOWED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Trust checked structurally, simulator does not evaluate trust policies",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Trust checked structurally, simulator does not evaluate trust policies",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 3,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          }
+        ],
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": false,
+        "sandbox_execution_success": null,
+        "sandbox_logs": [],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": null
+      },
+      "limitations": [
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/session policies not evaluated"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": 2.994537353515625,
+        "sandbox_time_ms": 0.0
+      }
+    },
+    {
+      "path_id": "705a16f255aec41f",
+      "status": "POLICY_ALLOWED_UNCONFIRMED",
+      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "verification_scope": "offline_fixture",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/dev-alice",
+          "to_node": "arn:aws:iam::111122223333:role/DevRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:01",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DevRole",
+          "to_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:02",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "to_node": "arn:aws:iam::111122223333:role/AdminRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:05",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/AdminRole",
+          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password-AbCdEf",
+          "action_used": "rule_target:RULE-IAM-003",
+          "matched_rule_id": "RULE-IAM-003",
+          "edge_id": "edge:APPLIES_TO:09",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "deny_present"
+          ]
+        }
+      ],
+      "assumptions": [
+        "deny_present",
+        "trust_structural_only"
+      ],
+      "queue_rank": 14,
+      "queue_reason": "severity CRITICAL, 4 hops, 2 assumptions",
+      "evidence": {
+        "policy_simulator_result": "ALLOWED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Trust checked structurally, simulator does not evaluate trust policies",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Trust checked structurally, simulator does not evaluate trust policies",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Trust checked structurally, simulator does not evaluate trust policies",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 3,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          }
+        ],
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": false,
+        "sandbox_execution_success": null,
+        "sandbox_logs": [],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": null
+      },
+      "limitations": [
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/session policies not evaluated"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": 2.994537353515625,
+        "sandbox_time_ms": 0.0
+      }
+    },
+    {
+      "path_id": "753ab93203d1250e",
+      "status": "POLICY_ALLOWED_UNCONFIRMED",
+      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "verification_scope": "offline_fixture",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/dev-alice",
+          "to_node": "arn:aws:iam::111122223333:role/DevRole",
+          "action_used": "rule_target:RULE-IAM-011",
+          "matched_rule_id": "RULE-IAM-011",
+          "edge_id": "edge:APPLIES_TO:01",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DevRole",
+          "to_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:02",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "to_node": "arn:aws:iam::111122223333:role/AdminRole",
+          "action_used": "rule_target:RULE-IAM-001",
+          "matched_rule_id": "RULE-IAM-001",
+          "edge_id": "edge:APPLIES_TO:08",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/AdminRole",
+          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password-AbCdEf",
+          "action_used": "rule_target:RULE-IAM-003",
+          "matched_rule_id": "RULE-IAM-003",
+          "edge_id": "edge:APPLIES_TO:09",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "deny_present"
+          ]
+        }
+      ],
+      "assumptions": [
+        "deny_present",
+        "trust_structural_only"
+      ],
+      "queue_rank": 15,
+      "queue_reason": "severity CRITICAL, 4 hops, 2 assumptions",
+      "evidence": {
+        "policy_simulator_result": "ALLOWED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Trust checked structurally, simulator does not evaluate trust policies",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 3,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          }
+        ],
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": false,
+        "sandbox_execution_success": null,
+        "sandbox_logs": [],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": null
+      },
+      "limitations": [
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/session policies not evaluated"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": 2.994537353515625,
+        "sandbox_time_ms": 0.0
+      }
+    },
+    {
+      "path_id": "7a2dc99c58500922",
+      "status": "POLICY_ALLOWED_UNCONFIRMED",
+      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "verification_scope": "offline_fixture",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/dev-alice",
+          "to_node": "arn:aws:iam::111122223333:role/DevRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:01",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DevRole",
+          "to_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "action_used": "rule_target:RULE-IAM-010",
+          "matched_rule_id": "RULE-IAM-010",
+          "edge_id": "edge:APPLIES_TO:04",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "to_node": "arn:aws:iam::111122223333:role/AdminRole",
+          "action_used": "rule_target:RULE-IAM-001",
+          "matched_rule_id": "RULE-IAM-001",
+          "edge_id": "edge:APPLIES_TO:08",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/AdminRole",
+          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password-AbCdEf",
+          "action_used": "rule_target:RULE-IAM-003",
+          "matched_rule_id": "RULE-IAM-003",
+          "edge_id": "edge:APPLIES_TO:09",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "deny_present"
+          ]
+        }
+      ],
+      "assumptions": [
+        "deny_present",
+        "trust_structural_only"
+      ],
+      "queue_rank": 16,
+      "queue_reason": "severity CRITICAL, 4 hops, 2 assumptions",
+      "evidence": {
+        "policy_simulator_result": "ALLOWED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Trust checked structurally, simulator does not evaluate trust policies",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 3,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          }
+        ],
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": false,
+        "sandbox_execution_success": null,
+        "sandbox_logs": [],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": null
+      },
+      "limitations": [
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/session policies not evaluated"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": 2.994537353515625,
+        "sandbox_time_ms": 0.0
+      }
+    },
+    {
+      "path_id": "9953915b3af4b1be",
+      "status": "POLICY_ALLOWED_UNCONFIRMED",
+      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "verification_scope": "offline_fixture",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/dev-alice",
+          "to_node": "arn:aws:iam::111122223333:role/DevRole",
+          "action_used": "rule_target:RULE-IAM-011",
+          "matched_rule_id": "RULE-IAM-011",
+          "edge_id": "edge:APPLIES_TO:01",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DevRole",
+          "to_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:02",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "to_node": "arn:aws:iam::111122223333:role/AdminRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:05",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/AdminRole",
+          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password-AbCdEf",
+          "action_used": "rule_target:RULE-IAM-003",
+          "matched_rule_id": "RULE-IAM-003",
+          "edge_id": "edge:APPLIES_TO:09",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "deny_present"
+          ]
+        }
+      ],
+      "assumptions": [
+        "deny_present",
+        "trust_structural_only"
+      ],
+      "queue_rank": 17,
+      "queue_reason": "severity CRITICAL, 4 hops, 2 assumptions",
+      "evidence": {
+        "policy_simulator_result": "ALLOWED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Trust checked structurally, simulator does not evaluate trust policies",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Trust checked structurally, simulator does not evaluate trust policies",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 3,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          }
+        ],
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": false,
+        "sandbox_execution_success": null,
+        "sandbox_logs": [],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": null
+      },
+      "limitations": [
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/session policies not evaluated"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": 2.994537353515625,
+        "sandbox_time_ms": 0.0
+      }
+    },
+    {
+      "path_id": "a2b6310eca1b30a4",
+      "status": "POLICY_ALLOWED_UNCONFIRMED",
+      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "verification_scope": "offline_fixture",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/dev-alice",
+          "to_node": "arn:aws:iam::111122223333:role/DevRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:01",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DevRole",
+          "to_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:02",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/DeployRole",
+          "to_node": "arn:aws:iam::111122223333:role/AdminRole",
+          "action_used": "rule_target:RULE-IAM-001",
+          "matched_rule_id": "RULE-IAM-001",
+          "edge_id": "edge:APPLIES_TO:08",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/AdminRole",
+          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password-AbCdEf",
+          "action_used": "rule_target:RULE-IAM-003",
+          "matched_rule_id": "RULE-IAM-003",
+          "edge_id": "edge:APPLIES_TO:09",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "deny_present"
+          ]
+        }
+      ],
+      "assumptions": [
+        "deny_present",
+        "trust_structural_only"
+      ],
+      "queue_rank": 18,
+      "queue_reason": "severity CRITICAL, 4 hops, 2 assumptions",
+      "evidence": {
+        "policy_simulator_result": "ALLOWED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Trust checked structurally, simulator does not evaluate trust policies",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Trust checked structurally, simulator does not evaluate trust policies",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 3,
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "",
+            "raw_ref": null
+          }
+        ],
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": false,
+        "sandbox_execution_success": null,
+        "sandbox_logs": [],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": null
+      },
+      "limitations": [
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/session policies not evaluated"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": 2.994537353515625,
+        "sandbox_time_ms": 0.0
       }
     }
   ],
   "runtime_metrics": {
-    "graph_time_ms": null,
-    "policy_sim_time_ms": null,
-    "sandbox_time_ms": null,
-    "total_ms": null,
-    "load_time_ms": null,
+    "graph_time_ms": 0.0,
+    "policy_sim_time_ms": 2.994537353515625,
+    "sandbox_time_ms": 0.0,
+    "total_ms": 54.21590805053711,
+    "load_time_ms": 45.20845413208008,
     "policy_sim_backend": "recorded",
     "policy_sim_timing_representative": false,
     "sandbox_breakdown_ms": {
@@ -104,9 +1774,9 @@
     }
   },
   "stats": {
-    "paths_total": 1,
+    "paths_total": 18,
     "by_status": {
-      "POLICY_ALLOWED_UNCONFIRMED": 1
+      "POLICY_ALLOWED_UNCONFIRMED": 18
     }
   },
   "warnings": []
