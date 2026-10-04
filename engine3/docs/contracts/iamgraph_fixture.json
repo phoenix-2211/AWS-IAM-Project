@@ -1,0 +1,531 @@
+{
+  "contract_name": "IAMGraph",
+  "contract_version": "0.1",
+  "x_provenance": {
+    "authored_by": "ENGINE3-SIDE DRAFT",
+    "basis": "IAMGraph v0.1 contract text (section 8 description of the synthetic fixture)",
+    "is_engine2_official_fixture": false,
+    "note": "Rebuilt from the contract description because the Engine 2 fixture file was not available. Replace with Engine 2's real fixture when it arrives. Node/edge ID formats here are placeholders, NOT the ID scheme proposed by Engine 2 (that scheme has a known '|' collision)."
+  },
+  "snapshot": {
+    "snapshot_id": "ENGINE3-DRAFT-FIXTURE-0001",
+    "account_id": "111122223333",
+    "collected_at": "2026-10-04T00:00:00Z",
+    "origin": "synthetic_fixture",
+    "collection_status": "complete",
+    "collected_resource_types": [
+      "secretsmanager:secret"
+    ],
+    "coverage": [
+      {
+        "component": "iam",
+        "region": "global",
+        "status": "complete",
+        "details": "synthetic"
+      },
+      {
+        "component": "secretsmanager",
+        "region": "us-east-1",
+        "status": "complete",
+        "details": "synthetic"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "id": "arn:aws:iam::111122223333:user/dev-alice",
+      "type": "User",
+      "arn": "arn:aws:iam::111122223333:user/dev-alice",
+      "name": "dev-alice",
+      "permissions_boundary": null
+    },
+    {
+      "id": "arn:aws:iam::111122223333:role/DevRole",
+      "type": "Role",
+      "arn": "arn:aws:iam::111122223333:role/DevRole",
+      "name": "DevRole",
+      "permissions_boundary": null,
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::111122223333:user/dev-alice"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "id": "arn:aws:iam::111122223333:role/DeployRole",
+      "type": "Role",
+      "arn": "arn:aws:iam::111122223333:role/DeployRole",
+      "name": "DeployRole",
+      "permissions_boundary": null,
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::111122223333:role/DevRole"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "lambda.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::111122223333:user/dev-alice"
+            },
+            "Action": "sts:AssumeRole",
+            "Condition": {
+              "Bool": {
+                "aws:MultiFactorAuthPresent": "true"
+              }
+            }
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::999988887777:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "id": "arn:aws:iam::111122223333:role/AdminRole",
+      "type": "Role",
+      "arn": "arn:aws:iam::111122223333:role/AdminRole",
+      "name": "AdminRole",
+      "permissions_boundary": null,
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::111122223333:role/DeployRole"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "id": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password-AbCdEf",
+      "type": "Resource",
+      "resource_type": "secretsmanager:secret",
+      "arn": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password-AbCdEf",
+      "name": "prod/db-password",
+      "metadata": {
+        "region": "us-east-1"
+      }
+    },
+    {
+      "id": "svc:lambda.amazonaws.com",
+      "type": "ServicePrincipal",
+      "name": "lambda.amazonaws.com"
+    },
+    {
+      "id": "perm:dev-alice:dev-inline:0",
+      "type": "Permission",
+      "effect": "Allow",
+      "actions": [
+        "sts:AssumeRole"
+      ],
+      "not_actions": null,
+      "resources": [
+        "arn:aws:iam::111122223333:role/DevRole"
+      ],
+      "not_resources": null,
+      "condition": null,
+      "raw_statement": {
+        "Effect": "Allow",
+        "Action": [
+          "sts:AssumeRole"
+        ],
+        "Resource": [
+          "arn:aws:iam::111122223333:role/DevRole"
+        ]
+      },
+      "provenance": {
+        "policy_type": "inline",
+        "policy_name": "dev-inline",
+        "policy_arn": null,
+        "version_id": null,
+        "owner_arn": "arn:aws:iam::111122223333:user/dev-alice",
+        "statement_index": 0
+      }
+    },
+    {
+      "id": "perm:dev-alice:Developers-deny:0",
+      "type": "Permission",
+      "effect": "Deny",
+      "actions": [
+        "secretsmanager:GetSecretValue"
+      ],
+      "not_actions": null,
+      "resources": [
+        "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/*"
+      ],
+      "not_resources": null,
+      "condition": null,
+      "raw_statement": {
+        "Effect": "Deny",
+        "Action": [
+          "secretsmanager:GetSecretValue"
+        ],
+        "Resource": [
+          "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/*"
+        ]
+      },
+      "provenance": {
+        "policy_type": "group_inline",
+        "policy_name": "Developers-deny",
+        "policy_arn": null,
+        "version_id": null,
+        "owner_arn": "arn:aws:iam::111122223333:group/Developers",
+        "statement_index": 0
+      }
+    },
+    {
+      "id": "perm:dev-alice:dev-passrole:0",
+      "type": "Permission",
+      "effect": "Allow",
+      "actions": [
+        "iam:PassRole"
+      ],
+      "not_actions": null,
+      "resources": [
+        "arn:aws:iam::111122223333:role/DeployRole"
+      ],
+      "not_resources": null,
+      "condition": {
+        "StringEquals": {
+          "iam:PassedToService": "lambda.amazonaws.com"
+        }
+      },
+      "raw_statement": {
+        "Effect": "Allow",
+        "Action": [
+          "iam:PassRole"
+        ],
+        "Resource": [
+          "arn:aws:iam::111122223333:role/DeployRole"
+        ],
+        "Condition": {
+          "StringEquals": {
+            "iam:PassedToService": "lambda.amazonaws.com"
+          }
+        }
+      },
+      "provenance": {
+        "policy_type": "inline",
+        "policy_name": "dev-passrole",
+        "policy_arn": null,
+        "version_id": null,
+        "owner_arn": "arn:aws:iam::111122223333:user/dev-alice",
+        "statement_index": 0
+      }
+    },
+    {
+      "id": "perm:DevRole:dev-assume:0",
+      "type": "Permission",
+      "effect": "Allow",
+      "actions": [
+        "sts:AssumeRole"
+      ],
+      "not_actions": null,
+      "resources": [
+        "arn:aws:iam::111122223333:role/DeployRole"
+      ],
+      "not_resources": null,
+      "condition": null,
+      "raw_statement": {
+        "Effect": "Allow",
+        "Action": [
+          "sts:AssumeRole"
+        ],
+        "Resource": [
+          "arn:aws:iam::111122223333:role/DeployRole"
+        ]
+      },
+      "provenance": {
+        "policy_type": "inline",
+        "policy_name": "dev-assume",
+        "policy_arn": null,
+        "version_id": null,
+        "owner_arn": "arn:aws:iam::111122223333:role/DevRole",
+        "statement_index": 0
+      }
+    },
+    {
+      "id": "perm:DeployRole:deploy-secrets:0",
+      "type": "Permission",
+      "effect": "Allow",
+      "actions": [
+        "secretsmanager:GetSecretValue"
+      ],
+      "not_actions": null,
+      "resources": [
+        "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/*"
+      ],
+      "not_resources": null,
+      "condition": null,
+      "raw_statement": {
+        "Effect": "Allow",
+        "Action": [
+          "secretsmanager:GetSecretValue"
+        ],
+        "Resource": [
+          "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/*"
+        ]
+      },
+      "provenance": {
+        "policy_type": "inline",
+        "policy_name": "deploy-secrets",
+        "policy_arn": null,
+        "version_id": null,
+        "owner_arn": "arn:aws:iam::111122223333:role/DeployRole",
+        "statement_index": 0
+      }
+    },
+    {
+      "id": "perm:DeployRole:deploy-passrole:0",
+      "type": "Permission",
+      "effect": "Allow",
+      "actions": [
+        "iam:PassRole"
+      ],
+      "not_actions": null,
+      "resources": [
+        "arn:aws:iam::111122223333:role/*"
+      ],
+      "not_resources": null,
+      "condition": null,
+      "raw_statement": {
+        "Effect": "Allow",
+        "Action": [
+          "iam:PassRole"
+        ],
+        "Resource": [
+          "arn:aws:iam::111122223333:role/*"
+        ]
+      },
+      "provenance": {
+        "policy_type": "inline",
+        "policy_name": "deploy-passrole",
+        "policy_arn": null,
+        "version_id": null,
+        "owner_arn": "arn:aws:iam::111122223333:role/DeployRole",
+        "statement_index": 0
+      }
+    },
+    {
+      "id": "perm:AdminRole:admin-secrets:0",
+      "type": "Permission",
+      "effect": "Allow",
+      "actions": [
+        "secretsmanager:GetSecretValue"
+      ],
+      "not_actions": null,
+      "resources": [
+        "arn:aws:secretsmanager:*:*:secret:*"
+      ],
+      "not_resources": null,
+      "condition": null,
+      "raw_statement": {
+        "Effect": "Allow",
+        "Action": [
+          "secretsmanager:GetSecretValue"
+        ],
+        "Resource": [
+          "arn:aws:secretsmanager:*:*:secret:*"
+        ]
+      },
+      "provenance": {
+        "policy_type": "inline",
+        "policy_name": "admin-secrets",
+        "policy_arn": null,
+        "version_id": null,
+        "owner_arn": "arn:aws:iam::111122223333:role/AdminRole",
+        "statement_index": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge:HAS_PERMISSION:01",
+      "type": "HAS_PERMISSION",
+      "source": "arn:aws:iam::111122223333:user/dev-alice",
+      "target": "perm:dev-alice:dev-inline:0",
+      "via_group": null
+    },
+    {
+      "id": "edge:HAS_PERMISSION:02",
+      "type": "HAS_PERMISSION",
+      "source": "arn:aws:iam::111122223333:user/dev-alice",
+      "target": "perm:dev-alice:Developers-deny:0",
+      "via_group": "Developers"
+    },
+    {
+      "id": "edge:HAS_PERMISSION:03",
+      "type": "HAS_PERMISSION",
+      "source": "arn:aws:iam::111122223333:user/dev-alice",
+      "target": "perm:dev-alice:dev-passrole:0",
+      "via_group": null
+    },
+    {
+      "id": "edge:HAS_PERMISSION:04",
+      "type": "HAS_PERMISSION",
+      "source": "arn:aws:iam::111122223333:role/DevRole",
+      "target": "perm:DevRole:dev-assume:0",
+      "via_group": null
+    },
+    {
+      "id": "edge:HAS_PERMISSION:05",
+      "type": "HAS_PERMISSION",
+      "source": "arn:aws:iam::111122223333:role/DeployRole",
+      "target": "perm:DeployRole:deploy-secrets:0",
+      "via_group": null
+    },
+    {
+      "id": "edge:HAS_PERMISSION:06",
+      "type": "HAS_PERMISSION",
+      "source": "arn:aws:iam::111122223333:role/DeployRole",
+      "target": "perm:DeployRole:deploy-passrole:0",
+      "via_group": null
+    },
+    {
+      "id": "edge:HAS_PERMISSION:07",
+      "type": "HAS_PERMISSION",
+      "source": "arn:aws:iam::111122223333:role/AdminRole",
+      "target": "perm:AdminRole:admin-secrets:0",
+      "via_group": null
+    },
+    {
+      "id": "edge:TRUSTED_BY:01",
+      "type": "TRUSTED_BY",
+      "source": "arn:aws:iam::111122223333:user/dev-alice",
+      "target": "arn:aws:iam::111122223333:role/DevRole",
+      "via": "principal_arn",
+      "has_condition": false,
+      "statement_index": 0,
+      "matched_principal": "arn:aws:iam::111122223333:user/dev-alice"
+    },
+    {
+      "id": "edge:TRUSTED_BY:02",
+      "type": "TRUSTED_BY",
+      "source": "arn:aws:iam::111122223333:role/DevRole",
+      "target": "arn:aws:iam::111122223333:role/DeployRole",
+      "via": "principal_arn",
+      "has_condition": false,
+      "statement_index": 0,
+      "matched_principal": "arn:aws:iam::111122223333:role/DevRole"
+    },
+    {
+      "id": "edge:TRUSTED_BY:03",
+      "type": "TRUSTED_BY",
+      "source": "svc:lambda.amazonaws.com",
+      "target": "arn:aws:iam::111122223333:role/DeployRole",
+      "via": "service",
+      "has_condition": false,
+      "statement_index": 1,
+      "matched_principal": "lambda.amazonaws.com"
+    },
+    {
+      "id": "edge:TRUSTED_BY:04",
+      "type": "TRUSTED_BY",
+      "source": "arn:aws:iam::111122223333:user/dev-alice",
+      "target": "arn:aws:iam::111122223333:role/DeployRole",
+      "via": "principal_arn",
+      "has_condition": true,
+      "statement_index": 2,
+      "matched_principal": "arn:aws:iam::111122223333:user/dev-alice"
+    },
+    {
+      "id": "edge:TRUSTED_BY:05",
+      "type": "TRUSTED_BY",
+      "source": "arn:aws:iam::111122223333:role/DeployRole",
+      "target": "arn:aws:iam::111122223333:role/AdminRole",
+      "via": "principal_arn",
+      "has_condition": false,
+      "statement_index": 0,
+      "matched_principal": "arn:aws:iam::111122223333:role/DeployRole"
+    },
+    {
+      "id": "edge:APPLIES_TO:01",
+      "type": "APPLIES_TO",
+      "source": "perm:dev-alice:dev-inline:0",
+      "target": "arn:aws:iam::111122223333:role/DevRole"
+    },
+    {
+      "id": "edge:APPLIES_TO:02",
+      "type": "APPLIES_TO",
+      "source": "perm:dev-alice:Developers-deny:0",
+      "target": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password-AbCdEf"
+    },
+    {
+      "id": "edge:APPLIES_TO:03",
+      "type": "APPLIES_TO",
+      "source": "perm:dev-alice:dev-passrole:0",
+      "target": "arn:aws:iam::111122223333:role/DeployRole"
+    },
+    {
+      "id": "edge:APPLIES_TO:04",
+      "type": "APPLIES_TO",
+      "source": "perm:DevRole:dev-assume:0",
+      "target": "arn:aws:iam::111122223333:role/DeployRole"
+    },
+    {
+      "id": "edge:APPLIES_TO:05",
+      "type": "APPLIES_TO",
+      "source": "perm:DeployRole:deploy-secrets:0",
+      "target": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password-AbCdEf"
+    },
+    {
+      "id": "edge:APPLIES_TO:06",
+      "type": "APPLIES_TO",
+      "source": "perm:DeployRole:deploy-passrole:0",
+      "target": "arn:aws:iam::111122223333:role/DevRole"
+    },
+    {
+      "id": "edge:APPLIES_TO:07",
+      "type": "APPLIES_TO",
+      "source": "perm:DeployRole:deploy-passrole:0",
+      "target": "arn:aws:iam::111122223333:role/DeployRole"
+    },
+    {
+      "id": "edge:APPLIES_TO:08",
+      "type": "APPLIES_TO",
+      "source": "perm:DeployRole:deploy-passrole:0",
+      "target": "arn:aws:iam::111122223333:role/AdminRole"
+    },
+    {
+      "id": "edge:APPLIES_TO:09",
+      "type": "APPLIES_TO",
+      "source": "perm:AdminRole:admin-secrets:0",
+      "target": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password-AbCdEf"
+    }
+  ],
+  "warnings": [
+    {
+      "warning_id": "warn:01",
+      "code": "UNRESOLVED_CROSS_ACCOUNT_TRUST",
+      "node_id": "arn:aws:iam::111122223333:role/DeployRole",
+      "statement_index": 3,
+      "message": "Trust statement 3 names principal arn:aws:iam::999988887777:root in another account; no resolved edge produced."
+    }
+  ]
+}

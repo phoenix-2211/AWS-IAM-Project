@@ -1,0 +1,16 @@
+Metadata-Version: 2.4
+Name: engine3
+Version: 0.1.0
+Summary: Engine 3: Attack + Verify IAM attack paths
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: pydantic>=2.0.0
+Requires-Dist: jsonschema>=4.0.0
+Requires-Dist: boto3>=1.28.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: ruff>=0.1.0; extra == "dev"
+
+# Engine 3 (Attack + Verify)
+
+Engine 3 consumes IAM graph snapshots (`IAMGraph v0.1`) and security rules (`SecurityRule[]`), matches rules, discovers attack paths, ranks them, verifies them, and emits a `VerificationResult v0.1`.

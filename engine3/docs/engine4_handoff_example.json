@@ -1,0 +1,113 @@
+{
+  "contract_name": "VerificationResult",
+  "contract_version": "0.1",
+  "run": {
+    "run_id": "run-EXAMPLE",
+    "origin": "synthetic_example",
+    "started_at": null,
+    "finished_at": null,
+    "git_sha": null,
+    "mode": "offline_fixture",
+    "simulator_backend": "recorded",
+    "sandbox_mode": "none",
+    "enrichment": "off"
+  },
+  "inputs": {
+    "iamgraph_snapshot_id": "snap-EXAMPLE",
+    "iamgraph_content_sha256": "<sha256>",
+    "iamgraph_collection_status": "complete",
+    "rulebook_sha256": "<sha256>",
+    "rulebook_origin": "engine3_authored_standin",
+    "rules_active": 0,
+    "rules_skipped": 0
+  },
+  "degraded": false,
+  "degraded_reasons": [],
+  "paths": [
+    {
+      "path_id": "<deterministic-hash>",
+      "status": "POLICY_ALLOWED_UNCONFIRMED",
+      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "verification_scope": "none",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/dev",
+          "to_node": "arn:aws:iam::111122223333:role/build-role",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "<edge-id>",
+          "edge_type": "TRUSTED_BY",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/build-role",
+          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod-db-EXAMPLE",
+          "action_used": "secretsmanager:GetSecretValue",
+          "matched_rule_id": "AWS-IAM-0XX",
+          "edge_id": "<edge-id>",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "condition_unevaluated"
+          ]
+        }
+      ],
+      "assumptions": [
+        "condition_unevaluated"
+      ],
+      "queue_rank": 1,
+      "queue_reason": "severity HIGH, 2 hops, 1 assumption",
+      "evidence": {
+        "policy_simulator_result": "ALLOWED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "decision": "ALLOWED",
+            "note": "trust checked structurally, simulator does not evaluate trust policies"
+          },
+          {
+            "hop_index": 1,
+            "decision": "ALLOWED",
+            "missing_context": [
+              "<condition key>"
+            ],
+            "raw_ref": "runs/<id>/04_simulator/raw/<file>"
+          }
+        ],
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": false,
+        "sandbox_execution_success": null,
+        "sandbox_logs": [],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": null
+      },
+      "limitations": [
+        "SCP/RCP/session policies not evaluated"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": null,
+        "sandbox_time_ms": null
+      }
+    }
+  ],
+  "runtime_metrics": {
+    "graph_time_ms": null,
+    "policy_sim_time_ms": null,
+    "sandbox_time_ms": null,
+    "total_ms": null,
+    "load_time_ms": null,
+    "policy_sim_backend": "recorded",
+    "policy_sim_timing_representative": false,
+    "sandbox_breakdown_ms": {
+      "deploy": null,
+      "execute": null,
+      "destroy": null
+    }
+  },
+  "stats": {
+    "paths_total": 1,
+    "by_status": {
+      "POLICY_ALLOWED_UNCONFIRMED": 1
+    }
+  },
+  "warnings": []
+}

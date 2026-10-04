@@ -1,0 +1,117 @@
+[
+  {
+    "rule_id": "TEST-IAM-001",
+    "title": "Role can pass IAM roles",
+    "description": "A role holds iam:PassRole on IAM roles.",
+    "condition": null,
+    "principal_type": "role",
+    "action": "iam:PassRole",
+    "resource_type": "iam_role",
+    "relationship": "can_pass_role",
+    "severity": "HIGH",
+    "source": {
+      "name": "ENGINE3-DRAFT test sample",
+      "url": null,
+      "tier": "TEST_ONLY"
+    },
+    "evidence": {
+      "text": "Synthetic test rule. No external source. Not a real finding."
+    },
+    "mitre": null,
+    "version": "0.1",
+    "status": "ACTIVE",
+    "rulebook_origin": "TEST_ONLY"
+  },
+  {
+    "rule_id": "TEST-IAM-002",
+    "title": "User can pass IAM roles",
+    "description": "A user holds iam:PassRole on IAM roles.",
+    "condition": null,
+    "principal_type": "user",
+    "action": "iam:PassRole",
+    "resource_type": "iam_role",
+    "relationship": "can_pass_role",
+    "severity": "HIGH",
+    "source": {
+      "name": "ENGINE3-DRAFT test sample",
+      "url": null,
+      "tier": "TEST_ONLY"
+    },
+    "evidence": {
+      "text": "Synthetic test rule. No external source. Not a real finding."
+    },
+    "mitre": null,
+    "version": "0.1",
+    "status": "ACTIVE",
+    "rulebook_origin": "TEST_ONLY"
+  },
+  {
+    "rule_id": "TEST-IAM-003",
+    "title": "Role can read secrets",
+    "description": "A role holds secretsmanager:GetSecretValue on a secret.",
+    "condition": null,
+    "principal_type": "role",
+    "action": "secretsmanager:GetSecretValue",
+    "resource_type": "secretsmanager_secret",
+    "relationship": "can_read_secret",
+    "severity": "CRITICAL",
+    "source": {
+      "name": "ENGINE3-DRAFT test sample",
+      "url": null,
+      "tier": "TEST_ONLY"
+    },
+    "evidence": {
+      "text": "Synthetic test rule. No external source. Not a real finding."
+    },
+    "mitre": null,
+    "version": "0.1",
+    "status": "ACTIVE",
+    "rulebook_origin": "TEST_ONLY"
+  },
+  {
+    "rule_id": "TEST-IAM-004",
+    "title": "Role can create Lambda functions",
+    "description": "Tests NOT_REPRESENTABLE: Lambda is not in IAMGraph v0.1.",
+    "condition": null,
+    "principal_type": "role",
+    "action": "lambda:CreateFunction",
+    "resource_type": "lambda_function",
+    "relationship": "can_create",
+    "severity": "HIGH",
+    "source": {
+      "name": "ENGINE3-DRAFT test sample",
+      "url": null,
+      "tier": "TEST_ONLY"
+    },
+    "evidence": {
+      "text": "Synthetic test rule. No external source. Not a real finding."
+    },
+    "mitre": null,
+    "version": "0.1",
+    "status": "ACTIVE",
+    "rulebook_origin": "TEST_ONLY"
+  },
+  {
+    "rule_id": "TEST-IAM-005",
+    "title": "Inactive rule (must be ignored)",
+    "description": "Tests that a non-ACTIVE rule is skipped with a warning.",
+    "condition": null,
+    "principal_type": "user",
+    "action": "iam:CreateAccessKey",
+    "resource_type": "iam_user",
+    "relationship": "can_create_key",
+    "severity": "MEDIUM",
+    "source": {
+      "name": "ENGINE3-DRAFT test sample",
+      "url": null,
+      "tier": "TEST_ONLY"
+    },
+    "evidence": {
+      "text": "Synthetic test rule. No external source. Not a real finding."
+    },
+    "mitre": null,
+    "version": "0.1",
+    "status": "DRAFT",
+    "rulebook_origin": "TEST_ONLY"
+  }
+]

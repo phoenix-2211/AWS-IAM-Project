@@ -1,0 +1,22 @@
+{
+  "manifest_version": "1.0",
+  "generated_at": "2026-10-04T10:45:59Z",
+  "files": {
+    "IAMGraph_v0.1.md": {
+      "sha256": "C74F5B4EE6CEC94ECB1977F315B2C1F96768A5AC1CC80D941FE0E036B88FAA64",
+      "bytes": 9930
+    },
+    "iamgraph_fixture.json": {
+      "sha256": "22685F5A32ABE39F3FFC42D915D2102F42A04ACFD186A907F603E8BC6EE551EA",
+      "bytes": 15307
+    },
+    "SecurityRule_sample.json": {
+      "sha256": "993FE862C543F9B7E4A3B8C4BA437EBD24FC9B42416751048089D9B666A70E15",
+      "bytes": 3285
+    },
+    "engine4_handoff_example.json": {
+      "sha256": "1566DBC943028829327E087C158D754E84B64770DD9E4EA01A984204C24807C7",
+      "bytes": 3253
+    }
+  }
+}
