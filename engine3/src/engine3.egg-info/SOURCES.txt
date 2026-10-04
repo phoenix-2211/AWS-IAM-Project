@@ -9,10 +9,14 @@ src/engine3.egg-info/entry_points.txt
 src/engine3.egg-info/requires.txt
 src/engine3.egg-info/top_level.txt
 src/engine3/adapters/__init__.py
+src/engine3/adapters/graph_adapter.py
+src/engine3/adapters/rule_adapter.py
 src/engine3/contracts/__init__.py
+src/engine3/contracts/models.py
 src/engine3/emit/__init__.py
 src/engine3/io/__init__.py
 src/engine3/sandbox/__init__.py
 src/engine3/stages/__init__.py
 src/engine3/verify/__init__.py
+tests/test_adapters.py
 tests/test_skeleton.py

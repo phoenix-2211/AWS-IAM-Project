@@ -2,6 +2,7 @@
 
 import json
 from pathlib import Path
+
 from engine3.adapters.graph_adapter import GraphAdapter
 from engine3.adapters.rule_adapter import RuleAdapter
 
@@ -42,7 +43,7 @@ def test_rule_adapter_sample() -> None:
         raw_rules = json.load(f)
 
     rules = RuleAdapter.from_json_list(raw_rules)
-    assert len(rules) == 1
-    assert rules[0].rule_id == "AWS-IAM-001"
+    assert len(rules) == 5
+    assert rules[0].rule_id == "TEST-IAM-001"
     assert rules[0].action == "iam:PassRole"
     assert rules[0].status == "ACTIVE"

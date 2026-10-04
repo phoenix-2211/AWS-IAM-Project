@@ -1,6 +1,7 @@
 """GraphAdapter converts raw IAMGraph v0.1 JSON into InternalGraph models."""
 
-from typing import Any, Dict, List
+from typing import Any
+
 from engine3.contracts.models import (
     GraphEdge,
     InternalGraph,
@@ -17,7 +18,7 @@ class GraphAdapter:
     SUPPORTED_MAJOR_VERSION = "0"
 
     @classmethod
-    def from_json(cls, raw_data: Dict[str, Any]) -> InternalGraph:
+    def from_json(cls, raw_data: dict[str, Any]) -> InternalGraph:
         contract_name = raw_data.get("contract_name")
         if contract_name != "IAMGraph":
             raise ValueError(f"Invalid contract_name '{contract_name}', expected 'IAMGraph'")
@@ -39,9 +40,9 @@ class GraphAdapter:
             extras={k: v for k, v in snap_raw.items() if k not in SnapshotMetadata.model_fields},
         )
 
-        principals: List[Principal] = []
-        permissions: List[PermissionStatement] = []
-        resources: List[TargetResource] = []
+        principals: list[Principal] = []
+        permissions: list[PermissionStatement] = []
+        resources: list[TargetResource] = []
 
         for node in raw_data.get("nodes", []):
             node_type = node.get("type")
@@ -95,7 +96,7 @@ class GraphAdapter:
                     )
                 )
 
-        edges: List[GraphEdge] = []
+        edges: list[GraphEdge] = []
         for edge in raw_data.get("edges", []):
             edge_id = str(edge.get("id"))
             edges.append(

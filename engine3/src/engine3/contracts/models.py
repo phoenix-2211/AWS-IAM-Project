@@ -1,6 +1,7 @@
 """Internal Engine 3 data models."""
 
-from typing import Any, Dict, List, Optional
+from typing import Any
+
 from pydantic import BaseModel, Field
 
 
@@ -10,33 +11,33 @@ class SnapshotMetadata(BaseModel):
     collected_at: str
     origin: str
     collection_status: str
-    collected_resource_types: List[str] = Field(default_factory=list)
-    coverage: List[Dict[str, Any]] = Field(default_factory=list)
-    extras: Dict[str, Any] = Field(default_factory=dict)
+    collected_resource_types: list[str] = Field(default_factory=list)
+    coverage: list[dict[str, Any]] = Field(default_factory=list)
+    extras: dict[str, Any] = Field(default_factory=dict)
 
 
 class Principal(BaseModel):
     id: str
     type: str  # User, Role, ServicePrincipal
-    arn: Optional[str] = None
-    name: Optional[str] = None
-    permissions_boundary: Optional[str] = None
-    trust_policy: Optional[Dict[str, Any]] = None
-    extras: Dict[str, Any] = Field(default_factory=dict)
+    arn: str | None = None
+    name: str | None = None
+    permissions_boundary: str | None = None
+    trust_policy: dict[str, Any] | None = None
+    extras: dict[str, Any] = Field(default_factory=dict)
 
 
 class PermissionStatement(BaseModel):
     id: str
     type: str = "Permission"
     effect: str  # Allow or Deny
-    actions: Optional[List[str]] = None
-    not_actions: Optional[List[str]] = None
-    resources: Optional[List[str]] = None
-    not_resources: Optional[List[str]] = None
-    condition: Optional[Dict[str, Any]] = None
-    raw_statement: Dict[str, Any] = Field(default_factory=dict)
-    provenance: Dict[str, Any] = Field(default_factory=dict)
-    extras: Dict[str, Any] = Field(default_factory=dict)
+    actions: list[str] | None = None
+    not_actions: list[str] | None = None
+    resources: list[str] | None = None
+    not_resources: list[str] | None = None
+    condition: dict[str, Any] | None = None
+    raw_statement: dict[str, Any] = Field(default_factory=dict)
+    provenance: dict[str, Any] = Field(default_factory=dict)
+    extras: dict[str, Any] = Field(default_factory=dict)
 
 
 class TargetResource(BaseModel):
@@ -44,9 +45,9 @@ class TargetResource(BaseModel):
     type: str = "Resource"
     resource_type: str
     arn: str
-    name: Optional[str] = None
-    metadata: Dict[str, Any] = Field(default_factory=dict)
-    extras: Dict[str, Any] = Field(default_factory=dict)
+    name: str | None = None
+    metadata: dict[str, Any] = Field(default_factory=dict)
+    extras: dict[str, Any] = Field(default_factory=dict)
 
 
 class GraphEdge(BaseModel):
@@ -54,38 +55,38 @@ class GraphEdge(BaseModel):
     type: str  # HAS_PERMISSION, TRUSTED_BY, APPLIES_TO
     source: str
     target: str
-    via_group: Optional[str] = None
-    via: Optional[str] = None
-    has_condition: Optional[bool] = None
-    statement_index: Optional[int] = None
-    matched_principal: Optional[str] = None
-    extras: Dict[str, Any] = Field(default_factory=dict)
+    via_group: str | None = None
+    via: str | None = None
+    has_condition: bool | None = None
+    statement_index: int | None = None
+    matched_principal: str | None = None
+    extras: dict[str, Any] = Field(default_factory=dict)
 
 
 class InternalGraph(BaseModel):
     snapshot: SnapshotMetadata
-    principals: List[Principal] = Field(default_factory=list)
-    permissions: List[PermissionStatement] = Field(default_factory=list)
-    resources: List[TargetResource] = Field(default_factory=list)
-    edges: List[GraphEdge] = Field(default_factory=list)
-    warnings: List[Dict[str, Any]] = Field(default_factory=list)
+    principals: list[Principal] = Field(default_factory=list)
+    permissions: list[PermissionStatement] = Field(default_factory=list)
+    resources: list[TargetResource] = Field(default_factory=list)
+    edges: list[GraphEdge] = Field(default_factory=list)
+    warnings: list[dict[str, Any]] = Field(default_factory=list)
     degraded: bool = False
-    degraded_reasons: List[str] = Field(default_factory=list)
+    degraded_reasons: list[str] = Field(default_factory=list)
 
 
 class Rule(BaseModel):
     rule_id: str
     title: str
     description: str
-    condition: Optional[Dict[str, Any]] = None
+    condition: dict[str, Any] | None = None
     principal_type: str
     action: str
     resource_type: str
     relationship: str
     severity: str
-    source: Dict[str, Any] = Field(default_factory=dict)
-    evidence: str
-    mitre: Optional[Dict[str, Any]] = None
+    source: dict[str, Any] = Field(default_factory=dict)
+    evidence: Any = ""
+    mitre: dict[str, Any] | None = None
     version: str
     status: str
-    extras: Dict[str, Any] = Field(default_factory=dict)
+    extras: dict[str, Any] = Field(default_factory=dict)

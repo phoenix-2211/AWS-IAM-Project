@@ -1,6 +1,7 @@
 """RuleAdapter converts raw SecurityRule/ApprovedRule JSON into internal Rule models."""
 
-from typing import Any, Dict, List
+from typing import Any
+
 from engine3.contracts.models import Rule
 
 
@@ -10,8 +11,8 @@ class RuleAdapter:
     SUPPORTED_MAJOR_VERSION = "0"
 
     @classmethod
-    def from_json_list(cls, raw_list: List[Dict[str, Any]]) -> List[Rule]:
-        rules: List[Rule] = []
+    def from_json_list(cls, raw_list: list[dict[str, Any]]) -> list[Rule]:
+        rules: list[Rule] = []
         for raw in raw_list:
             version = str(raw.get("version", "0.1"))
             major_version = version.split(".")[0] if "." in version else version
