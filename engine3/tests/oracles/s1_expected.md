@@ -35,3 +35,11 @@ This document defines the hand-derived expected matches for the 13-node/21-edge 
 - `actions` matching supports `*` and `?` wildcard matching. Case-insensitive for action strings.
 - Deny statements with overlapping actions flag `deny_present: true` on the match object.
 - Condition blocks flag `condition_unevaluated: true`.
+
+---
+
+## 4. Edge Cases and Negative Match Matrix
+- **No Active Rules (All DRAFT)**: When all input rules are `status="DRAFT"`, matcher receives 0 active rules and returns empty match results list.
+- **Empty Graph**: When IAMGraph has 0 principals and 0 permissions, matcher executes cleanly and returns `NO_MATCH` for all active rules.
+- **Deny Statement / Deny Condition**: When a permission statement has `effect: "Deny"`, matcher flags `deny_present: true` and does not grant permission.
+- **Deterministic Match Ordering**: Match results MUST be sorted by `rule_id` ascending; within a rule result, matches MUST be sorted by `principal_id` ascending, then `target_id` ascending. Exact assertion `[m.principal_id for m in matches] == sorted([m.principal_id for m in matches])` required.
