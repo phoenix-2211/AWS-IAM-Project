@@ -225,8 +225,8 @@ class Stage0Loader:
 
         # Check collection_status vs coverage
         coll_status = snapshot_raw.get("collection_status")
+        coverage = snapshot_raw.get("coverage", [])
         if coll_status == "partial":
-            coverage = snapshot_raw.get("coverage", [])
             all_complete = len(coverage) > 0 and all(
                 item.get("status") == "complete" for item in coverage
             )
@@ -236,6 +236,18 @@ class Stage0Loader:
                         code="ERR_INCONSISTENT_COVERAGE",
                         location="iamgraph.snapshot",
                         message="collection_status is 'partial' but all coverage components report 'complete'.",
+                    )
+                )
+        elif coll_status == "complete":
+            any_incomplete = any(
+                item.get("status") in ("partial", "failed") for item in coverage
+            )
+            if any_incomplete:
+                result.errors.append(
+                    StructuredError(
+                        code="ERR_INCONSISTENT_COVERAGE",
+                        location="iamgraph.snapshot",
+                        message="collection_status is 'complete' but some coverage items are incomplete or failed.",
                     )
                 )
 
@@ -252,14 +264,38 @@ class Stage0Loader:
                 )
             )
 
+        rule_ids: set[str] = set()
         for idx, r_data in enumerate(rulebook_data):
+            rule_id = r_data.get("rule_id")
+            if rule_id:
+                if rule_id in rule_ids:
+                    result.errors.append(
+                        StructuredError(
+                            code="ERR_DUPLICATE_RULE_ID",
+                            location=f"rulebook[{idx}].rule_id",
+                            message=f"Duplicate rule_id '{rule_id}' found in rulebook.",
+                        )
+                    )
+                else:
+                    rule_ids.add(rule_id)
+
             sev = r_data.get("severity")
             if sev not in self.VALID_SEVERITIES:
                 result.errors.append(
                     StructuredError(
                         code="ERR_UNKNOWN_RULE_SEVERITY",
                         location=f"rulebook[{idx}].severity",
-                        message=f"Rule '{r_data.get('rule_id')}' has unknown severity '{sev}'.",
+                        message=f"Rule '{rule_id}' has unknown severity '{sev}'.",
+                    )
+                )
+
+            st = r_data.get("status")
+            if st not in self.VALID_STATUSES:
+                result.errors.append(
+                    StructuredError(
+                        code="ERR_UNKNOWN_RULE_STATUS",
+                        location=f"rulebook[{idx}].status",
+                        message=f"Rule '{rule_id}' has unknown status '{st}'.",
                     )
                 )
 
