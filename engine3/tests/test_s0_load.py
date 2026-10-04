@@ -285,7 +285,7 @@ def test_mutation_15_tamper_contract_file(base_inputs):
         iamgraph_data,
         rulebook_data,
         iamgraph_raw_bytes=tampered_bytes,
-        iamgraph_sha256_expected="0000000000000000000000000000000000000000000000000000000000000000",
+        expected_iamgraph_sha256="0000000000000000000000000000000000000000000000000000000000000000",
     )
 
     assert res.is_valid is False
