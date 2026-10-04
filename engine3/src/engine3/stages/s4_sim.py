@@ -169,6 +169,8 @@ class LivePolicySimulator:
             action_name = hop.action_used
             resource_arn = hop.to_node
 
+            sim_source = "aws_policy_simulator"
+
             try:
                 resp = client.simulate_principal_policy(
                     PolicySourceArn=principal_arn,
@@ -178,31 +180,40 @@ class LivePolicySimulator:
                 eval_dec = resp["EvaluationResults"][0]["EvalDecision"]
                 missing = resp["EvaluationResults"][0].get("MissingContextValues", [])
             except Exception as e:
-                # If principal ARN is synthetic/non-existent, fall back to simulate_custom_policy
-                try:
-                    resp = client.simulate_custom_policy(
-                        PolicyInputList=[
-                            json.dumps(
-                                {
-                                    "Version": "2012-10-17",
-                                    "Statement": [
-                                        {
-                                            "Effect": "Allow",
-                                            "Action": action_name,
-                                            "Resource": resource_arn,
-                                        }
-                                    ],
-                                }
-                            )
-                        ],
-                        ActionNames=[action_name],
-                        ResourceArns=[resource_arn],
-                    )
-                    eval_dec = resp["EvaluationResults"][0]["EvalDecision"]
-                    missing = resp["EvaluationResults"][0].get("MissingContextValues", [])
-                except Exception as inner_e:
-                    eval_dec = "implicitDeny"
-                    missing = [f"API Error: {inner_e}"]
+                # Check if exception represents NoSuchEntity/ResourceNotFound ClientError
+                is_entity_error = False
+                err_response = getattr(e, "response", {})
+                if isinstance(err_response, dict):
+                    code = err_response.get("Error", {}).get("Code", "")
+                    if code in ("NoSuchEntity", "NoSuchEntityException", "InvalidInput", "ResourceNotFoundException"):
+                        is_entity_error = True
+
+                if not is_entity_error:
+                    # Re-raise throttling, auth failures, network errors
+                    raise e
+
+                # Fall back to simulate_custom_policy for synthetic/non-existent ARNs
+                resp = client.simulate_custom_policy(
+                    PolicyInputList=[
+                        json.dumps(
+                            {
+                                "Version": "2012-10-17",
+                                "Statement": [
+                                    {
+                                        "Effect": "Allow",
+                                        "Action": action_name,
+                                        "Resource": resource_arn,
+                                    }
+                                ],
+                            }
+                        )
+                    ],
+                    ActionNames=[action_name],
+                    ResourceArns=[resource_arn],
+                )
+                eval_dec = resp["EvaluationResults"][0]["EvalDecision"]
+                missing = resp["EvaluationResults"][0].get("MissingContextValues", [])
+                sim_source = "aws_simulate_custom_policy_synthetic"
 
             is_allowed = eval_dec == "allowed"
             hop_results.append(
@@ -211,7 +222,7 @@ class LivePolicySimulator:
                     decision="ALLOWED" if is_allowed else "DENIED",
                     eval_decision=eval_dec,
                     missing_context=missing,
-                    raw_ref="aws_policy_simulator_api",
+                    raw_ref=sim_source,
                 )
             )
 
@@ -225,7 +236,7 @@ class LivePolicySimulator:
                 status="POLICY_DENIED",
                 status_reason=f"Hop {denying_hop_idx} denied by AWS Policy Simulator ({hop_results[denying_hop_idx].eval_decision})",
                 hop_results=hop_results,
-                source="aws_policy_simulator",
+                source=sim_source,
                 limitations=["Evaluated against live AWS Policy Simulator API"],
             )
 
@@ -234,6 +245,6 @@ class LivePolicySimulator:
             status="POLICY_ALLOWED",
             status_reason="AWS Policy Simulator allowed every hop; trust structurally satisfied.",
             hop_results=hop_results,
-            source="aws_policy_simulator",
+            source=sim_source,
             limitations=["Evaluated against live AWS Policy Simulator API"],
         )

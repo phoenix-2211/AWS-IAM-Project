@@ -86,3 +86,64 @@ def test_s4_live_simulator_mocked_boto3(monkeypatch, tmp_path):
     assert res.source == "aws_policy_simulator"
     assert "Evaluated against live AWS Policy Simulator API" in res.limitations
 
+
+class MockClientError(Exception):
+    def __init__(self, response):
+        self.response = response
+
+
+def test_s4_live_simulator_no_such_entity_fallback(monkeypatch):
+    from unittest.mock import MagicMock
+    from engine3.stages.s2_path import CandidatePath, PathHop
+    from engine3.stages.s3_queue import QueuedPath
+
+    mock_boto3 = MagicMock()
+    mock_client = MagicMock()
+    mock_boto3.Session.return_value.client.return_value = mock_client
+
+    # simulate_principal_policy raises NoSuchEntity
+    err_resp = {"Error": {"Code": "NoSuchEntity", "Message": "Principal not found"}}
+    mock_client.simulate_principal_policy.side_effect = MockClientError(err_resp)
+    mock_client.simulate_custom_policy.return_value = {
+        "EvaluationResults": [{"EvalDecision": "allowed", "MissingContextValues": []}]
+    }
+
+    import sys
+    sys.modules["boto3"] = mock_boto3
+
+    hop = PathHop(from_node="arn:aws:iam::1111:role/R1", to_node="arn:aws:s3:::bucket", action_used="s3:GetObject", edge_id="e1", edge_type="APPLIES_TO")
+    path = CandidatePath(path_id="p1", start_node="arn:aws:iam::1111:role/R1", target_node="arn:aws:s3:::bucket", hops=[hop])
+    q_path = QueuedPath(queue_rank=1, path_id="p1", queue_reason="test", path=path)
+
+    live_sim = LivePolicySimulator()
+    res = live_sim.evaluate_path(q_path, gate_token="APPROVE-LIVE-SIM", aws_profile="pbl-iam")
+
+    assert res.status == "POLICY_ALLOWED"
+    assert res.source == "aws_simulate_custom_policy_synthetic"
+
+
+def test_s4_live_simulator_throttling_raises(monkeypatch):
+    from unittest.mock import MagicMock
+    from engine3.stages.s2_path import CandidatePath, PathHop
+    from engine3.stages.s3_queue import QueuedPath
+
+    mock_boto3 = MagicMock()
+    mock_client = MagicMock()
+    mock_boto3.Session.return_value.client.return_value = mock_client
+
+    # ThrottlingException MUST be re-raised, not swallowed
+    err_resp = {"Error": {"Code": "ThrottlingException", "Message": "Rate exceeded"}}
+    mock_client.simulate_principal_policy.side_effect = MockClientError(err_resp)
+
+    import sys
+    sys.modules["boto3"] = mock_boto3
+
+    hop = PathHop(from_node="arn:aws:iam::1111:role/R1", to_node="arn:aws:s3:::bucket", action_used="s3:GetObject", edge_id="e1", edge_type="APPLIES_TO")
+    path = CandidatePath(path_id="p1", start_node="arn:aws:iam::1111:role/R1", target_node="arn:aws:s3:::bucket", hops=[hop])
+    q_path = QueuedPath(queue_rank=1, path_id="p1", queue_reason="test", path=path)
+
+    live_sim = LivePolicySimulator()
+    with pytest.raises(MockClientError) as exc_info:
+        live_sim.evaluate_path(q_path, gate_token="APPROVE-LIVE-SIM", aws_profile="pbl-iam")
+    assert exc_info.value.response["Error"]["Code"] == "ThrottlingException"
+

@@ -122,6 +122,10 @@ class Stage2PathFinder:
                 return
 
             if current_node in target_nodes:
+                start_n = current_hops[0].from_node
+                if current_node == start_n:
+                    return  # Filter out self-loops (path starting and ending at same node)
+
                 p_id = self.compute_path_id(current_hops)
                 all_assumptions: set[str] = set()
                 for h in current_hops:
@@ -136,7 +140,7 @@ class Stage2PathFinder:
                         "Permissions boundaries beyond ARN not checked",
                     ],
                     degraded=graph.degraded,
-                    start_node=current_hops[0].from_node,
+                    start_node=start_n,
                     target_node=current_node,
                 )
                 discovered.append(path_obj)
