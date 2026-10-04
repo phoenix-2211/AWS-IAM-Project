@@ -12,4 +12,5 @@ credentials*
 sandbox.yaml
 cloudgoat/
 *.egg-info/
+vendor/
 
