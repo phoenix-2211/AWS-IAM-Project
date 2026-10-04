@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "IAMGraph Schema v0.1",
+  "type": "object",
+  "required": [
+    "contract_name",
+    "contract_version",
+    "snapshot",
+    "nodes",
+    "edges"
+  ],
+  "properties": {
+    "contract_name": {
+      "type": "string",
+      "const": "IAMGraph"
+    },
+    "contract_version": {
+      "type": "string",
+      "const": "0.1"
+    },
+    "x_provenance": {
+      "type": "object"
+    },
+    "snapshot": {
+      "type": "object",
+      "required": [
+        "snapshot_id",
+        "account_id",
+        "collected_at",
+        "origin",
+        "collection_status"
+      ],
+      "properties": {
+        "snapshot_id": { "type": "string" },
+        "account_id": { "type": "string" },
+        "collected_at": { "type": "string" },
+        "origin": {
+          "type": "string",
+          "enum": ["aws_collection", "synthetic_fixture"]
+        },
+        "collection_status": {
+          "type": "string",
+          "enum": ["complete", "partial"]
+        },
+        "collected_resource_types": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "coverage": {
+          "type": "array",
+          "items": { "type": "object" }
+        }
+      },
+      "additionalProperties": true
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type"],
+        "properties": {
+          "id": { "type": "string" },
+          "type": {
+            "type": "string",
+            "enum": ["User", "Role", "Resource", "ServicePrincipal", "Permission"]
+          },
+          "arn": { "type": ["string", "null"] },
+          "name": { "type": ["string", "null"] },
+          "resource_type": { "type": ["string", "null"] },
+          "effect": {
+            "type": ["string", "null"],
+            "enum": ["Allow", "Deny", null]
+          },
+          "actions": {
+            "type": ["array", "null"],
+            "items": { "type": "string" }
+          },
+          "not_actions": {
+            "type": ["array", "null"],
+            "items": { "type": "string" }
+          },
+          "resources": {
+            "type": ["array", "null"],
+            "items": { "type": "string" }
+          },
+          "not_resources": {
+            "type": ["array", "null"],
+            "items": { "type": "string" }
+          },
+          "condition": { "type": ["object", "null"] },
+          "permissions_boundary": { "type": ["string", "null"] },
+          "trust_policy": { "type": ["object", "null"] },
+          "raw_statement": { "type": "object" },
+          "provenance": { "type": "object" },
+          "metadata": { "type": "object" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "source", "target"],
+        "properties": {
+          "id": { "type": "string" },
+          "type": {
+            "type": "string",
+            "enum": ["HAS_PERMISSION", "TRUSTED_BY", "APPLIES_TO"]
+          },
+          "source": { "type": "string" },
+          "target": { "type": "string" },
+          "via_group": { "type": ["string", "null"] },
+          "via": { "type": ["string", "null"] },
+          "has_condition": { "type": ["boolean", "null"] },
+          "statement_index": { "type": ["integer", "null"] },
+          "matched_principal": { "type": ["string", "null"] }
+        },
+        "additionalProperties": true
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": { "type": "object" }
+    }
+  },
+  "additionalProperties": true
+}

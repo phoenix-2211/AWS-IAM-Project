@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VerificationResult Schema v0.1",
+  "type": "object",
+  "required": [
+    "contract_name",
+    "contract_version",
+    "run",
+    "inputs",
+    "degraded",
+    "degraded_reasons",
+    "paths",
+    "stats"
+  ],
+  "properties": {
+    "contract_name": {
+      "type": "string",
+      "const": "VerificationResult"
+    },
+    "contract_version": {
+      "type": "string",
+      "const": "0.1"
+    },
+    "run": {
+      "type": "object",
+      "required": [
+        "run_id",
+        "origin",
+        "mode",
+        "simulator_backend",
+        "sandbox_mode",
+        "enrichment"
+      ],
+      "properties": {
+        "run_id": { "type": "string" },
+        "origin": { "type": "string" },
+        "started_at": { "type": ["string", "null"] },
+        "finished_at": { "type": ["string", "null"] },
+        "git_sha": { "type": ["string", "null"] },
+        "mode": { "type": "string" },
+        "simulator_backend": { "type": "string" },
+        "sandbox_mode": { "type": "string" },
+        "enrichment": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "inputs": {
+      "type": "object",
+      "required": [
+        "iamgraph_snapshot_id",
+        "iamgraph_content_sha256",
+        "iamgraph_collection_status",
+        "rulebook_sha256",
+        "rulebook_origin",
+        "rules_active",
+        "rules_skipped"
+      ],
+      "properties": {
+        "iamgraph_snapshot_id": { "type": "string" },
+        "iamgraph_content_sha256": { "type": "string" },
+        "iamgraph_collection_status": { "type": "string" },
+        "rulebook_sha256": { "type": "string" },
+        "rulebook_origin": { "type": "string" },
+        "rules_active": { "type": "integer" },
+        "rules_skipped": { "type": "integer" }
+      },
+      "additionalProperties": true
+    },
+    "degraded": { "type": "boolean" },
+    "degraded_reasons": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "paths": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path_id",
+          "status",
+          "status_reason",
+          "hops",
+          "assumptions",
+          "queue_rank",
+          "queue_reason",
+          "evidence",
+          "limitations"
+        ],
+        "properties": {
+          "path_id": { "type": "string" },
+          "status": { "type": "string" },
+          "status_reason": { "type": "string" },
+          "verification_scope": { "type": "string" },
+          "hops": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["from_node", "to_node", "action_used", "edge_id", "edge_type"],
+              "properties": {
+                "from_node": { "type": "string" },
+                "to_node": { "type": "string" },
+                "action_used": { "type": "string" },
+                "matched_rule_id": { "type": ["string", "null"] },
+                "edge_id": { "type": "string" },
+                "edge_type": { "type": "string" },
+                "flags": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              },
+              "additionalProperties": true
+            }
+          },
+          "assumptions": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "queue_rank": { "type": "integer" },
+          "queue_reason": { "type": "string" },
+          "evidence": { "type": "object" },
+          "limitations": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "runtime_metrics": { "type": "object" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "runtime_metrics": { "type": "object" },
+    "stats": {
+      "type": "object",
+      "required": ["paths_total", "by_status"],
+      "properties": {
+        "paths_total": { "type": "integer" },
+        "by_status": { "type": "object" }
+      },
+      "additionalProperties": true
+    },
+    "warnings": {
+      "type": "array",
+      "items": { "type": "object" }
+    }
+  },
+  "additionalProperties": true
+}
