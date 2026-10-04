@@ -12,5 +12,5 @@ This document defines expected sandbox execution behavior and safety gates.
 ## 2. Sandbox Execution Output Table
 | Path Condition | Gate Approval | Sandbox Outcome | Result Status |
 |---|---|---|---|
-| Unmapped scenario / Offline mode | N/A | `sandbox_attempted: false` | `SANDBOX_FAILED` (reason recorded in logs) |
+| Unmapped scenario / Offline mode | N/A | `sandbox_attempted: false` | `SANDBOX_FAILED` (reason logged) |
 | Mapped scenario, no gates approved | Missing tokens | `sandbox_attempted: false` | `SANDBOX_FAILED` (reason: gate tokens missing) |

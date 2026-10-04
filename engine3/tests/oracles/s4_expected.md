@@ -1,13 +1,13 @@
 # Stage 4 Expected Oracle Outcomes (`s4_expected.md`)
 
-This document defines the hand-derived expected evaluation results for the Policy Simulator interface across recorded responses and live refusal safety checks.
+This document defines the hand-derived expected evaluation results for the Policy Simulator interface across local evaluator responses and live refusal safety checks.
 
-## 1. Recorded Simulator Hops Evaluation Matrix
+## 1. Local Evaluator Hops Evaluation Matrix
 
 | Path Hops | Evaluated Hop Decisions | Trust Policy Check | Final Path Verification Status | Source Label |
 |---|---|---|---|---|
-| `dev-alice` -> `DevRole` -> `DeployRole` -> `secret` | All action hops `ALLOWED` | Structural trust satisfied | `POLICY_ALLOWED_UNCONFIRMED` | `source: "local_evaluator"` |
-| `dev-alice` -> `DeployRole` (MFA missing context) -> `secret` | Action hop `ALLOWED` with missing context | Structural trust satisfied (with condition flag) | `POLICY_ALLOWED_UNCONFIRMED` | `source: "local_evaluator"` |
+| `dev-alice` -> `DevRole` -> `DeployRole` -> `secret` | All action hops `ALLOWED` | Structural trust satisfied | `POLICY_ALLOWED` | `source: "local_evaluator"` |
+| `dev-alice` -> `DeployRole` (MFA missing context) -> `secret` | Action hop `ALLOWED` with missing context | Structural trust satisfied (with condition flag) | `POLICY_ALLOWED` | `source: "local_evaluator"` |
 | Any path with an `explicitDeny` or `implicitDeny` hop | At least one hop `DENIED` | N/A | `POLICY_DENIED` | `source: "local_evaluator"` |
 
 ---

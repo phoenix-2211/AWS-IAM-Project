@@ -6,7 +6,7 @@ This document defines expected verification result assembly rules.
 | Simulator Result | Sandbox Result | Final Status |
 |---|---|---|
 | Hop Denied | Any | `POLICY_DENIED` |
-| All Hops Allowed (Recorded / Offline) | Sandbox Not Run / Failed / Offline | `POLICY_ALLOWED_UNCONFIRMED` (or `SANDBOX_FAILED` if sandbox attempted) |
+| All Hops Allowed (Local Evaluator / Offline) | Sandbox Not Run / Failed / Offline | `SANDBOX_FAILED` |
 | All Hops Allowed (Live) | Real Exploit Success | `VERIFIED_EXPLOITABLE` |
 
 ---
