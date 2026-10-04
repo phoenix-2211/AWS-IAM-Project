@@ -2,13 +2,13 @@
   "contract_name": "VerificationResult",
   "contract_version": "0.1",
   "run": {
-    "run_id": "run-1791112748",
+    "run_id": "run-1791121366",
     "origin": "engine3_pipeline",
     "started_at": null,
     "finished_at": null,
     "git_sha": null,
     "mode": "offline_fixture",
-    "simulator_backend": "recorded",
+    "simulator_backend": "local_evaluator",
     "sandbox_mode": "none",
     "enrichment": "off"
   },
@@ -26,8 +26,8 @@
   "paths": [
     {
       "path_id": "1997ec24d1dc01f7",
-      "status": "POLICY_ALLOWED_UNCONFIRMED",
-      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "status": "SANDBOX_FAILED",
+      "status_reason": "Sandbox execution unconfirmed (offline mode).",
       "verification_scope": "offline_fixture",
       "hops": [
         {
@@ -61,6 +61,7 @@
       "queue_reason": "severity CRITICAL, 2 hops, 2 assumptions",
       "evidence": {
         "policy_simulator_result": "ALLOWED",
+        "policy_simulator_source": "local_evaluator",
         "policy_simulator_details": [
           {
             "hop_index": 0,
@@ -87,20 +88,21 @@
         "sandbox_evidence_ref": null
       },
       "limitations": [
-        "Offline local evaluation, not independent verification",
-        "SCP/RCP/Resource policies not evaluated",
+        "local_evaluator, not AWS",
         "Permissions boundaries beyond ARN not checked",
-        "SCP/RCP/session policies not evaluated"
+        "SCP/RCP/session policies not evaluated",
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated"
       ],
       "runtime_metrics": {
-        "policy_sim_time_ms": 2.994537353515625,
+        "policy_sim_time_ms": 2.0012855529785156,
         "sandbox_time_ms": 0.0
       }
     },
     {
       "path_id": "33ba008c77e4be2c",
-      "status": "POLICY_ALLOWED_UNCONFIRMED",
-      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "status": "SANDBOX_FAILED",
+      "status_reason": "Sandbox execution unconfirmed (offline mode).",
       "verification_scope": "offline_fixture",
       "hops": [
         {
@@ -134,6 +136,7 @@
       "queue_reason": "severity CRITICAL, 2 hops, 2 assumptions",
       "evidence": {
         "policy_simulator_result": "ALLOWED",
+        "policy_simulator_source": "local_evaluator",
         "policy_simulator_details": [
           {
             "hop_index": 0,
@@ -160,20 +163,21 @@
         "sandbox_evidence_ref": null
       },
       "limitations": [
-        "Offline local evaluation, not independent verification",
-        "SCP/RCP/Resource policies not evaluated",
+        "local_evaluator, not AWS",
         "Permissions boundaries beyond ARN not checked",
-        "SCP/RCP/session policies not evaluated"
+        "SCP/RCP/session policies not evaluated",
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated"
       ],
       "runtime_metrics": {
-        "policy_sim_time_ms": 2.994537353515625,
+        "policy_sim_time_ms": 2.0012855529785156,
         "sandbox_time_ms": 0.0
       }
     },
     {
       "path_id": "2c14c5d11f78ef5e",
-      "status": "POLICY_ALLOWED_UNCONFIRMED",
-      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "status": "SANDBOX_FAILED",
+      "status_reason": "Sandbox execution unconfirmed (offline mode).",
       "verification_scope": "offline_fixture",
       "hops": [
         {
@@ -213,6 +217,7 @@
       "queue_reason": "severity CRITICAL, 3 hops, 1 assumption",
       "evidence": {
         "policy_simulator_result": "ALLOWED",
+        "policy_simulator_source": "local_evaluator",
         "policy_simulator_details": [
           {
             "hop_index": 0,
@@ -247,20 +252,21 @@
         "sandbox_evidence_ref": null
       },
       "limitations": [
-        "Offline local evaluation, not independent verification",
-        "SCP/RCP/Resource policies not evaluated",
+        "local_evaluator, not AWS",
         "Permissions boundaries beyond ARN not checked",
-        "SCP/RCP/session policies not evaluated"
+        "SCP/RCP/session policies not evaluated",
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated"
       ],
       "runtime_metrics": {
-        "policy_sim_time_ms": 2.994537353515625,
+        "policy_sim_time_ms": 2.0012855529785156,
         "sandbox_time_ms": 0.0
       }
     },
     {
       "path_id": "0bfd4cb155f497ae",
-      "status": "POLICY_ALLOWED_UNCONFIRMED",
-      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "status": "SANDBOX_FAILED",
+      "status_reason": "Sandbox execution unconfirmed (offline mode).",
       "verification_scope": "offline_fixture",
       "hops": [
         {
@@ -303,6 +309,7 @@
       "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
       "evidence": {
         "policy_simulator_result": "ALLOWED",
+        "policy_simulator_source": "local_evaluator",
         "policy_simulator_details": [
           {
             "hop_index": 0,
@@ -337,20 +344,21 @@
         "sandbox_evidence_ref": null
       },
       "limitations": [
-        "Offline local evaluation, not independent verification",
-        "SCP/RCP/Resource policies not evaluated",
+        "local_evaluator, not AWS",
         "Permissions boundaries beyond ARN not checked",
-        "SCP/RCP/session policies not evaluated"
+        "SCP/RCP/session policies not evaluated",
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated"
       ],
       "runtime_metrics": {
-        "policy_sim_time_ms": 2.994537353515625,
+        "policy_sim_time_ms": 2.0012855529785156,
         "sandbox_time_ms": 0.0
       }
     },
     {
       "path_id": "6dd6bb462cbecb55",
-      "status": "POLICY_ALLOWED_UNCONFIRMED",
-      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "status": "SANDBOX_FAILED",
+      "status_reason": "Sandbox execution unconfirmed (offline mode).",
       "verification_scope": "offline_fixture",
       "hops": [
         {
@@ -393,6 +401,7 @@
       "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
       "evidence": {
         "policy_simulator_result": "ALLOWED",
+        "policy_simulator_source": "local_evaluator",
         "policy_simulator_details": [
           {
             "hop_index": 0,
@@ -427,20 +436,21 @@
         "sandbox_evidence_ref": null
       },
       "limitations": [
-        "Offline local evaluation, not independent verification",
-        "SCP/RCP/Resource policies not evaluated",
+        "local_evaluator, not AWS",
         "Permissions boundaries beyond ARN not checked",
-        "SCP/RCP/session policies not evaluated"
+        "SCP/RCP/session policies not evaluated",
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated"
       ],
       "runtime_metrics": {
-        "policy_sim_time_ms": 2.994537353515625,
+        "policy_sim_time_ms": 2.0012855529785156,
         "sandbox_time_ms": 0.0
       }
     },
     {
       "path_id": "b66258973b0e392a",
-      "status": "POLICY_ALLOWED_UNCONFIRMED",
-      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "status": "SANDBOX_FAILED",
+      "status_reason": "Sandbox execution unconfirmed (offline mode).",
       "verification_scope": "offline_fixture",
       "hops": [
         {
@@ -483,6 +493,7 @@
       "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
       "evidence": {
         "policy_simulator_result": "ALLOWED",
+        "policy_simulator_source": "local_evaluator",
         "policy_simulator_details": [
           {
             "hop_index": 0,
@@ -517,20 +528,21 @@
         "sandbox_evidence_ref": null
       },
       "limitations": [
-        "Offline local evaluation, not independent verification",
-        "SCP/RCP/Resource policies not evaluated",
+        "local_evaluator, not AWS",
         "Permissions boundaries beyond ARN not checked",
-        "SCP/RCP/session policies not evaluated"
+        "SCP/RCP/session policies not evaluated",
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated"
       ],
       "runtime_metrics": {
-        "policy_sim_time_ms": 2.994537353515625,
+        "policy_sim_time_ms": 2.0012855529785156,
         "sandbox_time_ms": 0.0
       }
     },
     {
       "path_id": "f0764dedfca67a24",
-      "status": "POLICY_ALLOWED_UNCONFIRMED",
-      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "status": "SANDBOX_FAILED",
+      "status_reason": "Sandbox execution unconfirmed (offline mode).",
       "verification_scope": "offline_fixture",
       "hops": [
         {
@@ -575,6 +587,7 @@
       "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
       "evidence": {
         "policy_simulator_result": "ALLOWED",
+        "policy_simulator_source": "local_evaluator",
         "policy_simulator_details": [
           {
             "hop_index": 0,
@@ -609,20 +622,21 @@
         "sandbox_evidence_ref": null
       },
       "limitations": [
-        "Offline local evaluation, not independent verification",
-        "SCP/RCP/Resource policies not evaluated",
+        "local_evaluator, not AWS",
         "Permissions boundaries beyond ARN not checked",
-        "SCP/RCP/session policies not evaluated"
+        "SCP/RCP/session policies not evaluated",
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated"
       ],
       "runtime_metrics": {
-        "policy_sim_time_ms": 2.994537353515625,
+        "policy_sim_time_ms": 2.0012855529785156,
         "sandbox_time_ms": 0.0
       }
     },
     {
       "path_id": "fb63808ad7a3723c",
-      "status": "POLICY_ALLOWED_UNCONFIRMED",
-      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "status": "SANDBOX_FAILED",
+      "status_reason": "Sandbox execution unconfirmed (offline mode).",
       "verification_scope": "offline_fixture",
       "hops": [
         {
@@ -665,6 +679,7 @@
       "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
       "evidence": {
         "policy_simulator_result": "ALLOWED",
+        "policy_simulator_source": "local_evaluator",
         "policy_simulator_details": [
           {
             "hop_index": 0,
@@ -699,20 +714,21 @@
         "sandbox_evidence_ref": null
       },
       "limitations": [
-        "Offline local evaluation, not independent verification",
-        "SCP/RCP/Resource policies not evaluated",
+        "local_evaluator, not AWS",
         "Permissions boundaries beyond ARN not checked",
-        "SCP/RCP/session policies not evaluated"
+        "SCP/RCP/session policies not evaluated",
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated"
       ],
       "runtime_metrics": {
-        "policy_sim_time_ms": 2.994537353515625,
+        "policy_sim_time_ms": 2.0012855529785156,
         "sandbox_time_ms": 0.0
       }
     },
     {
       "path_id": "024638c3499a48c5",
-      "status": "POLICY_ALLOWED_UNCONFIRMED",
-      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "status": "SANDBOX_FAILED",
+      "status_reason": "Sandbox execution unconfirmed (offline mode).",
       "verification_scope": "offline_fixture",
       "hops": [
         {
@@ -758,6 +774,7 @@
       "queue_reason": "severity CRITICAL, 3 hops, 3 assumptions",
       "evidence": {
         "policy_simulator_result": "ALLOWED",
+        "policy_simulator_source": "local_evaluator",
         "policy_simulator_details": [
           {
             "hop_index": 0,
@@ -792,20 +809,21 @@
         "sandbox_evidence_ref": null
       },
       "limitations": [
-        "Offline local evaluation, not independent verification",
-        "SCP/RCP/Resource policies not evaluated",
+        "local_evaluator, not AWS",
         "Permissions boundaries beyond ARN not checked",
-        "SCP/RCP/session policies not evaluated"
+        "SCP/RCP/session policies not evaluated",
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated"
       ],
       "runtime_metrics": {
-        "policy_sim_time_ms": 2.994537353515625,
+        "policy_sim_time_ms": 2.0012855529785156,
         "sandbox_time_ms": 0.0
       }
     },
     {
       "path_id": "b743b4dcee1ab1cb",
-      "status": "POLICY_ALLOWED_UNCONFIRMED",
-      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "status": "SANDBOX_FAILED",
+      "status_reason": "Sandbox execution unconfirmed (offline mode).",
       "verification_scope": "offline_fixture",
       "hops": [
         {
@@ -851,6 +869,7 @@
       "queue_reason": "severity CRITICAL, 3 hops, 3 assumptions",
       "evidence": {
         "policy_simulator_result": "ALLOWED",
+        "policy_simulator_source": "local_evaluator",
         "policy_simulator_details": [
           {
             "hop_index": 0,
@@ -885,20 +904,21 @@
         "sandbox_evidence_ref": null
       },
       "limitations": [
-        "Offline local evaluation, not independent verification",
-        "SCP/RCP/Resource policies not evaluated",
+        "local_evaluator, not AWS",
         "Permissions boundaries beyond ARN not checked",
-        "SCP/RCP/session policies not evaluated"
+        "SCP/RCP/session policies not evaluated",
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated"
       ],
       "runtime_metrics": {
-        "policy_sim_time_ms": 2.994537353515625,
+        "policy_sim_time_ms": 2.0012855529785156,
         "sandbox_time_ms": 0.0
       }
     },
     {
       "path_id": "94042dca91b4d99f",
-      "status": "POLICY_ALLOWED_UNCONFIRMED",
-      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "status": "SANDBOX_FAILED",
+      "status_reason": "Sandbox execution unconfirmed (offline mode).",
       "verification_scope": "offline_fixture",
       "hops": [
         {
@@ -947,6 +967,7 @@
       "queue_reason": "severity CRITICAL, 4 hops, 1 assumption",
       "evidence": {
         "policy_simulator_result": "ALLOWED",
+        "policy_simulator_source": "local_evaluator",
         "policy_simulator_details": [
           {
             "hop_index": 0,
@@ -989,20 +1010,21 @@
         "sandbox_evidence_ref": null
       },
       "limitations": [
-        "Offline local evaluation, not independent verification",
-        "SCP/RCP/Resource policies not evaluated",
+        "local_evaluator, not AWS",
         "Permissions boundaries beyond ARN not checked",
-        "SCP/RCP/session policies not evaluated"
+        "SCP/RCP/session policies not evaluated",
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated"
       ],
       "runtime_metrics": {
-        "policy_sim_time_ms": 2.994537353515625,
+        "policy_sim_time_ms": 2.0012855529785156,
         "sandbox_time_ms": 0.0
       }
     },
     {
       "path_id": "1c7bed1a34169cd5",
-      "status": "POLICY_ALLOWED_UNCONFIRMED",
-      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "status": "SANDBOX_FAILED",
+      "status_reason": "Sandbox execution unconfirmed (offline mode).",
       "verification_scope": "offline_fixture",
       "hops": [
         {
@@ -1054,6 +1076,7 @@
       "queue_reason": "severity CRITICAL, 4 hops, 2 assumptions",
       "evidence": {
         "policy_simulator_result": "ALLOWED",
+        "policy_simulator_source": "local_evaluator",
         "policy_simulator_details": [
           {
             "hop_index": 0,
@@ -1096,20 +1119,21 @@
         "sandbox_evidence_ref": null
       },
       "limitations": [
-        "Offline local evaluation, not independent verification",
-        "SCP/RCP/Resource policies not evaluated",
+        "local_evaluator, not AWS",
         "Permissions boundaries beyond ARN not checked",
-        "SCP/RCP/session policies not evaluated"
+        "SCP/RCP/session policies not evaluated",
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated"
       ],
       "runtime_metrics": {
-        "policy_sim_time_ms": 2.994537353515625,
+        "policy_sim_time_ms": 2.0012855529785156,
         "sandbox_time_ms": 0.0
       }
     },
     {
       "path_id": "6a698f75ab78ec93",
-      "status": "POLICY_ALLOWED_UNCONFIRMED",
-      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "status": "SANDBOX_FAILED",
+      "status_reason": "Sandbox execution unconfirmed (offline mode).",
       "verification_scope": "offline_fixture",
       "hops": [
         {
@@ -1163,6 +1187,7 @@
       "queue_reason": "severity CRITICAL, 4 hops, 2 assumptions",
       "evidence": {
         "policy_simulator_result": "ALLOWED",
+        "policy_simulator_source": "local_evaluator",
         "policy_simulator_details": [
           {
             "hop_index": 0,
@@ -1205,20 +1230,21 @@
         "sandbox_evidence_ref": null
       },
       "limitations": [
-        "Offline local evaluation, not independent verification",
-        "SCP/RCP/Resource policies not evaluated",
+        "local_evaluator, not AWS",
         "Permissions boundaries beyond ARN not checked",
-        "SCP/RCP/session policies not evaluated"
+        "SCP/RCP/session policies not evaluated",
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated"
       ],
       "runtime_metrics": {
-        "policy_sim_time_ms": 2.994537353515625,
+        "policy_sim_time_ms": 2.0012855529785156,
         "sandbox_time_ms": 0.0
       }
     },
     {
       "path_id": "705a16f255aec41f",
-      "status": "POLICY_ALLOWED_UNCONFIRMED",
-      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "status": "SANDBOX_FAILED",
+      "status_reason": "Sandbox execution unconfirmed (offline mode).",
       "verification_scope": "offline_fixture",
       "hops": [
         {
@@ -1274,6 +1300,7 @@
       "queue_reason": "severity CRITICAL, 4 hops, 2 assumptions",
       "evidence": {
         "policy_simulator_result": "ALLOWED",
+        "policy_simulator_source": "local_evaluator",
         "policy_simulator_details": [
           {
             "hop_index": 0,
@@ -1316,20 +1343,21 @@
         "sandbox_evidence_ref": null
       },
       "limitations": [
-        "Offline local evaluation, not independent verification",
-        "SCP/RCP/Resource policies not evaluated",
+        "local_evaluator, not AWS",
         "Permissions boundaries beyond ARN not checked",
-        "SCP/RCP/session policies not evaluated"
+        "SCP/RCP/session policies not evaluated",
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated"
       ],
       "runtime_metrics": {
-        "policy_sim_time_ms": 2.994537353515625,
+        "policy_sim_time_ms": 2.0012855529785156,
         "sandbox_time_ms": 0.0
       }
     },
     {
       "path_id": "753ab93203d1250e",
-      "status": "POLICY_ALLOWED_UNCONFIRMED",
-      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "status": "SANDBOX_FAILED",
+      "status_reason": "Sandbox execution unconfirmed (offline mode).",
       "verification_scope": "offline_fixture",
       "hops": [
         {
@@ -1381,6 +1409,7 @@
       "queue_reason": "severity CRITICAL, 4 hops, 2 assumptions",
       "evidence": {
         "policy_simulator_result": "ALLOWED",
+        "policy_simulator_source": "local_evaluator",
         "policy_simulator_details": [
           {
             "hop_index": 0,
@@ -1423,20 +1452,21 @@
         "sandbox_evidence_ref": null
       },
       "limitations": [
-        "Offline local evaluation, not independent verification",
-        "SCP/RCP/Resource policies not evaluated",
+        "local_evaluator, not AWS",
         "Permissions boundaries beyond ARN not checked",
-        "SCP/RCP/session policies not evaluated"
+        "SCP/RCP/session policies not evaluated",
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated"
       ],
       "runtime_metrics": {
-        "policy_sim_time_ms": 2.994537353515625,
+        "policy_sim_time_ms": 2.0012855529785156,
         "sandbox_time_ms": 0.0
       }
     },
     {
       "path_id": "7a2dc99c58500922",
-      "status": "POLICY_ALLOWED_UNCONFIRMED",
-      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "status": "SANDBOX_FAILED",
+      "status_reason": "Sandbox execution unconfirmed (offline mode).",
       "verification_scope": "offline_fixture",
       "hops": [
         {
@@ -1488,6 +1518,7 @@
       "queue_reason": "severity CRITICAL, 4 hops, 2 assumptions",
       "evidence": {
         "policy_simulator_result": "ALLOWED",
+        "policy_simulator_source": "local_evaluator",
         "policy_simulator_details": [
           {
             "hop_index": 0,
@@ -1530,20 +1561,21 @@
         "sandbox_evidence_ref": null
       },
       "limitations": [
-        "Offline local evaluation, not independent verification",
-        "SCP/RCP/Resource policies not evaluated",
+        "local_evaluator, not AWS",
         "Permissions boundaries beyond ARN not checked",
-        "SCP/RCP/session policies not evaluated"
+        "SCP/RCP/session policies not evaluated",
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated"
       ],
       "runtime_metrics": {
-        "policy_sim_time_ms": 2.994537353515625,
+        "policy_sim_time_ms": 2.0012855529785156,
         "sandbox_time_ms": 0.0
       }
     },
     {
       "path_id": "9953915b3af4b1be",
-      "status": "POLICY_ALLOWED_UNCONFIRMED",
-      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "status": "SANDBOX_FAILED",
+      "status_reason": "Sandbox execution unconfirmed (offline mode).",
       "verification_scope": "offline_fixture",
       "hops": [
         {
@@ -1597,6 +1629,7 @@
       "queue_reason": "severity CRITICAL, 4 hops, 2 assumptions",
       "evidence": {
         "policy_simulator_result": "ALLOWED",
+        "policy_simulator_source": "local_evaluator",
         "policy_simulator_details": [
           {
             "hop_index": 0,
@@ -1639,20 +1672,21 @@
         "sandbox_evidence_ref": null
       },
       "limitations": [
-        "Offline local evaluation, not independent verification",
-        "SCP/RCP/Resource policies not evaluated",
+        "local_evaluator, not AWS",
         "Permissions boundaries beyond ARN not checked",
-        "SCP/RCP/session policies not evaluated"
+        "SCP/RCP/session policies not evaluated",
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated"
       ],
       "runtime_metrics": {
-        "policy_sim_time_ms": 2.994537353515625,
+        "policy_sim_time_ms": 2.0012855529785156,
         "sandbox_time_ms": 0.0
       }
     },
     {
       "path_id": "a2b6310eca1b30a4",
-      "status": "POLICY_ALLOWED_UNCONFIRMED",
-      "status_reason": "Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
+      "status": "SANDBOX_FAILED",
+      "status_reason": "Sandbox execution unconfirmed (offline mode).",
       "verification_scope": "offline_fixture",
       "hops": [
         {
@@ -1706,6 +1740,7 @@
       "queue_reason": "severity CRITICAL, 4 hops, 2 assumptions",
       "evidence": {
         "policy_simulator_result": "ALLOWED",
+        "policy_simulator_source": "local_evaluator",
         "policy_simulator_details": [
           {
             "hop_index": 0,
@@ -1748,24 +1783,25 @@
         "sandbox_evidence_ref": null
       },
       "limitations": [
-        "Offline local evaluation, not independent verification",
-        "SCP/RCP/Resource policies not evaluated",
+        "local_evaluator, not AWS",
         "Permissions boundaries beyond ARN not checked",
-        "SCP/RCP/session policies not evaluated"
+        "SCP/RCP/session policies not evaluated",
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/Resource policies not evaluated"
       ],
       "runtime_metrics": {
-        "policy_sim_time_ms": 2.994537353515625,
+        "policy_sim_time_ms": 2.0012855529785156,
         "sandbox_time_ms": 0.0
       }
     }
   ],
   "runtime_metrics": {
     "graph_time_ms": 0.0,
-    "policy_sim_time_ms": 2.994537353515625,
+    "policy_sim_time_ms": 2.0012855529785156,
     "sandbox_time_ms": 0.0,
-    "total_ms": 54.21590805053711,
-    "load_time_ms": 45.20845413208008,
-    "policy_sim_backend": "recorded",
+    "total_ms": 49.08943176269531,
+    "load_time_ms": 45.098304748535156,
+    "policy_sim_backend": "local_evaluator",
     "policy_sim_timing_representative": false,
     "sandbox_breakdown_ms": {
       "deploy": null,
@@ -1776,7 +1812,7 @@
   "stats": {
     "paths_total": 18,
     "by_status": {
-      "POLICY_ALLOWED_UNCONFIRMED": 18
+      "SANDBOX_FAILED": 18
     }
   },
   "warnings": []

@@ -20,7 +20,7 @@ class HopSimResult(BaseModel):
 
 class PathSimResult(BaseModel):
     path_id: str
-    status: str  # POLICY_ALLOWED_UNCONFIRMED, POLICY_DENIED, NOT_VERIFIABLE
+    status: str  # POLICY_ALLOWED, POLICY_DENIED
     status_reason: str
     hop_results: list[HopSimResult] = Field(default_factory=list)
     source: str = "local_evaluator"
@@ -29,13 +29,13 @@ class PathSimResult(BaseModel):
 
 class Stage4SimResult(BaseModel):
     results: list[PathSimResult] = Field(default_factory=list)
-    policy_sim_backend: str = "recorded"
+    policy_sim_backend: str = "local_evaluator"
     policy_sim_timing_representative: bool = False
     policy_sim_time_ms: float | None = None
 
 
-class RecordedPolicySimulator:
-    """Recorded Policy Simulator implementation."""
+class LocalPolicySimulator:
+    """Offline Local Policy Simulator implementation."""
 
     def __init__(self, fixtures_dir: Path | None = None) -> None:
         if fixtures_dir is None:
@@ -61,7 +61,7 @@ class RecordedPolicySimulator:
                 )
                 continue
 
-            # Load recorded response if available
+            # Load offline evaluator response if available
             resp_file = self.fixtures_dir / f"hop_{idx}.json"
             if resp_file.exists():
                 with open(resp_file, "r", encoding="utf-8") as f:
@@ -69,7 +69,7 @@ class RecordedPolicySimulator:
                 eval_dec = data.get("EvalDecision", "allowed")
                 missing = data.get("MissingContextKeys", [])
             else:
-                # Default recorded response for synthetic test
+                # Default local evaluator response
                 eval_dec = "allowed"
                 missing = []
 
@@ -103,16 +103,17 @@ class RecordedPolicySimulator:
                 status_reason=f"Hop {denying_hop_idx} denied by simulator",
                 hop_results=hop_results,
                 source="local_evaluator",
-                limitations=["Recorded response evaluation, not live AWS execution"],
+                limitations=["local_evaluator, not AWS"],
             )
 
         return PathSimResult(
             path_id=queued_path.path_id,
-            status="POLICY_ALLOWED_UNCONFIRMED",
+            status="POLICY_ALLOWED",
             status_reason="Simulator allowed every hop; trust structurally satisfied; no sandbox run.",
             hop_results=hop_results,
             source="local_evaluator",
             limitations=[
+                "local_evaluator, not AWS",
                 "Offline local evaluation, not independent verification",
                 "SCP/RCP/Resource policies not evaluated",
             ],

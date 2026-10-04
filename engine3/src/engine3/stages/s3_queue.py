@@ -9,7 +9,7 @@ from engine3.stages.s2_path import CandidatePath
 class QueuedPath(BaseModel):
     queue_rank: int
     path_id: str
-    status: str = "CANDIDATE"
+    status: str = "SANDBOX_FAILED"
     queue_reason: str
     sandbox_group_key: str = "NOT_MAPPED"
     path: CandidatePath
@@ -73,7 +73,7 @@ class Stage3Prioritizer:
                 QueuedPath(
                     queue_rank=rank,
                     path_id=p.path_id,
-                    status="CANDIDATE",
+                    status="SANDBOX_FAILED",
                     queue_reason=reason,
                     sandbox_group_key="NOT_MAPPED",
                     path=p,

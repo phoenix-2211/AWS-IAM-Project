@@ -11,7 +11,7 @@ from engine3.stages.s0_load import Stage0Loader
 from engine3.stages.s1_match import Stage1Matcher
 from engine3.stages.s2_path import Stage2PathFinder
 from engine3.stages.s3_queue import Stage3Prioritizer
-from engine3.stages.s4_sim import RecordedPolicySimulator
+from engine3.stages.s4_sim import LocalPolicySimulator
 
 
 class PipelineRunner:
@@ -54,9 +54,9 @@ class PipelineRunner:
         prioritizer = Stage3Prioritizer()
         queue_res = prioritizer.prioritize_paths(disc_res.paths, load_res.active_rules)
 
-        # S4: Policy Simulator (Offline / Recorded)
+        # S4: Policy Simulator (Offline / Local Evaluator)
         t_s4_start = time.time()
-        sim = RecordedPolicySimulator()
+        sim = LocalPolicySimulator()
         sim_results = [sim.evaluate_path(q_p) for q_p in queue_res.queue]
         t_s4_end = time.time()
 

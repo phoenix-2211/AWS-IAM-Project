@@ -37,7 +37,7 @@ class Stage6Assembler:
             sim_res = sim_map.get(path_id)
             sb_res = sb_map.get(path_id)
 
-            # Decision logic for final status
+            # Decision logic for final status (VERIFIED_EXPLOITABLE | POLICY_DENIED | SANDBOX_FAILED)
             if sim_res and sim_res.status == "POLICY_DENIED":
                 status = "POLICY_DENIED"
                 status_reason = sim_res.status_reason
@@ -47,12 +47,9 @@ class Stage6Assembler:
             elif sb_res and sb_res.sandbox_attempted:
                 status = "SANDBOX_FAILED"
                 status_reason = sb_res.reason or "Sandbox execution failed."
-            elif sim_res and sim_res.status == "POLICY_ALLOWED_UNCONFIRMED":
-                status = "POLICY_ALLOWED_UNCONFIRMED"
-                status_reason = sim_res.status_reason
             else:
-                status = "POLICY_ALLOWED_UNCONFIRMED"
-                status_reason = "Simulator evaluation completed."
+                status = "SANDBOX_FAILED"
+                status_reason = "Sandbox execution unconfirmed (offline mode)."
 
             status_counts[status] = status_counts.get(status, 0) + 1
 
@@ -72,6 +69,7 @@ class Stage6Assembler:
 
             evidence_obj = {
                 "policy_simulator_result": "ALLOWED" if status != "POLICY_DENIED" else "DENIED",
+                "policy_simulator_source": sim_res.source if sim_res else "local_evaluator",
                 "policy_simulator_details": [h.model_dump() for h in (sim_res.hop_results if sim_res else [])],
                 "sandbox_scenario_name": sb_res.sandbox_scenario_name if sb_res else None,
                 "sandbox_attempted": sb_res.sandbox_attempted if sb_res else False,
@@ -84,6 +82,8 @@ class Stage6Assembler:
             path_limitations = list(q_p.path.limitations)
             if sim_res:
                 path_limitations.extend(sim_res.limitations)
+            if "local_evaluator, not AWS" not in path_limitations:
+                path_limitations.append("local_evaluator, not AWS")
 
             final_paths.append(
                 {
@@ -114,7 +114,7 @@ class Stage6Assembler:
                 "finished_at": None,
                 "git_sha": None,
                 "mode": "offline_fixture",
-                "simulator_backend": "recorded",
+                "simulator_backend": "local_evaluator",
                 "sandbox_mode": "none",
                 "enrichment": "off",
             },
@@ -136,7 +136,7 @@ class Stage6Assembler:
                 "sandbox_time_ms": metrics_dict.get("sandbox_time_ms"),
                 "total_ms": metrics_dict.get("total_ms"),
                 "load_time_ms": metrics_dict.get("load_time_ms"),
-                "policy_sim_backend": "recorded",
+                "policy_sim_backend": "local_evaluator",
                 "policy_sim_timing_representative": False,
                 "sandbox_breakdown_ms": {
                     "deploy": None,

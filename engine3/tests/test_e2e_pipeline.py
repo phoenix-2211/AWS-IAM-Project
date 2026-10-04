@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 import jsonschema
+import pytest
 
 from engine3.stages.runner import PipelineRunner
 
@@ -31,4 +32,51 @@ def test_end_to_end_pipeline_execution(tmp_path):
     assert vr_doc["contract_name"] == "VerificationResult"
     assert vr_doc["contract_version"] == "0.1"
     assert vr_doc["stats"]["paths_total"] >= 2
-    assert "POLICY_ALLOWED_UNCONFIRMED" in vr_doc["stats"]["by_status"]
+    assert "SANDBOX_FAILED" in vr_doc["stats"]["by_status"]
+
+
+def test_schema_rejects_non_enum_status():
+    schema_path = Path("schemas/verification_result_v0.1.schema.json")
+    with open(schema_path, "r", encoding="utf-8") as f:
+        schema = json.load(f)
+
+    invalid_doc = {
+        "contract_name": "VerificationResult",
+        "contract_version": "0.1",
+        "run": {
+            "run_id": "run-test",
+            "origin": "test",
+            "mode": "offline",
+            "simulator_backend": "local_evaluator",
+            "sandbox_mode": "none",
+            "enrichment": "off",
+        },
+        "inputs": {
+            "iamgraph_snapshot_id": "snap-1",
+            "iamgraph_content_sha256": "abc",
+            "iamgraph_collection_status": "complete",
+            "rulebook_sha256": "def",
+            "rulebook_origin": "test",
+            "rules_active": 1,
+            "rules_skipped": 0,
+        },
+        "degraded": False,
+        "degraded_reasons": [],
+        "paths": [
+            {
+                "path_id": "path-1",
+                "status": "INVALID_NON_ENUM_STATUS",
+                "status_reason": "invalid status test",
+                "hops": [],
+                "assumptions": [],
+                "queue_rank": 1,
+                "queue_reason": "test",
+                "evidence": {},
+                "limitations": [],
+            }
+        ],
+        "stats": {"paths_total": 1, "by_status": {"INVALID_NON_ENUM_STATUS": 1}},
+    }
+
+    with pytest.raises(jsonschema.ValidationError):
+        jsonschema.validate(instance=invalid_doc, schema=schema)

@@ -17,4 +17,4 @@ python -m engine3.cli run --graph docs/contracts/iamgraph_fixture.json --rules r
 
 ## Limitations & Scope
 - Missing edges in `IAMGraph` are non-proof of safety.
-- Offline recorded policy simulator calls produce `POLICY_ALLOWED_UNCONFIRMED` and never `VERIFIED_EXPLOITABLE`.
+- Offline local policy simulator calls emit `SANDBOX_FAILED` (with `local_evaluator, not AWS` limitation) and never `VERIFIED_EXPLOITABLE`.

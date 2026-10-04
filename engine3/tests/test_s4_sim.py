@@ -9,10 +9,10 @@ from engine3.adapters.rule_adapter import RuleAdapter
 from engine3.stages.s1_match import Stage1Matcher
 from engine3.stages.s2_path import Stage2PathFinder
 from engine3.stages.s3_queue import Stage3Prioritizer
-from engine3.stages.s4_sim import LivePolicySimulator, RecordedPolicySimulator
+from engine3.stages.s4_sim import LivePolicySimulator, LocalPolicySimulator
 
 
-def test_s4_recorded_simulator_baseline():
+def test_s4_local_simulator_baseline():
     import json
     fixture_path = Path("docs/contracts/iamgraph_fixture.json")
     rulebook_path = Path("rulebook/active_rulebook.json")
@@ -34,12 +34,12 @@ def test_s4_recorded_simulator_baseline():
     prioritizer = Stage3Prioritizer()
     queue_res = prioritizer.prioritize_paths(disc_res.paths, rules)
 
-    sim = RecordedPolicySimulator()
+    sim = LocalPolicySimulator()
     for q_path in queue_res.queue:
         res = sim.evaluate_path(q_path)
-        assert res.status == "POLICY_ALLOWED_UNCONFIRMED"
+        assert res.status == "POLICY_ALLOWED"
         assert res.source == "local_evaluator"
-        assert "Offline local evaluation, not independent verification" in res.limitations
+        assert "local_evaluator, not AWS" in res.limitations
 
 
 def test_s4_live_simulator_refuses_without_gate():

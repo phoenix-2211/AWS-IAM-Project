@@ -16,7 +16,7 @@
 ---
 
 ## 2. Unverified Items & Limitations Statement
-1. Policy Simulator calls executed in `recorded` offline mode; results carry `source: "local_evaluator"` and status `POLICY_ALLOWED_UNCONFIRMED`.
+1. Policy Simulator calls executed in local evaluator offline mode; results carry `source: "local_evaluator"` and final status `SANDBOX_FAILED` (with `local_evaluator, not AWS` limitation).
 2. CloudGoat sandbox deployments not run live in offline session (`SANDBOX_FAILED` with gate missing note).
 3. Missing graph edges are explicitly recorded as non-proof of absolute safety across all outputs.
 
