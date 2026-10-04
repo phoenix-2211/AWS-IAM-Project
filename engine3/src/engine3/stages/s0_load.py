@@ -78,6 +78,7 @@ class Stage0Loader:
         rulebook_data: list[dict[str, Any]],
         iamgraph_raw_bytes: bytes | None = None,
         rulebook_raw_bytes: bytes | None = None,
+        expected_iamgraph_sha256: str | None = None,
     ) -> Stage0LoadResult:
         result = Stage0LoadResult()
 
@@ -88,7 +89,16 @@ class Stage0Loader:
 
         # Compute SHA-256 hashes
         if iamgraph_raw_bytes is not None:
-            result.iamgraph_content_sha256 = hashlib.sha256(iamgraph_raw_bytes).hexdigest()
+            computed = hashlib.sha256(iamgraph_raw_bytes).hexdigest()
+            result.iamgraph_content_sha256 = computed
+            if expected_iamgraph_sha256 and computed != expected_iamgraph_sha256:
+                result.errors.append(
+                    StructuredError(
+                        code="ERR_MANIFEST_HASH_MISMATCH",
+                        location="iamgraph_raw_bytes",
+                        message=f"Computed hash {computed} does not match expected {expected_iamgraph_sha256}",
+                    )
+                )
         else:
             result.iamgraph_content_sha256 = hashlib.sha256(
                 json.dumps(iamgraph_data, sort_keys=True).encode("utf-8")
