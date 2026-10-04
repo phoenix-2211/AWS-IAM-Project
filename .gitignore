@@ -1,0 +1,8 @@
+runs/
+*.pem
+*.key
+.env*
+.aws/
+*.tfstate*
+*.tfvars
+credentials*
