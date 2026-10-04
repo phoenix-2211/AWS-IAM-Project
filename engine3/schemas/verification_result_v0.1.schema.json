@@ -88,7 +88,10 @@
         ],
         "properties": {
           "path_id": { "type": "string" },
-          "status": { "type": "string" },
+          "status": {
+            "type": "string",
+            "enum": ["VERIFIED_EXPLOITABLE", "POLICY_DENIED", "SANDBOX_FAILED"]
+          },
           "status_reason": { "type": "string" },
           "verification_scope": { "type": "string" },
           "hops": {
