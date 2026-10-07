@@ -1,0 +1,268 @@
+{
+  "contract_name": "IAMGraph",
+  "contract_version": "0.1",
+  "x_provenance": {
+    "authored_by": "ENGINE3-SAMPLE-FIXTURES",
+    "basis": "Tree 5 Critical Capital One Breach Pattern Escalation"
+  },
+  "snapshot": {
+    "snapshot_id": "TREE-5-CRITICAL-001",
+    "account_id": "111122223333",
+    "collected_at": "2026-10-07T00:00:00Z",
+    "origin": "synthetic_fixture",
+    "collection_status": "complete",
+    "collected_resource_types": [
+      "s3_bucket",
+      "secretsmanager_secret"
+    ],
+    "coverage": [
+      {
+        "component": "iam",
+        "region": "global",
+        "status": "complete"
+      },
+      {
+        "component": "s3",
+        "region": "us-east-1",
+        "status": "complete"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "id": "arn:aws:iam::111122223333:user/user-entrypoint",
+      "type": "User",
+      "arn": "arn:aws:iam::111122223333:user/user-entrypoint",
+      "name": "user-entrypoint",
+      "permissions_boundary": null,
+      "is_admin": false,
+      "mfa_enabled": false,
+      "is_dormant": false
+    },
+    {
+      "id": "arn:aws:iam::111122223333:role/WAFAppRole",
+      "type": "Role",
+      "arn": "arn:aws:iam::111122223333:role/WAFAppRole",
+      "name": "WAFAppRole",
+      "permissions_boundary": null,
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::111122223333:user/user-entrypoint"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "id": "arn:aws:iam::111122223333:role/CustomerDataRole",
+      "type": "Role",
+      "arn": "arn:aws:iam::111122223333:role/CustomerDataRole",
+      "name": "CustomerDataRole",
+      "permissions_boundary": null,
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::111122223333:role/WAFAppRole"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "id": "arn:aws:s3:::customer-credit-applications",
+      "type": "Resource",
+      "resource_type": "s3_bucket",
+      "arn": "arn:aws:s3:::customer-credit-applications",
+      "name": "customer-credit-applications",
+      "metadata": {
+        "region": "us-east-1"
+      }
+    },
+    {
+      "id": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/master-key",
+      "type": "Resource",
+      "resource_type": "secretsmanager_secret",
+      "arn": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/master-key",
+      "name": "prod/master-key",
+      "metadata": {
+        "region": "us-east-1"
+      }
+    },
+    {
+      "id": "perm:user-entrypoint:assume-waf:0",
+      "type": "Permission",
+      "effect": "Allow",
+      "actions": [
+        "sts:AssumeRole"
+      ],
+      "resources": [
+        "arn:aws:iam::111122223333:role/WAFAppRole"
+      ],
+      "raw_statement": {
+        "Effect": "Allow",
+        "Action": [
+          "sts:AssumeRole"
+        ],
+        "Resource": [
+          "arn:aws:iam::111122223333:role/WAFAppRole"
+        ]
+      },
+      "provenance": {
+        "policy_type": "inline",
+        "policy_name": "assume-waf"
+      }
+    },
+    {
+      "id": "perm:WAFAppRole:assume-customer-data:0",
+      "type": "Permission",
+      "effect": "Allow",
+      "actions": [
+        "sts:AssumeRole"
+      ],
+      "resources": [
+        "arn:aws:iam::111122223333:role/CustomerDataRole"
+      ],
+      "raw_statement": {
+        "Effect": "Allow",
+        "Action": [
+          "sts:AssumeRole"
+        ],
+        "Resource": [
+          "arn:aws:iam::111122223333:role/CustomerDataRole"
+        ]
+      },
+      "provenance": {
+        "policy_type": "inline",
+        "policy_name": "assume-customer-data"
+      }
+    },
+    {
+      "id": "perm:CustomerDataRole:get-credit-apps:0",
+      "type": "Permission",
+      "effect": "Allow",
+      "actions": [
+        "s3:GetObject"
+      ],
+      "resources": [
+        "arn:aws:s3:::customer-credit-applications"
+      ],
+      "raw_statement": {
+        "Effect": "Allow",
+        "Action": [
+          "s3:GetObject"
+        ],
+        "Resource": [
+          "arn:aws:s3:::customer-credit-applications"
+        ]
+      },
+      "provenance": {
+        "policy_type": "inline",
+        "policy_name": "get-credit-apps"
+      }
+    },
+    {
+      "id": "perm:CustomerDataRole:get-master-key:0",
+      "type": "Permission",
+      "effect": "Allow",
+      "actions": [
+        "secretsmanager:GetSecretValue"
+      ],
+      "resources": [
+        "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/master-key"
+      ],
+      "raw_statement": {
+        "Effect": "Allow",
+        "Action": [
+          "secretsmanager:GetSecretValue"
+        ],
+        "Resource": [
+          "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/master-key"
+        ]
+      },
+      "provenance": {
+        "policy_type": "inline",
+        "policy_name": "get-master-key"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge:HAS_PERMISSION:t5-01",
+      "type": "HAS_PERMISSION",
+      "source": "arn:aws:iam::111122223333:user/user-entrypoint",
+      "target": "perm:user-entrypoint:assume-waf:0"
+    },
+    {
+      "id": "edge:APPLIES_TO:t5-01",
+      "type": "APPLIES_TO",
+      "source": "perm:user-entrypoint:assume-waf:0",
+      "target": "arn:aws:iam::111122223333:role/WAFAppRole"
+    },
+    {
+      "id": "edge:TRUSTED_BY:t5-01",
+      "type": "TRUSTED_BY",
+      "source": "arn:aws:iam::111122223333:user/user-entrypoint",
+      "target": "arn:aws:iam::111122223333:role/WAFAppRole",
+      "via": "principal_arn",
+      "has_condition": false,
+      "statement_index": 0,
+      "matched_principal": "arn:aws:iam::111122223333:user/user-entrypoint"
+    },
+    {
+      "id": "edge:HAS_PERMISSION:t5-02",
+      "type": "HAS_PERMISSION",
+      "source": "arn:aws:iam::111122223333:role/WAFAppRole",
+      "target": "perm:WAFAppRole:assume-customer-data:0"
+    },
+    {
+      "id": "edge:APPLIES_TO:t5-02",
+      "type": "APPLIES_TO",
+      "source": "perm:WAFAppRole:assume-customer-data:0",
+      "target": "arn:aws:iam::111122223333:role/CustomerDataRole"
+    },
+    {
+      "id": "edge:TRUSTED_BY:t5-02",
+      "type": "TRUSTED_BY",
+      "source": "arn:aws:iam::111122223333:role/WAFAppRole",
+      "target": "arn:aws:iam::111122223333:role/CustomerDataRole",
+      "via": "principal_arn",
+      "has_condition": false,
+      "statement_index": 0,
+      "matched_principal": "arn:aws:iam::111122223333:role/WAFAppRole"
+    },
+    {
+      "id": "edge:HAS_PERMISSION:t5-03",
+      "type": "HAS_PERMISSION",
+      "source": "arn:aws:iam::111122223333:role/CustomerDataRole",
+      "target": "perm:CustomerDataRole:get-credit-apps:0"
+    },
+    {
+      "id": "edge:APPLIES_TO:t5-03",
+      "type": "APPLIES_TO",
+      "source": "perm:CustomerDataRole:get-credit-apps:0",
+      "target": "arn:aws:s3:::customer-credit-applications"
+    },
+    {
+      "id": "edge:HAS_PERMISSION:t5-04",
+      "type": "HAS_PERMISSION",
+      "source": "arn:aws:iam::111122223333:role/CustomerDataRole",
+      "target": "perm:CustomerDataRole:get-master-key:0"
+    },
+    {
+      "id": "edge:APPLIES_TO:t5-04",
+      "type": "APPLIES_TO",
+      "source": "perm:CustomerDataRole:get-master-key:0",
+      "target": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/master-key"
+    }
+  ],
+  "warnings": []
+}

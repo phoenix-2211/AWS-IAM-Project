@@ -1,0 +1,97 @@
+{
+  "contract_name": "IAMGraph",
+  "contract_version": "0.1",
+  "x_provenance": {
+    "authored_by": "ENGINE3-SAMPLE-FIXTURES",
+    "basis": "Tree 1 Benign Environment"
+  },
+  "snapshot": {
+    "snapshot_id": "TREE-1-BENIGN-001",
+    "account_id": "111122223333",
+    "collected_at": "2026-10-07T00:00:00Z",
+    "origin": "synthetic_fixture",
+    "collection_status": "complete",
+    "collected_resource_types": [
+      "s3_bucket"
+    ],
+    "coverage": [
+      {
+        "component": "iam",
+        "region": "global",
+        "status": "complete"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "id": "arn:aws:iam::111122223333:user/user-alice-benign",
+      "type": "User",
+      "arn": "arn:aws:iam::111122223333:user/user-alice-benign",
+      "name": "user-alice-benign",
+      "permissions_boundary": null,
+      "is_admin": false,
+      "mfa_enabled": true,
+      "is_dormant": false
+    },
+    {
+      "id": "arn:aws:iam::111122223333:role/ReadOnlyRole",
+      "type": "Role",
+      "arn": "arn:aws:iam::111122223333:role/ReadOnlyRole",
+      "name": "ReadOnlyRole",
+      "permissions_boundary": null,
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": []
+      }
+    },
+    {
+      "id": "arn:aws:s3:::benign-public-logs",
+      "type": "Resource",
+      "resource_type": "s3_bucket",
+      "arn": "arn:aws:s3:::benign-public-logs",
+      "name": "benign-public-logs",
+      "metadata": {
+        "region": "us-east-1"
+      }
+    },
+    {
+      "id": "perm:user-alice:read-logs:0",
+      "type": "Permission",
+      "effect": "Allow",
+      "actions": [
+        "s3:ListBucket"
+      ],
+      "resources": [
+        "arn:aws:s3:::benign-public-logs"
+      ],
+      "raw_statement": {
+        "Effect": "Allow",
+        "Action": [
+          "s3:ListBucket"
+        ],
+        "Resource": [
+          "arn:aws:s3:::benign-public-logs"
+        ]
+      },
+      "provenance": {
+        "policy_type": "inline",
+        "policy_name": "read-logs"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge:HAS_PERMISSION:t1-01",
+      "type": "HAS_PERMISSION",
+      "source": "arn:aws:iam::111122223333:user/user-alice-benign",
+      "target": "perm:user-alice:read-logs:0"
+    },
+    {
+      "id": "edge:APPLIES_TO:t1-01",
+      "type": "APPLIES_TO",
+      "source": "perm:user-alice:read-logs:0",
+      "target": "arn:aws:s3:::benign-public-logs"
+    }
+  ],
+  "warnings": []
+}

@@ -1,0 +1,156 @@
+{
+  "contract_name": "IAMGraph",
+  "contract_version": "0.1",
+  "x_provenance": {
+    "authored_by": "ENGINE3-SAMPLE-FIXTURES",
+    "basis": "Tree 3 Medium Severity Condition Gated Path"
+  },
+  "snapshot": {
+    "snapshot_id": "TREE-3-MEDIUM-001",
+    "account_id": "111122223333",
+    "collected_at": "2026-10-07T00:00:00Z",
+    "origin": "synthetic_fixture",
+    "collection_status": "complete",
+    "collected_resource_types": [
+      "secretsmanager_secret"
+    ],
+    "coverage": [
+      {
+        "component": "iam",
+        "region": "global",
+        "status": "complete"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "id": "arn:aws:iam::111122223333:user/user-charlie-medium",
+      "type": "User",
+      "arn": "arn:aws:iam::111122223333:user/user-charlie-medium",
+      "name": "user-charlie-medium",
+      "permissions_boundary": null,
+      "is_admin": false,
+      "mfa_enabled": false,
+      "is_dormant": false
+    },
+    {
+      "id": "arn:aws:iam::111122223333:role/AppRole",
+      "type": "Role",
+      "arn": "arn:aws:iam::111122223333:role/AppRole",
+      "name": "AppRole",
+      "permissions_boundary": null,
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::111122223333:user/user-charlie-medium"
+            },
+            "Action": "sts:AssumeRole",
+            "Condition": {
+              "Bool": {
+                "aws:MultiFactorAuthPresent": "true"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "arn:aws:secretsmanager:us-east-1:111122223333:secret:app/config",
+      "type": "Resource",
+      "resource_type": "secretsmanager_secret",
+      "arn": "arn:aws:secretsmanager:us-east-1:111122223333:secret:app/config",
+      "name": "app/config",
+      "metadata": {
+        "region": "us-east-1"
+      }
+    },
+    {
+      "id": "perm:user-charlie:assume-app:0",
+      "type": "Permission",
+      "effect": "Allow",
+      "actions": [
+        "sts:AssumeRole"
+      ],
+      "resources": [
+        "arn:aws:iam::111122223333:role/AppRole"
+      ],
+      "raw_statement": {
+        "Effect": "Allow",
+        "Action": [
+          "sts:AssumeRole"
+        ],
+        "Resource": [
+          "arn:aws:iam::111122223333:role/AppRole"
+        ]
+      },
+      "provenance": {
+        "policy_type": "inline",
+        "policy_name": "assume-app"
+      }
+    },
+    {
+      "id": "perm:AppRole:read-config:0",
+      "type": "Permission",
+      "effect": "Allow",
+      "actions": [
+        "secretsmanager:GetSecretValue"
+      ],
+      "resources": [
+        "arn:aws:secretsmanager:us-east-1:111122223333:secret:app/config"
+      ],
+      "raw_statement": {
+        "Effect": "Allow",
+        "Action": [
+          "secretsmanager:GetSecretValue"
+        ],
+        "Resource": [
+          "arn:aws:secretsmanager:us-east-1:111122223333:secret:app/config"
+        ]
+      },
+      "provenance": {
+        "policy_type": "inline",
+        "policy_name": "read-config"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge:HAS_PERMISSION:t3-01",
+      "type": "HAS_PERMISSION",
+      "source": "arn:aws:iam::111122223333:user/user-charlie-medium",
+      "target": "perm:user-charlie:assume-app:0"
+    },
+    {
+      "id": "edge:APPLIES_TO:t3-01",
+      "type": "APPLIES_TO",
+      "source": "perm:user-charlie:assume-app:0",
+      "target": "arn:aws:iam::111122223333:role/AppRole"
+    },
+    {
+      "id": "edge:TRUSTED_BY:t3-01",
+      "type": "TRUSTED_BY",
+      "source": "arn:aws:iam::111122223333:user/user-charlie-medium",
+      "target": "arn:aws:iam::111122223333:role/AppRole",
+      "via": "principal_arn",
+      "has_condition": true,
+      "statement_index": 0,
+      "matched_principal": "arn:aws:iam::111122223333:user/user-charlie-medium"
+    },
+    {
+      "id": "edge:HAS_PERMISSION:t3-02",
+      "type": "HAS_PERMISSION",
+      "source": "arn:aws:iam::111122223333:role/AppRole",
+      "target": "perm:AppRole:read-config:0"
+    },
+    {
+      "id": "edge:APPLIES_TO:t3-02",
+      "type": "APPLIES_TO",
+      "source": "perm:AppRole:read-config:0",
+      "target": "arn:aws:secretsmanager:us-east-1:111122223333:secret:app/config"
+    }
+  ],
+  "warnings": []
+}

@@ -1,0 +1,86 @@
+{
+  "contract_name": "IAMGraph",
+  "contract_version": "0.1",
+  "x_provenance": {
+    "authored_by": "ENGINE3-SAMPLE-FIXTURES",
+    "basis": "Tree 2 Low Privilege Overprivilege"
+  },
+  "snapshot": {
+    "snapshot_id": "TREE-2-LOW-001",
+    "account_id": "111122223333",
+    "collected_at": "2026-10-07T00:00:00Z",
+    "origin": "synthetic_fixture",
+    "collection_status": "complete",
+    "collected_resource_types": [
+      "s3_bucket"
+    ],
+    "coverage": [
+      {
+        "component": "iam",
+        "region": "global",
+        "status": "complete"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "id": "arn:aws:iam::111122223333:user/user-bob-low",
+      "type": "User",
+      "arn": "arn:aws:iam::111122223333:user/user-bob-low",
+      "name": "user-bob-low",
+      "permissions_boundary": null,
+      "is_admin": false,
+      "mfa_enabled": false,
+      "is_dormant": false
+    },
+    {
+      "id": "arn:aws:s3:::low-value-public-assets",
+      "type": "Resource",
+      "resource_type": "s3_bucket",
+      "arn": "arn:aws:s3:::low-value-public-assets",
+      "name": "low-value-public-assets",
+      "metadata": {
+        "region": "us-east-1"
+      }
+    },
+    {
+      "id": "perm:user-bob-low:read-assets:0",
+      "type": "Permission",
+      "effect": "Allow",
+      "actions": [
+        "s3:GetObject"
+      ],
+      "resources": [
+        "arn:aws:s3:::low-value-public-assets"
+      ],
+      "raw_statement": {
+        "Effect": "Allow",
+        "Action": [
+          "s3:GetObject"
+        ],
+        "Resource": [
+          "arn:aws:s3:::low-value-public-assets"
+        ]
+      },
+      "provenance": {
+        "policy_type": "inline",
+        "policy_name": "read-assets"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge:HAS_PERMISSION:t2-01",
+      "type": "HAS_PERMISSION",
+      "source": "arn:aws:iam::111122223333:user/user-bob-low",
+      "target": "perm:user-bob-low:read-assets:0"
+    },
+    {
+      "id": "edge:APPLIES_TO:t2-01",
+      "type": "APPLIES_TO",
+      "source": "perm:user-bob-low:read-assets:0",
+      "target": "arn:aws:s3:::low-value-public-assets"
+    }
+  ],
+  "warnings": []
+}

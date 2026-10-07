@@ -1,0 +1,216 @@
+{
+  "contract_name": "IAMGraph",
+  "contract_version": "0.1",
+  "x_provenance": {
+    "authored_by": "ENGINE3-SAMPLE-FIXTURES",
+    "basis": "Tree 4 High Severity Multi-hop Escalation Path"
+  },
+  "snapshot": {
+    "snapshot_id": "TREE-4-HIGH-001",
+    "account_id": "111122223333",
+    "collected_at": "2026-10-07T00:00:00Z",
+    "origin": "synthetic_fixture",
+    "collection_status": "complete",
+    "collected_resource_types": [
+      "secretsmanager_secret"
+    ],
+    "coverage": [
+      {
+        "component": "iam",
+        "region": "global",
+        "status": "complete"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "id": "arn:aws:iam::111122223333:user/user-david-high",
+      "type": "User",
+      "arn": "arn:aws:iam::111122223333:user/user-david-high",
+      "name": "user-david-high",
+      "permissions_boundary": null,
+      "is_admin": false,
+      "mfa_enabled": true,
+      "is_dormant": false
+    },
+    {
+      "id": "arn:aws:iam::111122223333:role/DevRole",
+      "type": "Role",
+      "arn": "arn:aws:iam::111122223333:role/DevRole",
+      "name": "DevRole",
+      "permissions_boundary": null,
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::111122223333:user/user-david-high"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "id": "arn:aws:iam::111122223333:role/DeployRole",
+      "type": "Role",
+      "arn": "arn:aws:iam::111122223333:role/DeployRole",
+      "name": "DeployRole",
+      "permissions_boundary": null,
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::111122223333:role/DevRole"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "id": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password",
+      "type": "Resource",
+      "resource_type": "secretsmanager_secret",
+      "arn": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password",
+      "name": "prod/db-password",
+      "metadata": {
+        "region": "us-east-1"
+      }
+    },
+    {
+      "id": "perm:user-david:assume-dev:0",
+      "type": "Permission",
+      "effect": "Allow",
+      "actions": [
+        "sts:AssumeRole"
+      ],
+      "resources": [
+        "arn:aws:iam::111122223333:role/DevRole"
+      ],
+      "raw_statement": {
+        "Effect": "Allow",
+        "Action": [
+          "sts:AssumeRole"
+        ],
+        "Resource": [
+          "arn:aws:iam::111122223333:role/DevRole"
+        ]
+      },
+      "provenance": {
+        "policy_type": "inline",
+        "policy_name": "assume-dev"
+      }
+    },
+    {
+      "id": "perm:DevRole:assume-deploy:0",
+      "type": "Permission",
+      "effect": "Allow",
+      "actions": [
+        "sts:AssumeRole"
+      ],
+      "resources": [
+        "arn:aws:iam::111122223333:role/DeployRole"
+      ],
+      "raw_statement": {
+        "Effect": "Allow",
+        "Action": [
+          "sts:AssumeRole"
+        ],
+        "Resource": [
+          "arn:aws:iam::111122223333:role/DeployRole"
+        ]
+      },
+      "provenance": {
+        "policy_type": "inline",
+        "policy_name": "assume-deploy"
+      }
+    },
+    {
+      "id": "perm:DeployRole:get-db-pass:0",
+      "type": "Permission",
+      "effect": "Allow",
+      "actions": [
+        "secretsmanager:GetSecretValue"
+      ],
+      "resources": [
+        "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password"
+      ],
+      "raw_statement": {
+        "Effect": "Allow",
+        "Action": [
+          "secretsmanager:GetSecretValue"
+        ],
+        "Resource": [
+          "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password"
+        ]
+      },
+      "provenance": {
+        "policy_type": "inline",
+        "policy_name": "get-db-pass"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge:HAS_PERMISSION:t4-01",
+      "type": "HAS_PERMISSION",
+      "source": "arn:aws:iam::111122223333:user/user-david-high",
+      "target": "perm:user-david:assume-dev:0"
+    },
+    {
+      "id": "edge:APPLIES_TO:t4-01",
+      "type": "APPLIES_TO",
+      "source": "perm:user-david:assume-dev:0",
+      "target": "arn:aws:iam::111122223333:role/DevRole"
+    },
+    {
+      "id": "edge:TRUSTED_BY:t4-01",
+      "type": "TRUSTED_BY",
+      "source": "arn:aws:iam::111122223333:user/user-david-high",
+      "target": "arn:aws:iam::111122223333:role/DevRole",
+      "via": "principal_arn",
+      "has_condition": false,
+      "statement_index": 0,
+      "matched_principal": "arn:aws:iam::111122223333:user/user-david-high"
+    },
+    {
+      "id": "edge:HAS_PERMISSION:t4-02",
+      "type": "HAS_PERMISSION",
+      "source": "arn:aws:iam::111122223333:role/DevRole",
+      "target": "perm:DevRole:assume-deploy:0"
+    },
+    {
+      "id": "edge:APPLIES_TO:t4-02",
+      "type": "APPLIES_TO",
+      "source": "perm:DevRole:assume-deploy:0",
+      "target": "arn:aws:iam::111122223333:role/DeployRole"
+    },
+    {
+      "id": "edge:TRUSTED_BY:t4-02",
+      "type": "TRUSTED_BY",
+      "source": "arn:aws:iam::111122223333:role/DevRole",
+      "target": "arn:aws:iam::111122223333:role/DeployRole",
+      "via": "principal_arn",
+      "has_condition": false,
+      "statement_index": 0,
+      "matched_principal": "arn:aws:iam::111122223333:role/DevRole"
+    },
+    {
+      "id": "edge:HAS_PERMISSION:t4-03",
+      "type": "HAS_PERMISSION",
+      "source": "arn:aws:iam::111122223333:role/DeployRole",
+      "target": "perm:DeployRole:get-db-pass:0"
+    },
+    {
+      "id": "edge:APPLIES_TO:t4-03",
+      "type": "APPLIES_TO",
+      "source": "perm:DeployRole:get-db-pass:0",
+      "target": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/db-password"
+    }
+  ],
+  "warnings": []
+}
