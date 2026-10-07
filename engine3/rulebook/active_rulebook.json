@@ -1,278 +1,326 @@
 [
   {
     "rule_id": "RULE-IAM-001",
-    "title": "Role holds PassRole on IAM roles",
-    "description": "Role holds iam:PassRole permission on target roles.",
-    "condition": null,
-    "principal_type": "role",
-    "action": "iam:PassRole",
+    "title": "Role Assumption Chain via sts:AssumeRole",
+    "description": "Principal can assume intermediate or administrative IAM roles via sts:AssumeRole.",
+    "principal_type": "user",
+    "action": "sts:AssumeRole",
     "resource_type": "iam_role",
-    "relationship": "can_pass_role",
+    "relationship": "can_assume_role",
     "severity": "HIGH",
+    "technique_id": "T1548.005",
+    "technique_name": "Abuse Elevation Control Mechanism: Temporary Elevated Privileges",
+    "required_actions": [
+      "sts:AssumeRole"
+    ],
+    "evidence_citation": "MITRE ATT&CK T1548.005 - Temporary Elevated Privileges via STS AssumeRole",
+    "condition": null,
     "source": {
-      "name": "Datadog pathfinding.cloud",
-      "id": "iam_passrole",
-      "url": "https://github.com/DataDog/pathfinding.cloud"
+      "name": "researched",
+      "url": "https://attack.mitre.org/techniques/T1548/005/",
+      "tier": "PUBLIC_RESEARCH"
     },
-    "evidence": "Role has permission to pass roles to services or instances.",
+    "evidence": {
+      "text": "User or role principal has permission to call sts:AssumeRole on target IAM roles."
+    },
     "mitre": {
-      "technique_id": "T1078.004",
-      "technique_name": "Valid Accounts: Cloud Accounts"
+      "technique_id": "T1548.005",
+      "technique_name": "Abuse Elevation Control Mechanism: Temporary Elevated Privileges"
     },
     "version": "0.1",
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "rulebook_origin": "active"
   },
   {
     "rule_id": "RULE-IAM-002",
-    "title": "User holds PassRole on IAM roles",
-    "description": "User holds iam:PassRole permission on target roles.",
-    "condition": null,
-    "principal_type": "user",
-    "action": "iam:PassRole",
+    "title": "Overly Permissive Wildcard Role Trust Policy",
+    "description": "Role trust policy allows wildcard principal assumption across accounts or unauthenticated callers.",
+    "principal_type": "role",
+    "action": "sts:AssumeRole",
     "resource_type": "iam_role",
-    "relationship": "can_pass_role",
-    "severity": "HIGH",
+    "relationship": "trusted_by_wildcard",
+    "severity": "CRITICAL",
+    "technique_id": "T1098",
+    "technique_name": "Account Manipulation",
+    "required_actions": [
+      "sts:AssumeRole"
+    ],
+    "evidence_citation": "MITRE ATT&CK T1098 - Account Manipulation via wildcard trust policy",
+    "condition": null,
     "source": {
-      "name": "Datadog pathfinding.cloud",
-      "id": "iam_passrole_user",
-      "url": "https://github.com/DataDog/pathfinding.cloud"
+      "name": "researched",
+      "url": "https://attack.mitre.org/techniques/T1098/",
+      "tier": "PUBLIC_RESEARCH"
     },
-    "evidence": "User has permission to pass roles.",
+    "evidence": {
+      "text": "Role trust statement permits Principal '*' without restricting conditions."
+    },
+    "mitre": {
+      "technique_id": "T1098",
+      "technique_name": "Account Manipulation"
+    },
+    "version": "0.1",
+    "status": "ACTIVE",
+    "rulebook_origin": "active"
+  },
+  {
+    "rule_id": "RULE-IAM-003",
+    "title": "Dormant Administrator Account Privileges",
+    "description": "Dormant user or role principal holds administrator permissions without recent activity.",
+    "principal_type": "user",
+    "action": "iam:AttachUserPolicy",
+    "resource_type": "iam_user",
+    "relationship": "dormant_admin",
+    "severity": "HIGH",
+    "technique_id": "T1078.004",
+    "technique_name": "Valid Accounts: Cloud Accounts",
+    "required_actions": [
+      "iam:AttachUserPolicy"
+    ],
+    "evidence_citation": "MITRE ATT&CK T1078.004 - Inactive Cloud Accounts retaining administrative privileges",
+    "condition": {
+      "is_dormant": true
+    },
+    "source": {
+      "name": "researched",
+      "url": "https://attack.mitre.org/techniques/T1078/004/",
+      "tier": "PUBLIC_RESEARCH"
+    },
+    "evidence": {
+      "text": "User is marked dormant (is_dormant=true) while holding elevated IAM privileges."
+    },
     "mitre": {
       "technique_id": "T1078.004",
       "technique_name": "Valid Accounts: Cloud Accounts"
     },
     "version": "0.1",
-    "status": "ACTIVE"
-  },
-  {
-    "rule_id": "RULE-IAM-003",
-    "title": "Role can read SecretValue",
-    "description": "Role holds permission to read secrets from Secrets Manager.",
-    "condition": null,
-    "principal_type": "role",
-    "action": "secretsmanager:GetSecretValue",
-    "resource_type": "secretsmanager_secret",
-    "relationship": "can_read_secret",
-    "severity": "CRITICAL",
-    "source": {
-      "name": "Datadog pathfinding.cloud",
-      "id": "secretsmanager_getsecretvalue",
-      "url": "https://github.com/DataDog/pathfinding.cloud"
-    },
-    "evidence": "Principal has direct access to read secret payloads.",
-    "mitre": {
-      "technique_id": "T1552",
-      "technique_name": "Unsecured Credentials"
-    },
-    "version": "0.1",
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "rulebook_origin": "active"
   },
   {
     "rule_id": "RULE-IAM-004",
-    "title": "Role can attach managed policy",
-    "description": "Role can attach IAM policies to roles.",
-    "condition": null,
-    "principal_type": "role",
-    "action": "iam:AttachRolePolicy",
-    "resource_type": "iam_role",
-    "relationship": "can_attach_policy",
-    "severity": "HIGH",
-    "source": {
-      "name": "Datadog pathfinding.cloud",
-      "id": "iam_attachrolepolicy",
-      "url": "https://github.com/DataDog/pathfinding.cloud"
+    "title": "Sensitive Action Lacks Multi-Factor Authentication",
+    "description": "Destructive or sensitive action permitted without requiring multi-factor authentication (MFA).",
+    "principal_type": "user",
+    "action": "s3:DeleteBucket",
+    "resource_type": "s3_bucket",
+    "relationship": "missing_mfa_protection",
+    "severity": "MEDIUM",
+    "technique_id": "T1556",
+    "technique_name": "Modify Authentication Process",
+    "required_actions": [
+      "s3:DeleteBucket"
+    ],
+    "evidence_citation": "MITRE ATT&CK T1556 - Bypassing multi-factor authentication requirements",
+    "condition": {
+      "requires_mfa": true
     },
-    "evidence": "Role can attach administrator policies to itself or other roles.",
+    "source": {
+      "name": "researched",
+      "url": "https://attack.mitre.org/techniques/T1556/",
+      "tier": "PUBLIC_RESEARCH"
+    },
+    "evidence": {
+      "text": "Destructive bucket policy action lacks aws:MultiFactorAuthPresent condition constraint."
+    },
     "mitre": {
-      "technique_id": "T1098.003",
-      "technique_name": "Account Manipulation: Additional Cloud Roles"
+      "technique_id": "T1556",
+      "technique_name": "Modify Authentication Process"
     },
     "version": "0.1",
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "rulebook_origin": "active"
   },
   {
     "rule_id": "RULE-IAM-005",
-    "title": "Role can put inline policy",
-    "description": "Role can write inline policy to roles.",
-    "condition": null,
-    "principal_type": "role",
-    "action": "iam:PutRolePolicy",
-    "resource_type": "iam_role",
-    "relationship": "can_put_policy",
-    "severity": "HIGH",
-    "source": {
-      "name": "Datadog pathfinding.cloud",
-      "id": "iam_putrolepolicy",
-      "url": "https://github.com/DataDog/pathfinding.cloud"
-    },
-    "evidence": "Role can embed permissive policy statements.",
-    "mitre": {
-      "technique_id": "T1098",
-      "technique_name": "Account Manipulation"
-    },
-    "version": "0.1",
-    "status": "ACTIVE"
-  },
-  {
-    "rule_id": "RULE-IAM-006",
-    "title": "Role can create policy version",
-    "description": "Role can create new version of managed policy.",
-    "condition": null,
-    "principal_type": "role",
-    "action": "iam:CreatePolicyVersion",
-    "resource_type": "iam_policy",
-    "relationship": "can_create_policy_version",
-    "severity": "HIGH",
-    "source": {
-      "name": "Datadog pathfinding.cloud",
-      "id": "iam_createpolicyversion",
-      "url": "https://github.com/DataDog/pathfinding.cloud"
-    },
-    "evidence": "Role can inject permissive policy versions.",
-    "mitre": {
-      "technique_id": "T1098",
-      "technique_name": "Account Manipulation"
-    },
-    "version": "0.1",
-    "status": "ACTIVE"
-  },
-  {
-    "rule_id": "RULE-IAM-007",
-    "title": "Role can set default policy version",
-    "description": "Role can switch active version of managed policy.",
-    "condition": null,
-    "principal_type": "role",
-    "action": "iam:SetDefaultPolicyVersion",
-    "resource_type": "iam_policy",
-    "relationship": "can_set_policy_version",
-    "severity": "HIGH",
-    "source": {
-      "name": "Datadog pathfinding.cloud",
-      "id": "iam_setdefaultpolicyversion",
-      "url": "https://github.com/DataDog/pathfinding.cloud"
-    },
-    "evidence": "Role can activate existing permissive policy versions.",
-    "mitre": {
-      "technique_id": "T1098",
-      "technique_name": "Account Manipulation"
-    },
-    "version": "0.1",
-    "status": "ACTIVE"
-  },
-  {
-    "rule_id": "RULE-IAM-008",
-    "title": "User can create access keys",
-    "description": "User can generate access keys for IAM users.",
-    "condition": null,
+    "title": "Privilege Escalation via User Policy Attachment",
+    "description": "Principal can attach arbitrary administrator or managed policies to IAM users.",
     "principal_type": "user",
-    "action": "iam:CreateAccessKey",
+    "action": "iam:AttachUserPolicy",
     "resource_type": "iam_user",
-    "relationship": "can_create_access_key",
-    "severity": "HIGH",
+    "relationship": "can_attach_policy",
+    "severity": "CRITICAL",
+    "technique_id": "T1098.001",
+    "technique_name": "Account Manipulation: Additional Cloud Credentials",
+    "required_actions": [
+      "iam:AttachUserPolicy"
+    ],
+    "evidence_citation": "MITRE ATT&CK T1098.001 - Privilege escalation via IAM user policy attachment",
+    "condition": null,
     "source": {
-      "name": "Datadog pathfinding.cloud",
-      "id": "iam_createaccesskey",
-      "url": "https://github.com/DataDog/pathfinding.cloud"
+      "name": "researched",
+      "url": "https://attack.mitre.org/techniques/T1098/001/",
+      "tier": "PUBLIC_RESEARCH"
     },
-    "evidence": "User can create credentials for privileged target users.",
+    "evidence": {
+      "text": "Principal holds iam:AttachUserPolicy allowing direct privilege escalation."
+    },
     "mitre": {
       "technique_id": "T1098.001",
       "technique_name": "Account Manipulation: Additional Cloud Credentials"
     },
     "version": "0.1",
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "rulebook_origin": "active"
   },
   {
-    "rule_id": "RULE-IAM-009",
-    "title": "Role can update trust policy",
-    "description": "Role can alter trust policy of target roles.",
-    "condition": null,
+    "rule_id": "RULE-IAM-006",
+    "title": "Privilege Escalation via Role Policy Modification",
+    "description": "Principal can put inline policies onto IAM roles.",
     "principal_type": "role",
-    "action": "iam:UpdateAssumeRolePolicy",
+    "action": "iam:PutRolePolicy",
     "resource_type": "iam_role",
-    "relationship": "can_update_assume_role_policy",
+    "relationship": "can_put_policy",
     "severity": "CRITICAL",
+    "technique_id": "T1098.001",
+    "technique_name": "Account Manipulation: Additional Cloud Credentials",
+    "required_actions": [
+      "iam:PutRolePolicy"
+    ],
+    "evidence_citation": "MITRE ATT&CK T1098.001 - Inline policy modification on IAM role",
+    "condition": null,
     "source": {
-      "name": "Datadog pathfinding.cloud",
-      "id": "iam_updateassumerolepolicy",
-      "url": "https://github.com/DataDog/pathfinding.cloud"
+      "name": "researched",
+      "url": "https://attack.mitre.org/techniques/T1098/001/",
+      "tier": "PUBLIC_RESEARCH"
     },
-    "evidence": "Role can grant itself assume privileges on target roles.",
+    "evidence": {
+      "text": "Role principal holds iam:PutRolePolicy enabling inline policy escalation."
+    },
     "mitre": {
-      "technique_id": "T1098.003",
-      "technique_name": "Account Manipulation: Additional Cloud Roles"
+      "technique_id": "T1098.001",
+      "technique_name": "Account Manipulation: Additional Cloud Credentials"
     },
     "version": "0.1",
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "rulebook_origin": "active"
   },
   {
-    "rule_id": "RULE-IAM-010",
-    "title": "Role can assume role",
-    "description": "Role holds sts:AssumeRole permission.",
-    "condition": null,
+    "rule_id": "RULE-IAM-007",
+    "title": "Cross-Account Role Trust Misconfiguration",
+    "description": "Role trusts external AWS account principal without condition constraints.",
     "principal_type": "role",
     "action": "sts:AssumeRole",
     "resource_type": "iam_role",
-    "relationship": "can_assume_role",
-    "severity": "MEDIUM",
-    "source": {
-      "name": "Datadog pathfinding.cloud",
-      "id": "sts_assumerole",
-      "url": "https://github.com/DataDog/pathfinding.cloud"
-    },
-    "evidence": "Role can assume secondary role identity.",
-    "mitre": {
-      "technique_id": "T1078.004",
-      "technique_name": "Valid Accounts: Cloud Accounts"
-    },
-    "version": "0.1",
-    "status": "ACTIVE"
-  },
-  {
-    "rule_id": "RULE-IAM-011",
-    "title": "User can assume role",
-    "description": "User holds sts:AssumeRole permission.",
-    "condition": null,
-    "principal_type": "user",
-    "action": "sts:AssumeRole",
-    "resource_type": "iam_role",
-    "relationship": "can_assume_role",
-    "severity": "MEDIUM",
-    "source": {
-      "name": "Datadog pathfinding.cloud",
-      "id": "sts_assumerole_user",
-      "url": "https://github.com/DataDog/pathfinding.cloud"
-    },
-    "evidence": "User can assume role identity.",
-    "mitre": {
-      "technique_id": "T1078.004",
-      "technique_name": "Valid Accounts: Cloud Accounts"
-    },
-    "version": "0.1",
-    "status": "ACTIVE"
-  },
-  {
-    "rule_id": "RULE-IAM-012",
-    "title": "Role can pass role to Lambda",
-    "description": "Role can create Lambda function with target role.",
-    "condition": null,
-    "principal_type": "role",
-    "action": "lambda:CreateFunction",
-    "resource_type": "lambda_function",
-    "relationship": "not_representable",
+    "relationship": "cross_account_trust",
     "severity": "HIGH",
+    "technique_id": "T1199",
+    "technique_name": "Trusted Relationship",
+    "required_actions": [
+      "sts:AssumeRole"
+    ],
+    "evidence_citation": "MITRE ATT&CK T1199 - Exploitation of cross-account trust relationships",
+    "condition": null,
     "source": {
-      "name": "Datadog pathfinding.cloud",
-      "id": "lambda_createfunction_passrole",
-      "url": "https://github.com/DataDog/pathfinding.cloud"
+      "name": "researched",
+      "url": "https://attack.mitre.org/techniques/T1199/",
+      "tier": "PUBLIC_RESEARCH"
     },
-    "evidence": "Role can pass execution role to newly created Lambda function.",
+    "evidence": {
+      "text": "Role trust statement trusts external AWS root/account ARN without ExternalId constraint."
+    },
+    "mitre": {
+      "technique_id": "T1199",
+      "technique_name": "Trusted Relationship"
+    },
+    "version": "0.1",
+    "status": "ACTIVE",
+    "rulebook_origin": "active"
+  },
+  {
+    "rule_id": "RULE-IAM-008",
+    "title": "Compute Service Role Passing via iam:PassRole",
+    "description": "Principal can pass powerful IAM roles to compute resources (Lambda, EC2).",
+    "principal_type": "user",
+    "action": "iam:PassRole",
+    "resource_type": "iam_role",
+    "relationship": "can_pass_role",
+    "severity": "HIGH",
+    "technique_id": "T1098",
+    "technique_name": "Account Manipulation",
+    "required_actions": [
+      "iam:PassRole"
+    ],
+    "evidence_citation": "MITRE ATT&CK T1098 - Service role delegation to compute services",
+    "condition": null,
+    "source": {
+      "name": "researched",
+      "url": "https://attack.mitre.org/techniques/T1098/",
+      "tier": "PUBLIC_RESEARCH"
+    },
+    "evidence": {
+      "text": "User holds iam:PassRole permission on target IAM role."
+    },
     "mitre": {
       "technique_id": "T1098",
       "technique_name": "Account Manipulation"
     },
     "version": "0.1",
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "rulebook_origin": "active"
+  },
+  {
+    "rule_id": "RULE-IAM-009",
+    "title": "Compute Role Storage Data Access (Capital One Pattern)",
+    "description": "Over-privileged compute role can read sensitive objects from S3 storage buckets.",
+    "principal_type": "role",
+    "action": "s3:GetObject",
+    "resource_type": "s3_bucket",
+    "relationship": "can_read_storage",
+    "severity": "CRITICAL",
+    "technique_id": "T1530",
+    "technique_name": "Data from Cloud Storage Object",
+    "required_actions": [
+      "s3:GetObject"
+    ],
+    "evidence_citation": "MITRE ATT&CK T1530 & Capital One SSRF-to-S3 exfiltration pattern",
+    "condition": null,
+    "source": {
+      "name": "researched",
+      "url": "https://attack.mitre.org/techniques/T1530/",
+      "tier": "PUBLIC_RESEARCH"
+    },
+    "evidence": {
+      "text": "IAM role attached to compute service has direct s3:GetObject access on sensitive buckets."
+    },
+    "mitre": {
+      "technique_id": "T1530",
+      "technique_name": "Data from Cloud Storage Object"
+    },
+    "version": "0.1",
+    "status": "ACTIVE",
+    "rulebook_origin": "active"
+  },
+  {
+    "rule_id": "RULE-IAM-010",
+    "title": "Direct Access to Secrets Manager Secrets",
+    "description": "Role can retrieve plaintext secrets from AWS Secrets Manager.",
+    "principal_type": "role",
+    "action": "secretsmanager:GetSecretValue",
+    "resource_type": "secretsmanager_secret",
+    "relationship": "can_read_secret",
+    "severity": "CRITICAL",
+    "technique_id": "T1552.005",
+    "technique_name": "Unsecured Credentials: Cloud Secrets",
+    "required_actions": [
+      "secretsmanager:GetSecretValue"
+    ],
+    "evidence_citation": "MITRE ATT&CK T1552.005 - Accessing cloud credentials stored in Secrets Manager",
+    "condition": null,
+    "source": {
+      "name": "researched",
+      "url": "https://attack.mitre.org/techniques/T1552/005/",
+      "tier": "PUBLIC_RESEARCH"
+    },
+    "evidence": {
+      "text": "Role permits secretsmanager:GetSecretValue on production secrets."
+    },
+    "mitre": {
+      "technique_id": "T1552.005",
+      "technique_name": "Unsecured Credentials: Cloud Secrets"
+    },
+    "version": "0.1",
+    "status": "ACTIVE",
+    "rulebook_origin": "active"
   }
 ]
