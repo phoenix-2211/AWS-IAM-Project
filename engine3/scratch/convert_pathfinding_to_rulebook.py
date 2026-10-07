@@ -50,6 +50,7 @@ extra_data_rules = [
         "extras": {
             "source_path_id": "s3-001",
             "category": "credential-access",
+            "unconstrained_permission_rule": True,
             "detection_tools": {"prowler": "", "cloudsplaining": ""},
             "cloudgoat_scenario": "cloud_breach_s3"
         }
@@ -89,6 +90,7 @@ extra_data_rules = [
         "extras": {
             "source_path_id": "s3-001",
             "category": "credential-access",
+            "unconstrained_permission_rule": True,
             "detection_tools": {"prowler": "", "cloudsplaining": ""},
             "cloudgoat_scenario": "cloud_breach_s3"
         }
@@ -128,6 +130,7 @@ extra_data_rules = [
         "extras": {
             "source_path_id": "secretsmanager-001",
             "category": "credential-access",
+            "unconstrained_permission_rule": True,
             "detection_tools": {"prowler": "", "cloudsplaining": ""},
             "cloudgoat_scenario": None
         }
@@ -167,6 +170,7 @@ extra_data_rules = [
         "extras": {
             "source_path_id": "secretsmanager-001",
             "category": "credential-access",
+            "unconstrained_permission_rule": True,
             "detection_tools": {"prowler": "", "cloudsplaining": ""},
             "cloudgoat_scenario": None
         }
@@ -205,12 +209,15 @@ converted_summary = {
     "converted_count": 0,
     "paths_with_detection_tools": 0,
     "paths_with_cloudgoat_scenario": 0,
-    "mitre_checked_count": 0
+    "mitre_checked_count": 0,
+    "rules_with_resource_constraints": 0,
+    "unconstrained_permission_rules": 0
 }
 
 # Add extra data access rules first
 for er in extra_data_rules:
     rules.append(er)
+    converted_summary["unconstrained_permission_rules"] += 1
 
 for pid in ordered_pids:
     data = paths_by_id[pid]
@@ -232,7 +239,8 @@ for pid in ordered_pids:
             
     # Resource constraints fold into condition
     constraints = [p.get("resourceConstraints") for p in perms_req if p.get("resourceConstraints")]
-    condition = {"resource_constraints": constraints} if constraints else None
+    has_constraints = len(constraints) > 0
+    condition = {"resource_constraints": constraints} if has_constraints else None
     
     # Discovery Attribution
     attrib = data.get("discoveryAttribution", {}).get("firstDocumented", {})
@@ -285,6 +293,11 @@ for pid in ordered_pids:
         rule_id = f"RULE-IAM-{rule_counter:03d}"
         rule_counter += 1
         
+        if has_constraints:
+            converted_summary["rules_with_resource_constraints"] += 1
+        else:
+            converted_summary["unconstrained_permission_rules"] += 1
+        
         rule_entry = {
             "rule_id": rule_id,
             "title": f"Privilege Escalation via {primary_action} ({pid} - {p_type})",
@@ -314,6 +327,7 @@ for pid in ordered_pids:
             "extras": {
                 "source_path_id": pid,
                 "category": category,
+                "unconstrained_permission_rule": not has_constraints,
                 "detection_tools": detection_tools,
                 "cloudgoat_scenario": cg_scenario
             }

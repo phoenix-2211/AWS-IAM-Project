@@ -90,7 +90,7 @@
           "path_id": { "type": "string" },
           "status": {
             "type": "string",
-            "enum": ["VERIFIED_EXPLOITABLE", "POLICY_DENIED", "SANDBOX_FAILED"]
+            "enum": ["VERIFIED_EXPLOITABLE", "POLICY_DENIED", "SANDBOX_FAILED", "POLICY_VERIFIED_NO_SANDBOX", "PARTIAL_CHAIN_VERIFIED"]
           },
           "status_reason": { "type": "string" },
           "verification_scope": { "type": "string" },

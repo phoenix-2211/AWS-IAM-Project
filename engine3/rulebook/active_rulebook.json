@@ -39,6 +39,7 @@
     "extras": {
       "source_path_id": "s3-001",
       "category": "credential-access",
+      "unconstrained_permission_rule": true,
       "detection_tools": {
         "prowler": "",
         "cloudsplaining": ""
@@ -86,6 +87,7 @@
     "extras": {
       "source_path_id": "s3-001",
       "category": "credential-access",
+      "unconstrained_permission_rule": true,
       "detection_tools": {
         "prowler": "",
         "cloudsplaining": ""
@@ -133,6 +135,7 @@
     "extras": {
       "source_path_id": "secretsmanager-001",
       "category": "credential-access",
+      "unconstrained_permission_rule": true,
       "detection_tools": {
         "prowler": "",
         "cloudsplaining": ""
@@ -180,6 +183,7 @@
     "extras": {
       "source_path_id": "secretsmanager-001",
       "category": "credential-access",
+      "unconstrained_permission_rule": true,
       "detection_tools": {
         "prowler": "",
         "cloudsplaining": ""
@@ -234,6 +238,7 @@
     "extras": {
       "source_path_id": "iam-014",
       "category": "principal-access",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L121",
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L580",
@@ -289,6 +294,7 @@
     "extras": {
       "source_path_id": "iam-014",
       "category": "principal-access",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L121",
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L580",
@@ -342,6 +348,7 @@
     "extras": {
       "source_path_id": "iam-001",
       "category": "self-escalation",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L117",
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L273",
@@ -395,6 +402,7 @@
     "extras": {
       "source_path_id": "iam-001",
       "category": "self-escalation",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L117",
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L273",
@@ -448,6 +456,7 @@
     "extras": {
       "source_path_id": "iam-009",
       "category": "self-escalation",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L121",
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L176",
@@ -501,6 +510,7 @@
     "extras": {
       "source_path_id": "iam-009",
       "category": "self-escalation",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L121",
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L176",
@@ -554,6 +564,7 @@
     "extras": {
       "source_path_id": "iam-005",
       "category": "self-escalation",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L124",
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L423",
@@ -607,6 +618,7 @@
     "extras": {
       "source_path_id": "iam-005",
       "category": "self-escalation",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L124",
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L423",
@@ -661,6 +673,7 @@
     "extras": {
       "source_path_id": "iam-002",
       "category": "principal-access",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/iam_edges.py#L70",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L112",
@@ -713,6 +726,7 @@
     "extras": {
       "source_path_id": "sts-001",
       "category": "principal-access",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/sts_edges.py#L73"
       },
@@ -762,6 +776,7 @@
     "extras": {
       "source_path_id": "sts-001",
       "category": "principal-access",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/sts_edges.py#L73"
       },
@@ -814,6 +829,7 @@
     "extras": {
       "source_path_id": "apprunner-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L287",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L182"
@@ -867,6 +883,7 @@
     "extras": {
       "source_path_id": "apprunner-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L287",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L182"
@@ -917,6 +934,7 @@
     "extras": {
       "source_path_id": "apprunner-002",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L292"
       },
@@ -966,6 +984,7 @@
     "extras": {
       "source_path_id": "apprunner-002",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L292"
       },
@@ -1019,6 +1038,7 @@
     "extras": {
       "source_path_id": "batch-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L346"
       },
@@ -1072,6 +1092,7 @@
     "extras": {
       "source_path_id": "batch-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L346"
       },
@@ -1121,6 +1142,7 @@
     "extras": {
       "source_path_id": "batch-002",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L352"
       },
@@ -1170,6 +1192,7 @@
     "extras": {
       "source_path_id": "batch-002",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L352"
       },
@@ -1225,6 +1248,7 @@
     "extras": {
       "source_path_id": "batch-003",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {},
       "cloudgoat_scenario": null
     }
@@ -1278,6 +1302,7 @@
     "extras": {
       "source_path_id": "batch-003",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {},
       "cloudgoat_scenario": null
     }
@@ -1332,6 +1357,7 @@
     "extras": {
       "source_path_id": "bedrock-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/1e1c1c018b6466b416e8cc98a452b11d4b83ae07/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L300",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L183"
@@ -1389,6 +1415,7 @@
     "extras": {
       "source_path_id": "bedrock-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/1e1c1c018b6466b416e8cc98a452b11d4b83ae07/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L300",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L183"
@@ -1442,6 +1469,7 @@
     "extras": {
       "source_path_id": "bedrock-002",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/1e1c1c018b6466b416e8cc98a452b11d4b83ae07/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L307",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L163"
@@ -1495,6 +1523,7 @@
     "extras": {
       "source_path_id": "bedrock-002",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/1e1c1c018b6466b416e8cc98a452b11d4b83ae07/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L307",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L163"
@@ -1553,6 +1582,7 @@
     "extras": {
       "source_path_id": "bedrock-003",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/1e1c1c018b6466b416e8cc98a452b11d4b83ae07/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L317"
       },
@@ -1610,6 +1640,7 @@
     "extras": {
       "source_path_id": "bedrock-003",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/1e1c1c018b6466b416e8cc98a452b11d4b83ae07/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L317"
       },
@@ -1659,6 +1690,7 @@
     "extras": {
       "source_path_id": "bedrock-004",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/1e1c1c018b6466b416e8cc98a452b11d4b83ae07/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L314"
       },
@@ -1708,6 +1740,7 @@
     "extras": {
       "source_path_id": "bedrock-004",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/1e1c1c018b6466b416e8cc98a452b11d4b83ae07/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L314"
       },
@@ -1771,6 +1804,7 @@
     "extras": {
       "source_path_id": "bedrock-005",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/1e1c1c018b6466b416e8cc98a452b11d4b83ae07/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L324"
       },
@@ -1834,6 +1868,7 @@
     "extras": {
       "source_path_id": "bedrock-005",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/1e1c1c018b6466b416e8cc98a452b11d4b83ae07/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L324"
       },
@@ -1889,6 +1924,7 @@
     "extras": {
       "source_path_id": "bedrock-006",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/1e1c1c018b6466b416e8cc98a452b11d4b83ae07/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L339"
       },
@@ -1944,6 +1980,7 @@
     "extras": {
       "source_path_id": "bedrock-006",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/1e1c1c018b6466b416e8cc98a452b11d4b83ae07/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L339"
       },
@@ -1995,6 +2032,7 @@
     "extras": {
       "source_path_id": "bedrock-007",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/1e1c1c018b6466b416e8cc98a452b11d4b83ae07/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L335"
       },
@@ -2046,6 +2084,7 @@
     "extras": {
       "source_path_id": "bedrock-007",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/1e1c1c018b6466b416e8cc98a452b11d4b83ae07/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L335"
       },
@@ -2097,6 +2136,7 @@
     "extras": {
       "source_path_id": "braket-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L354"
       },
@@ -2148,6 +2188,7 @@
     "extras": {
       "source_path_id": "braket-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L354"
       },
@@ -2201,6 +2242,7 @@
     "extras": {
       "source_path_id": "cloudformation-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/cloudformation_edges.py#L109-L132",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L150",
@@ -2256,6 +2298,7 @@
     "extras": {
       "source_path_id": "cloudformation-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/cloudformation_edges.py#L109-L132",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L150",
@@ -2308,6 +2351,7 @@
     "extras": {
       "source_path_id": "cloudformation-002",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/cloudformation_edges.py#L149",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L174"
@@ -2359,6 +2403,7 @@
     "extras": {
       "source_path_id": "cloudformation-002",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/cloudformation_edges.py#L149",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L174"
@@ -2414,6 +2459,7 @@
     "extras": {
       "source_path_id": "cloudformation-003",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L175",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L189"
@@ -2469,6 +2515,7 @@
     "extras": {
       "source_path_id": "cloudformation-003",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L175",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L189"
@@ -2522,6 +2569,7 @@
     "extras": {
       "source_path_id": "cloudformation-004",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L181",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L194"
@@ -2575,6 +2623,7 @@
     "extras": {
       "source_path_id": "cloudformation-004",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L181",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L194"
@@ -2629,6 +2678,7 @@
     "extras": {
       "source_path_id": "cloudformation-005",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/cloudformation_edges.py#L188-L210",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L186",
@@ -2686,6 +2736,7 @@
     "extras": {
       "source_path_id": "codebuild-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/codebuild_edges.py#L216",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L203",
@@ -2743,6 +2794,7 @@
     "extras": {
       "source_path_id": "codebuild-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/codebuild_edges.py#L216",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L203",
@@ -2795,6 +2847,7 @@
     "extras": {
       "source_path_id": "codebuild-002",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/codebuild_edges.py#L165-L173",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L214"
@@ -2846,6 +2899,7 @@
     "extras": {
       "source_path_id": "codebuild-002",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/codebuild_edges.py#L165-L173",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L214"
@@ -2897,6 +2951,7 @@
     "extras": {
       "source_path_id": "codebuild-003",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/codebuild_edges.py#L186",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L216"
@@ -2948,6 +3003,7 @@
     "extras": {
       "source_path_id": "codebuild-003",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/codebuild_edges.py#L186",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L216"
@@ -3004,6 +3060,7 @@
     "extras": {
       "source_path_id": "codebuild-004",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/codebuild_edges.py#L186",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L208",
@@ -3061,6 +3118,7 @@
     "extras": {
       "source_path_id": "codebuild-004",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/codebuild_edges.py#L186",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L208",
@@ -3116,6 +3174,7 @@
     "extras": {
       "source_path_id": "codedeploy-001",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L360"
       },
@@ -3169,6 +3228,7 @@
     "extras": {
       "source_path_id": "codedeploy-001",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L360"
       },
@@ -3220,6 +3280,7 @@
     "extras": {
       "source_path_id": "cognitoidentity-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L366"
       },
@@ -3271,6 +3332,7 @@
     "extras": {
       "source_path_id": "cognitoidentity-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L366"
       },
@@ -3327,6 +3389,7 @@
     "extras": {
       "source_path_id": "datapipeline-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L191",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L154"
@@ -3384,6 +3447,7 @@
     "extras": {
       "source_path_id": "datapipeline-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L191",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L154"
@@ -3439,6 +3503,7 @@
     "extras": {
       "source_path_id": "ec2-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/ec2_edges.py#L73-L127",
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L600",
@@ -3496,6 +3561,7 @@
     "extras": {
       "source_path_id": "ec2-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/ec2_edges.py#L73-L127",
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L600",
@@ -3553,6 +3619,7 @@
     "extras": {
       "source_path_id": "ec2-002",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L86",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L168"
@@ -3608,6 +3675,7 @@
     "extras": {
       "source_path_id": "ec2-002",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L86",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L168"
@@ -3661,6 +3729,7 @@
     "extras": {
       "source_path_id": "ec2-003",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L81",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L205"
@@ -3714,6 +3783,7 @@
     "extras": {
       "source_path_id": "ec2-003",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L81",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L205"
@@ -3767,6 +3837,7 @@
     "extras": {
       "source_path_id": "ec2-004",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L92",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L169"
@@ -3820,6 +3891,7 @@
     "extras": {
       "source_path_id": "ec2-004",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L92",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L169"
@@ -3873,6 +3945,7 @@
     "extras": {
       "source_path_id": "ec2-005",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/master/cloudsplaining/shared/constants.py#L275",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/master/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L154"
@@ -3926,6 +3999,7 @@
     "extras": {
       "source_path_id": "ec2-005",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/master/cloudsplaining/shared/constants.py#L275",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/master/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L154"
@@ -3979,6 +4053,7 @@
     "extras": {
       "source_path_id": "ec2instanceconnect-003",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L98",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L170"
@@ -4032,6 +4107,7 @@
     "extras": {
       "source_path_id": "ec2instanceconnect-003",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L98",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L170"
@@ -4089,6 +4165,7 @@
     "extras": {
       "source_path_id": "ecs-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L230",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L206"
@@ -4146,6 +4223,7 @@
     "extras": {
       "source_path_id": "ecs-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L230",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L206"
@@ -4203,6 +4281,7 @@
     "extras": {
       "source_path_id": "ecs-002",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L235",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L212"
@@ -4260,6 +4339,7 @@
     "extras": {
       "source_path_id": "ecs-002",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L235",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L212"
@@ -4315,6 +4395,7 @@
     "extras": {
       "source_path_id": "ecs-003",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L230",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L218"
@@ -4370,6 +4451,7 @@
     "extras": {
       "source_path_id": "ecs-003",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L230",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L218"
@@ -4425,6 +4507,7 @@
     "extras": {
       "source_path_id": "ecs-004",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L235",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L219"
@@ -4480,6 +4563,7 @@
     "extras": {
       "source_path_id": "ecs-004",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L235",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L219"
@@ -4535,6 +4619,7 @@
     "extras": {
       "source_path_id": "ecs-005",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L240",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L220"
@@ -4590,6 +4675,7 @@
     "extras": {
       "source_path_id": "ecs-005",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L240",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L220"
@@ -4643,6 +4729,7 @@
     "extras": {
       "source_path_id": "ecs-006",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/4f18bfc33cd2709ef3535e7c3ee0ad7ad72e8aa2/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L258",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L171"
@@ -4696,6 +4783,7 @@
     "extras": {
       "source_path_id": "ecs-006",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/4f18bfc33cd2709ef3535e7c3ee0ad7ad72e8aa2/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L258",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L171"
@@ -4750,6 +4838,7 @@
     "extras": {
       "source_path_id": "ecs-007",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L243"
       },
@@ -4803,6 +4892,7 @@
     "extras": {
       "source_path_id": "ecs-007",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L243"
       },
@@ -4854,6 +4944,7 @@
     "extras": {
       "source_path_id": "ecs-008",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L250"
       },
@@ -4905,6 +4996,7 @@
     "extras": {
       "source_path_id": "ecs-008",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L250"
       },
@@ -4956,6 +5048,7 @@
     "extras": {
       "source_path_id": "ecs-009",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L371"
       },
@@ -5007,6 +5100,7 @@
     "extras": {
       "source_path_id": "ecs-009",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L371"
       },
@@ -5058,6 +5152,7 @@
     "extras": {
       "source_path_id": "emr-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L376"
       },
@@ -5109,6 +5204,7 @@
     "extras": {
       "source_path_id": "emr-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L376"
       },
@@ -5162,6 +5258,7 @@
     "extras": {
       "source_path_id": "emrserverless-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L381"
       },
@@ -5215,6 +5312,7 @@
     "extras": {
       "source_path_id": "emrserverless-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L381"
       },
@@ -5270,6 +5368,7 @@
     "extras": {
       "source_path_id": "gamelift-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L387"
       },
@@ -5325,6 +5424,7 @@
     "extras": {
       "source_path_id": "gamelift-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L387"
       },
@@ -5377,6 +5477,7 @@
     "extras": {
       "source_path_id": "glue-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L146",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L140"
@@ -5430,6 +5531,7 @@
     "extras": {
       "source_path_id": "glue-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L146",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L140"
@@ -5482,6 +5584,7 @@
     "extras": {
       "source_path_id": "glue-002",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L159",
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L468",
@@ -5535,6 +5638,7 @@
     "extras": {
       "source_path_id": "glue-002",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L159",
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L468",
@@ -5591,6 +5695,7 @@
     "extras": {
       "source_path_id": "glue-003",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L146",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L221"
@@ -5646,6 +5751,7 @@
     "extras": {
       "source_path_id": "glue-003",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L146",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L221"
@@ -5701,6 +5807,7 @@
     "extras": {
       "source_path_id": "glue-004",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L151",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L222"
@@ -5756,6 +5863,7 @@
     "extras": {
       "source_path_id": "glue-004",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L151",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L222"
@@ -5811,6 +5919,7 @@
     "extras": {
       "source_path_id": "glue-005",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L157",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L223"
@@ -5866,6 +5975,7 @@
     "extras": {
       "source_path_id": "glue-005",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L157",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L223"
@@ -5921,6 +6031,7 @@
     "extras": {
       "source_path_id": "glue-006",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L163",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L224"
@@ -5976,6 +6087,7 @@
     "extras": {
       "source_path_id": "glue-006",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L163",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L224"
@@ -6030,6 +6142,7 @@
     "extras": {
       "source_path_id": "glue-007",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L394"
       },
@@ -6083,6 +6196,7 @@
     "extras": {
       "source_path_id": "glue-007",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L394"
       },
@@ -6136,6 +6250,7 @@
     "extras": {
       "source_path_id": "iam-003",
       "category": "principal-access",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/iam_edges.py#L63-L85",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L41",
@@ -6190,6 +6305,7 @@
     "extras": {
       "source_path_id": "iam-004",
       "category": "principal-access",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/iam_edges.py#L116",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L113",
@@ -6245,6 +6361,7 @@
     "extras": {
       "source_path_id": "iam-006",
       "category": "principal-access",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/iam_edges.py#L108",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L114",
@@ -6299,6 +6416,7 @@
     "extras": {
       "source_path_id": "iam-007",
       "category": "self-escalation",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L122",
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L437",
@@ -6352,6 +6470,7 @@
     "extras": {
       "source_path_id": "iam-007",
       "category": "self-escalation",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L122",
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L437",
@@ -6405,6 +6524,7 @@
     "extras": {
       "source_path_id": "iam-008",
       "category": "self-escalation",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L119",
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L190",
@@ -6458,6 +6578,7 @@
     "extras": {
       "source_path_id": "iam-008",
       "category": "self-escalation",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L119",
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L190",
@@ -6511,6 +6632,7 @@
     "extras": {
       "source_path_id": "iam-010",
       "category": "self-escalation",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L120",
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L162",
@@ -6564,6 +6686,7 @@
     "extras": {
       "source_path_id": "iam-010",
       "category": "self-escalation",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L120",
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L162",
@@ -6617,6 +6740,7 @@
     "extras": {
       "source_path_id": "iam-011",
       "category": "self-escalation",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L123",
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L409",
@@ -6670,6 +6794,7 @@
     "extras": {
       "source_path_id": "iam-011",
       "category": "self-escalation",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L123",
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L409",
@@ -6724,6 +6849,7 @@
     "extras": {
       "source_path_id": "iam-012",
       "category": "principal-access",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/iam_edges.py#L131",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L126",
@@ -6779,6 +6905,7 @@
     "extras": {
       "source_path_id": "iam-012",
       "category": "principal-access",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/iam_edges.py#L131",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L126",
@@ -6833,6 +6960,7 @@
     "extras": {
       "source_path_id": "iam-013",
       "category": "self-escalation",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L115",
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L572",
@@ -6886,6 +7014,7 @@
     "extras": {
       "source_path_id": "iam-013",
       "category": "self-escalation",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L115",
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L572",
@@ -6940,6 +7069,7 @@
     "extras": {
       "source_path_id": "iam-015",
       "category": "principal-access",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L45",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L231"
@@ -6993,6 +7123,7 @@
     "extras": {
       "source_path_id": "iam-016",
       "category": "principal-access",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L72",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L232"
@@ -7045,6 +7176,7 @@
     "extras": {
       "source_path_id": "iam-017",
       "category": "principal-access",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L67"
       },
@@ -7096,6 +7228,7 @@
     "extras": {
       "source_path_id": "iam-017",
       "category": "principal-access",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L67"
       },
@@ -7148,6 +7281,7 @@
     "extras": {
       "source_path_id": "iam-018",
       "category": "principal-access",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L49",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L233"
@@ -7201,6 +7335,7 @@
     "extras": {
       "source_path_id": "iam-019",
       "category": "principal-access",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L53",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L234"
@@ -7254,6 +7389,7 @@
     "extras": {
       "source_path_id": "iam-019",
       "category": "principal-access",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L53",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L234"
@@ -7307,6 +7443,7 @@
     "extras": {
       "source_path_id": "iam-020",
       "category": "principal-access",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L57",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L235"
@@ -7360,6 +7497,7 @@
     "extras": {
       "source_path_id": "iam-021",
       "category": "principal-access",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L61",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L236"
@@ -7413,6 +7551,7 @@
     "extras": {
       "source_path_id": "iam-021",
       "category": "principal-access",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L61",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L236"
@@ -7471,6 +7610,7 @@
     "extras": {
       "source_path_id": "imagebuilder-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L400"
       },
@@ -7528,6 +7668,7 @@
     "extras": {
       "source_path_id": "imagebuilder-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L400"
       },
@@ -7581,6 +7722,7 @@
     "extras": {
       "source_path_id": "kinesisanalytics-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L408"
       },
@@ -7634,6 +7776,7 @@
     "extras": {
       "source_path_id": "kinesisanalytics-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L408"
       },
@@ -7688,6 +7831,7 @@
     "extras": {
       "source_path_id": "lambda-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L129",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L103"
@@ -7743,6 +7887,7 @@
     "extras": {
       "source_path_id": "lambda-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L129",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L103"
@@ -7799,6 +7944,7 @@
     "extras": {
       "source_path_id": "lambda-002",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L655",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L108",
@@ -7856,6 +8002,7 @@
     "extras": {
       "source_path_id": "lambda-002",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L655",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L108",
@@ -7910,6 +8057,7 @@
     "extras": {
       "source_path_id": "lambda-003",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/lambda_edges.py#L152-L172",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L160",
@@ -7965,6 +8113,7 @@
     "extras": {
       "source_path_id": "lambda-003",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/lambda_edges.py#L152-L172",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L160",
@@ -8021,6 +8170,7 @@
     "extras": {
       "source_path_id": "lambda-004",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L616C10-L616C29",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L130",
@@ -8076,6 +8226,7 @@
     "extras": {
       "source_path_id": "lambda-004",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L616C10-L616C29",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L130",
@@ -8130,6 +8281,7 @@
     "extras": {
       "source_path_id": "lambda-005",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L135",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L173"
@@ -8183,6 +8335,7 @@
     "extras": {
       "source_path_id": "lambda-005",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L135",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L173"
@@ -8239,6 +8392,7 @@
     "extras": {
       "source_path_id": "lambda-006",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L287",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L120",
@@ -8296,6 +8450,7 @@
     "extras": {
       "source_path_id": "lambda-006",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pacu": "https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L287",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L120",
@@ -8353,6 +8508,7 @@
     "extras": {
       "source_path_id": "omics-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L414"
       },
@@ -8408,6 +8564,7 @@
     "extras": {
       "source_path_id": "omics-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L414"
       },
@@ -8461,6 +8618,7 @@
     "extras": {
       "source_path_id": "sagemaker-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/sagemaker_edges.py#L94",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L258",
@@ -8516,6 +8674,7 @@
     "extras": {
       "source_path_id": "sagemaker-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/sagemaker_edges.py#L94",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L258",
@@ -8571,6 +8730,7 @@
     "extras": {
       "source_path_id": "sagemaker-002",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/sagemaker_edges.py#L111",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L262",
@@ -8626,6 +8786,7 @@
     "extras": {
       "source_path_id": "sagemaker-002",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/sagemaker_edges.py#L111",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L262",
@@ -8681,6 +8842,7 @@
     "extras": {
       "source_path_id": "sagemaker-003",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/sagemaker_edges.py#L127",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L266",
@@ -8736,6 +8898,7 @@
     "extras": {
       "source_path_id": "sagemaker-003",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/sagemaker_edges.py#L127",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L266",
@@ -8788,6 +8951,7 @@
     "extras": {
       "source_path_id": "sagemaker-004",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L271",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L174"
@@ -8839,6 +9003,7 @@
     "extras": {
       "source_path_id": "sagemaker-004",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L271",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L174"
@@ -8896,6 +9061,7 @@
     "extras": {
       "source_path_id": "sagemaker-005",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L275",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L175"
@@ -8953,6 +9119,7 @@
     "extras": {
       "source_path_id": "sagemaker-005",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L275",
         "cloudsplaining": "https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L175"
@@ -9005,6 +9172,7 @@
     "extras": {
       "source_path_id": "scheduler-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L421"
       },
@@ -9056,6 +9224,7 @@
     "extras": {
       "source_path_id": "scheduler-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L421"
       },
@@ -9106,6 +9275,7 @@
     "extras": {
       "source_path_id": "ssm-001",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/ssm_edges.py#L103-L110",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L283"
@@ -9157,6 +9327,7 @@
     "extras": {
       "source_path_id": "ssm-001",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/ssm_edges.py#L103-L110",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L283"
@@ -9208,6 +9379,7 @@
     "extras": {
       "source_path_id": "ssm-002",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/ssm_edges.py#L85-L95",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L285"
@@ -9259,6 +9431,7 @@
     "extras": {
       "source_path_id": "ssm-002",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "pmapper": "https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/ssm_edges.py#L85-L95",
         "prowler": "https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L285"
@@ -9313,6 +9486,7 @@
     "extras": {
       "source_path_id": "ssm-003",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L426"
       },
@@ -9366,6 +9540,7 @@
     "extras": {
       "source_path_id": "ssm-003",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L426"
       },
@@ -9419,6 +9594,7 @@
     "extras": {
       "source_path_id": "stepfunctions-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L432"
       },
@@ -9472,6 +9648,7 @@
     "extras": {
       "source_path_id": "stepfunctions-001",
       "category": "new-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L432"
       },
@@ -9523,6 +9700,7 @@
     "extras": {
       "source_path_id": "stepfunctions-002",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L438"
       },
@@ -9574,6 +9752,7 @@
     "extras": {
       "source_path_id": "stepfunctions-002",
       "category": "existing-passrole",
+      "unconstrained_permission_rule": false,
       "detection_tools": {
         "prowler": "https://github.com/prowler-cloud/prowler/blob/c610d9ac3157a8ffd3ca43353febc5817e50fb86/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L438"
       },

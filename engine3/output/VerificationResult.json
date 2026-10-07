@@ -1,0 +1,1386 @@
+{
+  "contract_name": "VerificationResult",
+  "contract_version": "0.1",
+  "run": {
+    "run_id": "run-1791363228",
+    "origin": "engine3_pipeline",
+    "started_at": null,
+    "finished_at": null,
+    "git_sha": null,
+    "mode": "offline_fixture",
+    "simulator_backend": "local_evaluator",
+    "sandbox_mode": "MOCKED",
+    "enrichment": "off"
+  },
+  "inputs": {
+    "iamgraph_snapshot_id": "TREE-5-CRITICAL-001",
+    "iamgraph_content_sha256": "c8e992ec33d0700b3067c0c1ee634c2553fb82df85e44890ceef2037ca7b45a2",
+    "iamgraph_collection_status": "complete",
+    "rulebook_sha256": "1b9af7a2b5740080d7aaaa300e184a4c8b173ea1904f483168572a82fe14e106",
+    "rulebook_origin": "active",
+    "rules_active": 179,
+    "rules_skipped": 0
+  },
+  "degraded": false,
+  "degraded_reasons": [],
+  "paths": [
+    {
+      "path_id": "da75135d9ecbcc2b",
+      "status": "VERIFIED_EXPLOITABLE",
+      "confidence_tier": "FULL_CHAIN_VERIFIED",
+      "status_reason": "Every hop policy-checked and exploit successfully verified in CloudGoat sandbox.",
+      "verification_scope": "live_verified",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+          "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "action_used": "rule_target:RULE-IAM-010",
+          "matched_rule_id": "RULE-IAM-010",
+          "edge_id": "edge:APPLIES_TO:t5-01",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "action_used": "rule_target:RULE-IAM-011",
+          "matched_rule_id": "RULE-IAM-011",
+          "edge_id": "edge:APPLIES_TO:t5-02",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "to_node": "arn:aws:s3:::customer-credit-applications",
+          "action_used": "rule_target:RULE-IAM-S3-001",
+          "matched_rule_id": "RULE-IAM-S3-001",
+          "edge_id": "edge:APPLIES_TO:t5-03",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        }
+      ],
+      "assumptions": [],
+      "queue_rank": 1,
+      "queue_reason": "severity CRITICAL, 3 hops, 0 assumptions",
+      "evidence": {
+        "policy_simulator_result": "ALLOWED",
+        "policy_simulator_source": "local_evaluator",
+        "simulator_mode": "MOCKED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+            "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "action_used": "rule_target:RULE-IAM-010",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 0: Action 'rule_target:RULE-IAM-010' permitted from 'arn:aws:iam::111122223333:user/user-entrypoint' to target 'arn:aws:iam::111122223333:role/WAFAppRole'.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "action_used": "rule_target:RULE-IAM-011",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 1: Action 'rule_target:RULE-IAM-011' permitted from 'arn:aws:iam::111122223333:role/WAFAppRole' to target 'arn:aws:iam::111122223333:role/CustomerDataRole'.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "to_node": "arn:aws:s3:::customer-credit-applications",
+            "action_used": "rule_target:RULE-IAM-S3-001",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 2: Action 'rule_target:RULE-IAM-S3-001' permitted from 'arn:aws:iam::111122223333:role/CustomerDataRole' to target 'arn:aws:s3:::customer-credit-applications'.",
+            "raw_ref": null
+          }
+        ],
+        "denying_hop_details": null,
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": true,
+        "sandbox_execution_success": true,
+        "sandbox_failure_reason": null,
+        "sandbox_logs": [
+          "[MOCKED] Initializing CloudGoat scenario: None",
+          "[MOCKED] Target start node: arn:aws:iam::111122223333:user/user-entrypoint",
+          "[MOCKED] Target end node: arn:aws:s3:::customer-credit-applications",
+          "[MOCKED] Hop sequence: arn:aws:iam::111122223333:role/WAFAppRole -> arn:aws:iam::111122223333:role/CustomerDataRole -> arn:aws:s3:::customer-credit-applications",
+          "[MOCKED] Execution result: SUCCESS (FLAG_CAPTURED)",
+          "[MOCKED] Teardown verified cleanly; sandbox destroyed."
+        ],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": "mocked-evidence-da75135d",
+        "sandbox_mode": "MOCKED"
+      },
+      "limitations": [
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/session policies not evaluated",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/Resource policies not evaluated",
+        "local_evaluator, not AWS"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": null,
+        "sandbox_time_ms": null
+      }
+    },
+    {
+      "path_id": "0eb1e97d2236c559",
+      "status": "VERIFIED_EXPLOITABLE",
+      "confidence_tier": "FULL_CHAIN_VERIFIED",
+      "status_reason": "Every hop policy-checked and exploit successfully verified in CloudGoat sandbox.",
+      "verification_scope": "live_verified",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+          "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:t5-01",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "action_used": "rule_target:RULE-IAM-011",
+          "matched_rule_id": "RULE-IAM-011",
+          "edge_id": "edge:APPLIES_TO:t5-02",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "to_node": "arn:aws:s3:::customer-credit-applications",
+          "action_used": "rule_target:RULE-IAM-S3-001",
+          "matched_rule_id": "RULE-IAM-S3-001",
+          "edge_id": "edge:APPLIES_TO:t5-03",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        }
+      ],
+      "assumptions": [
+        "trust_structural_only"
+      ],
+      "queue_rank": 2,
+      "queue_reason": "severity CRITICAL, 3 hops, 1 assumption",
+      "evidence": {
+        "policy_simulator_result": "ALLOWED",
+        "policy_simulator_source": "local_evaluator",
+        "simulator_mode": "MOCKED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+            "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "action_used": "sts:AssumeRole",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 0: Trust relationship between 'arn:aws:iam::111122223333:user/user-entrypoint' and 'arn:aws:iam::111122223333:role/WAFAppRole' verified structurally.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "action_used": "rule_target:RULE-IAM-011",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 1: Action 'rule_target:RULE-IAM-011' permitted from 'arn:aws:iam::111122223333:role/WAFAppRole' to target 'arn:aws:iam::111122223333:role/CustomerDataRole'.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "to_node": "arn:aws:s3:::customer-credit-applications",
+            "action_used": "rule_target:RULE-IAM-S3-001",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 2: Action 'rule_target:RULE-IAM-S3-001' permitted from 'arn:aws:iam::111122223333:role/CustomerDataRole' to target 'arn:aws:s3:::customer-credit-applications'.",
+            "raw_ref": null
+          }
+        ],
+        "denying_hop_details": null,
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": true,
+        "sandbox_execution_success": true,
+        "sandbox_failure_reason": null,
+        "sandbox_logs": [
+          "[MOCKED] Initializing CloudGoat scenario: None",
+          "[MOCKED] Target start node: arn:aws:iam::111122223333:user/user-entrypoint",
+          "[MOCKED] Target end node: arn:aws:s3:::customer-credit-applications",
+          "[MOCKED] Hop sequence: arn:aws:iam::111122223333:role/WAFAppRole -> arn:aws:iam::111122223333:role/CustomerDataRole -> arn:aws:s3:::customer-credit-applications",
+          "[MOCKED] Execution result: SUCCESS (FLAG_CAPTURED)",
+          "[MOCKED] Teardown verified cleanly; sandbox destroyed."
+        ],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": "mocked-evidence-0eb1e97d",
+        "sandbox_mode": "MOCKED"
+      },
+      "limitations": [
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/session policies not evaluated",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/Resource policies not evaluated",
+        "local_evaluator, not AWS"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": null,
+        "sandbox_time_ms": null
+      }
+    },
+    {
+      "path_id": "2169950ff0260de4",
+      "status": "POLICY_DENIED",
+      "confidence_tier": "POLICY_DENIED",
+      "status_reason": "Hop 2 ('rule_target:RULE-IAM-SEC-001') denied by simulator (explicitDeny)",
+      "verification_scope": "policy_simulated_only",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+          "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "action_used": "rule_target:RULE-IAM-010",
+          "matched_rule_id": "RULE-IAM-010",
+          "edge_id": "edge:APPLIES_TO:t5-01",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "action_used": "rule_target:RULE-IAM-011",
+          "matched_rule_id": "RULE-IAM-011",
+          "edge_id": "edge:APPLIES_TO:t5-02",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/master-key",
+          "action_used": "rule_target:RULE-IAM-SEC-001",
+          "matched_rule_id": "RULE-IAM-SEC-001",
+          "edge_id": "edge:APPLIES_TO:t5-04",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "deny_present"
+          ]
+        }
+      ],
+      "assumptions": [
+        "deny_present"
+      ],
+      "queue_rank": 3,
+      "queue_reason": "severity CRITICAL, 3 hops, 1 assumption",
+      "evidence": {
+        "policy_simulator_result": "DENIED",
+        "policy_simulator_source": "local_evaluator",
+        "simulator_mode": "MOCKED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+            "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "action_used": "rule_target:RULE-IAM-010",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 0: Action 'rule_target:RULE-IAM-010' permitted from 'arn:aws:iam::111122223333:user/user-entrypoint' to target 'arn:aws:iam::111122223333:role/WAFAppRole'.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "action_used": "rule_target:RULE-IAM-011",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 1: Action 'rule_target:RULE-IAM-011' permitted from 'arn:aws:iam::111122223333:role/WAFAppRole' to target 'arn:aws:iam::111122223333:role/CustomerDataRole'.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/master-key",
+            "action_used": "rule_target:RULE-IAM-SEC-001",
+            "decision": "DENIED",
+            "eval_decision": "explicitDeny",
+            "missing_context": [],
+            "note": "Denied at hop 2: Action 'rule_target:RULE-IAM-SEC-001' on target 'arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/master-key' explicitly denied by overlapping Deny statement in policy.",
+            "raw_ref": null
+          }
+        ],
+        "denying_hop_details": {
+          "denying_hop_index": 2,
+          "denying_hop_from": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "denying_hop_to": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/master-key",
+          "denying_action": "rule_target:RULE-IAM-SEC-001",
+          "denying_reason_type": "explicitDeny"
+        },
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": false,
+        "sandbox_execution_success": null,
+        "sandbox_failure_reason": "blocked_at_policy_simulator",
+        "sandbox_logs": [
+          "[MOCKED] Skipped sandbox execution: path blocked at policy simulator (POLICY_DENIED)."
+        ],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": null,
+        "sandbox_mode": "MOCKED"
+      },
+      "limitations": [
+        "local_evaluator, not AWS",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/session policies not evaluated"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": null,
+        "sandbox_time_ms": null
+      }
+    },
+    {
+      "path_id": "346ff0863ae8f1ce",
+      "status": "VERIFIED_EXPLOITABLE",
+      "confidence_tier": "FULL_CHAIN_VERIFIED",
+      "status_reason": "Every hop policy-checked and exploit successfully verified in CloudGoat sandbox.",
+      "verification_scope": "live_verified",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+          "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:t5-01",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:t5-02",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "to_node": "arn:aws:s3:::customer-credit-applications",
+          "action_used": "rule_target:RULE-IAM-S3-001",
+          "matched_rule_id": "RULE-IAM-S3-001",
+          "edge_id": "edge:APPLIES_TO:t5-03",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        }
+      ],
+      "assumptions": [
+        "trust_structural_only"
+      ],
+      "queue_rank": 4,
+      "queue_reason": "severity CRITICAL, 3 hops, 1 assumption",
+      "evidence": {
+        "policy_simulator_result": "ALLOWED",
+        "policy_simulator_source": "local_evaluator",
+        "simulator_mode": "MOCKED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+            "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "action_used": "sts:AssumeRole",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 0: Trust relationship between 'arn:aws:iam::111122223333:user/user-entrypoint' and 'arn:aws:iam::111122223333:role/WAFAppRole' verified structurally.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "action_used": "sts:AssumeRole",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 1: Trust relationship between 'arn:aws:iam::111122223333:role/WAFAppRole' and 'arn:aws:iam::111122223333:role/CustomerDataRole' verified structurally.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "to_node": "arn:aws:s3:::customer-credit-applications",
+            "action_used": "rule_target:RULE-IAM-S3-001",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 2: Action 'rule_target:RULE-IAM-S3-001' permitted from 'arn:aws:iam::111122223333:role/CustomerDataRole' to target 'arn:aws:s3:::customer-credit-applications'.",
+            "raw_ref": null
+          }
+        ],
+        "denying_hop_details": null,
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": true,
+        "sandbox_execution_success": true,
+        "sandbox_failure_reason": null,
+        "sandbox_logs": [
+          "[MOCKED] Initializing CloudGoat scenario: None",
+          "[MOCKED] Target start node: arn:aws:iam::111122223333:user/user-entrypoint",
+          "[MOCKED] Target end node: arn:aws:s3:::customer-credit-applications",
+          "[MOCKED] Hop sequence: arn:aws:iam::111122223333:role/WAFAppRole -> arn:aws:iam::111122223333:role/CustomerDataRole -> arn:aws:s3:::customer-credit-applications",
+          "[MOCKED] Execution result: SUCCESS (FLAG_CAPTURED)",
+          "[MOCKED] Teardown verified cleanly; sandbox destroyed."
+        ],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": "mocked-evidence-346ff086",
+        "sandbox_mode": "MOCKED"
+      },
+      "limitations": [
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/session policies not evaluated",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/Resource policies not evaluated",
+        "local_evaluator, not AWS"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": null,
+        "sandbox_time_ms": null
+      }
+    },
+    {
+      "path_id": "9761c2bab5fa8f43",
+      "status": "POLICY_DENIED",
+      "confidence_tier": "POLICY_DENIED",
+      "status_reason": "Hop 2 ('rule_target:RULE-IAM-SEC-001') denied by simulator (explicitDeny)",
+      "verification_scope": "policy_simulated_only",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+          "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "action_used": "rule_target:RULE-IAM-010",
+          "matched_rule_id": "RULE-IAM-010",
+          "edge_id": "edge:APPLIES_TO:t5-01",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "action_used": "rule_target:RULE-IAM-011",
+          "matched_rule_id": "RULE-IAM-011",
+          "edge_id": "edge:APPLIES_TO:t5-02",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/deny-trap-secret",
+          "action_used": "rule_target:RULE-IAM-SEC-001",
+          "matched_rule_id": "RULE-IAM-SEC-001",
+          "edge_id": "edge:APPLIES_TO:t5-05",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "deny_present"
+          ]
+        }
+      ],
+      "assumptions": [
+        "deny_present"
+      ],
+      "queue_rank": 5,
+      "queue_reason": "severity CRITICAL, 3 hops, 1 assumption",
+      "evidence": {
+        "policy_simulator_result": "DENIED",
+        "policy_simulator_source": "local_evaluator",
+        "simulator_mode": "MOCKED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+            "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "action_used": "rule_target:RULE-IAM-010",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 0: Action 'rule_target:RULE-IAM-010' permitted from 'arn:aws:iam::111122223333:user/user-entrypoint' to target 'arn:aws:iam::111122223333:role/WAFAppRole'.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "action_used": "rule_target:RULE-IAM-011",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 1: Action 'rule_target:RULE-IAM-011' permitted from 'arn:aws:iam::111122223333:role/WAFAppRole' to target 'arn:aws:iam::111122223333:role/CustomerDataRole'.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/deny-trap-secret",
+            "action_used": "rule_target:RULE-IAM-SEC-001",
+            "decision": "DENIED",
+            "eval_decision": "explicitDeny",
+            "missing_context": [],
+            "note": "Denied at hop 2: Action 'rule_target:RULE-IAM-SEC-001' on target 'arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/deny-trap-secret' explicitly denied by overlapping Deny statement in policy.",
+            "raw_ref": null
+          }
+        ],
+        "denying_hop_details": {
+          "denying_hop_index": 2,
+          "denying_hop_from": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "denying_hop_to": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/deny-trap-secret",
+          "denying_action": "rule_target:RULE-IAM-SEC-001",
+          "denying_reason_type": "explicitDeny"
+        },
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": false,
+        "sandbox_execution_success": null,
+        "sandbox_failure_reason": "blocked_at_policy_simulator",
+        "sandbox_logs": [
+          "[MOCKED] Skipped sandbox execution: path blocked at policy simulator (POLICY_DENIED)."
+        ],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": null,
+        "sandbox_mode": "MOCKED"
+      },
+      "limitations": [
+        "local_evaluator, not AWS",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/session policies not evaluated"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": null,
+        "sandbox_time_ms": null
+      }
+    },
+    {
+      "path_id": "bf4f212700bc4559",
+      "status": "VERIFIED_EXPLOITABLE",
+      "confidence_tier": "FULL_CHAIN_VERIFIED",
+      "status_reason": "Every hop policy-checked and exploit successfully verified in CloudGoat sandbox.",
+      "verification_scope": "live_verified",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+          "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "action_used": "rule_target:RULE-IAM-010",
+          "matched_rule_id": "RULE-IAM-010",
+          "edge_id": "edge:APPLIES_TO:t5-01",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:t5-02",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "to_node": "arn:aws:s3:::customer-credit-applications",
+          "action_used": "rule_target:RULE-IAM-S3-001",
+          "matched_rule_id": "RULE-IAM-S3-001",
+          "edge_id": "edge:APPLIES_TO:t5-03",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        }
+      ],
+      "assumptions": [
+        "trust_structural_only"
+      ],
+      "queue_rank": 6,
+      "queue_reason": "severity CRITICAL, 3 hops, 1 assumption",
+      "evidence": {
+        "policy_simulator_result": "ALLOWED",
+        "policy_simulator_source": "local_evaluator",
+        "simulator_mode": "MOCKED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+            "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "action_used": "rule_target:RULE-IAM-010",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 0: Action 'rule_target:RULE-IAM-010' permitted from 'arn:aws:iam::111122223333:user/user-entrypoint' to target 'arn:aws:iam::111122223333:role/WAFAppRole'.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "action_used": "sts:AssumeRole",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 1: Trust relationship between 'arn:aws:iam::111122223333:role/WAFAppRole' and 'arn:aws:iam::111122223333:role/CustomerDataRole' verified structurally.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "to_node": "arn:aws:s3:::customer-credit-applications",
+            "action_used": "rule_target:RULE-IAM-S3-001",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 2: Action 'rule_target:RULE-IAM-S3-001' permitted from 'arn:aws:iam::111122223333:role/CustomerDataRole' to target 'arn:aws:s3:::customer-credit-applications'.",
+            "raw_ref": null
+          }
+        ],
+        "denying_hop_details": null,
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": true,
+        "sandbox_execution_success": true,
+        "sandbox_failure_reason": null,
+        "sandbox_logs": [
+          "[MOCKED] Initializing CloudGoat scenario: None",
+          "[MOCKED] Target start node: arn:aws:iam::111122223333:user/user-entrypoint",
+          "[MOCKED] Target end node: arn:aws:s3:::customer-credit-applications",
+          "[MOCKED] Hop sequence: arn:aws:iam::111122223333:role/WAFAppRole -> arn:aws:iam::111122223333:role/CustomerDataRole -> arn:aws:s3:::customer-credit-applications",
+          "[MOCKED] Execution result: SUCCESS (FLAG_CAPTURED)",
+          "[MOCKED] Teardown verified cleanly; sandbox destroyed."
+        ],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": "mocked-evidence-bf4f2127",
+        "sandbox_mode": "MOCKED"
+      },
+      "limitations": [
+        "Offline local evaluation, not independent verification",
+        "SCP/RCP/session policies not evaluated",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/Resource policies not evaluated",
+        "local_evaluator, not AWS"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": null,
+        "sandbox_time_ms": null
+      }
+    },
+    {
+      "path_id": "4000e7cc9b62ebcb",
+      "status": "POLICY_DENIED",
+      "confidence_tier": "POLICY_DENIED",
+      "status_reason": "Hop 2 ('rule_target:RULE-IAM-SEC-001') denied by simulator (explicitDeny)",
+      "verification_scope": "policy_simulated_only",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+          "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:t5-01",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:t5-02",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/deny-trap-secret",
+          "action_used": "rule_target:RULE-IAM-SEC-001",
+          "matched_rule_id": "RULE-IAM-SEC-001",
+          "edge_id": "edge:APPLIES_TO:t5-05",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "deny_present"
+          ]
+        }
+      ],
+      "assumptions": [
+        "deny_present",
+        "trust_structural_only"
+      ],
+      "queue_rank": 7,
+      "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
+      "evidence": {
+        "policy_simulator_result": "DENIED",
+        "policy_simulator_source": "local_evaluator",
+        "simulator_mode": "MOCKED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+            "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "action_used": "sts:AssumeRole",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 0: Trust relationship between 'arn:aws:iam::111122223333:user/user-entrypoint' and 'arn:aws:iam::111122223333:role/WAFAppRole' verified structurally.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "action_used": "sts:AssumeRole",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 1: Trust relationship between 'arn:aws:iam::111122223333:role/WAFAppRole' and 'arn:aws:iam::111122223333:role/CustomerDataRole' verified structurally.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/deny-trap-secret",
+            "action_used": "rule_target:RULE-IAM-SEC-001",
+            "decision": "DENIED",
+            "eval_decision": "explicitDeny",
+            "missing_context": [],
+            "note": "Denied at hop 2: Action 'rule_target:RULE-IAM-SEC-001' on target 'arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/deny-trap-secret' explicitly denied by overlapping Deny statement in policy.",
+            "raw_ref": null
+          }
+        ],
+        "denying_hop_details": {
+          "denying_hop_index": 2,
+          "denying_hop_from": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "denying_hop_to": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/deny-trap-secret",
+          "denying_action": "rule_target:RULE-IAM-SEC-001",
+          "denying_reason_type": "explicitDeny"
+        },
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": false,
+        "sandbox_execution_success": null,
+        "sandbox_failure_reason": "blocked_at_policy_simulator",
+        "sandbox_logs": [
+          "[MOCKED] Skipped sandbox execution: path blocked at policy simulator (POLICY_DENIED)."
+        ],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": null,
+        "sandbox_mode": "MOCKED"
+      },
+      "limitations": [
+        "local_evaluator, not AWS",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/session policies not evaluated"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": null,
+        "sandbox_time_ms": null
+      }
+    },
+    {
+      "path_id": "645cd14e29ca9468",
+      "status": "POLICY_DENIED",
+      "confidence_tier": "POLICY_DENIED",
+      "status_reason": "Hop 2 ('rule_target:RULE-IAM-SEC-001') denied by simulator (explicitDeny)",
+      "verification_scope": "policy_simulated_only",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+          "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:t5-01",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "action_used": "rule_target:RULE-IAM-011",
+          "matched_rule_id": "RULE-IAM-011",
+          "edge_id": "edge:APPLIES_TO:t5-02",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/master-key",
+          "action_used": "rule_target:RULE-IAM-SEC-001",
+          "matched_rule_id": "RULE-IAM-SEC-001",
+          "edge_id": "edge:APPLIES_TO:t5-04",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "deny_present"
+          ]
+        }
+      ],
+      "assumptions": [
+        "deny_present",
+        "trust_structural_only"
+      ],
+      "queue_rank": 8,
+      "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
+      "evidence": {
+        "policy_simulator_result": "DENIED",
+        "policy_simulator_source": "local_evaluator",
+        "simulator_mode": "MOCKED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+            "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "action_used": "sts:AssumeRole",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 0: Trust relationship between 'arn:aws:iam::111122223333:user/user-entrypoint' and 'arn:aws:iam::111122223333:role/WAFAppRole' verified structurally.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "action_used": "rule_target:RULE-IAM-011",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 1: Action 'rule_target:RULE-IAM-011' permitted from 'arn:aws:iam::111122223333:role/WAFAppRole' to target 'arn:aws:iam::111122223333:role/CustomerDataRole'.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/master-key",
+            "action_used": "rule_target:RULE-IAM-SEC-001",
+            "decision": "DENIED",
+            "eval_decision": "explicitDeny",
+            "missing_context": [],
+            "note": "Denied at hop 2: Action 'rule_target:RULE-IAM-SEC-001' on target 'arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/master-key' explicitly denied by overlapping Deny statement in policy.",
+            "raw_ref": null
+          }
+        ],
+        "denying_hop_details": {
+          "denying_hop_index": 2,
+          "denying_hop_from": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "denying_hop_to": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/master-key",
+          "denying_action": "rule_target:RULE-IAM-SEC-001",
+          "denying_reason_type": "explicitDeny"
+        },
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": false,
+        "sandbox_execution_success": null,
+        "sandbox_failure_reason": "blocked_at_policy_simulator",
+        "sandbox_logs": [
+          "[MOCKED] Skipped sandbox execution: path blocked at policy simulator (POLICY_DENIED)."
+        ],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": null,
+        "sandbox_mode": "MOCKED"
+      },
+      "limitations": [
+        "local_evaluator, not AWS",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/session policies not evaluated"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": null,
+        "sandbox_time_ms": null
+      }
+    },
+    {
+      "path_id": "67120f903fb22bfa",
+      "status": "POLICY_DENIED",
+      "confidence_tier": "POLICY_DENIED",
+      "status_reason": "Hop 2 ('rule_target:RULE-IAM-SEC-001') denied by simulator (explicitDeny)",
+      "verification_scope": "policy_simulated_only",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+          "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:t5-01",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:t5-02",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/master-key",
+          "action_used": "rule_target:RULE-IAM-SEC-001",
+          "matched_rule_id": "RULE-IAM-SEC-001",
+          "edge_id": "edge:APPLIES_TO:t5-04",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "deny_present"
+          ]
+        }
+      ],
+      "assumptions": [
+        "deny_present",
+        "trust_structural_only"
+      ],
+      "queue_rank": 9,
+      "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
+      "evidence": {
+        "policy_simulator_result": "DENIED",
+        "policy_simulator_source": "local_evaluator",
+        "simulator_mode": "MOCKED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+            "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "action_used": "sts:AssumeRole",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 0: Trust relationship between 'arn:aws:iam::111122223333:user/user-entrypoint' and 'arn:aws:iam::111122223333:role/WAFAppRole' verified structurally.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "action_used": "sts:AssumeRole",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 1: Trust relationship between 'arn:aws:iam::111122223333:role/WAFAppRole' and 'arn:aws:iam::111122223333:role/CustomerDataRole' verified structurally.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/master-key",
+            "action_used": "rule_target:RULE-IAM-SEC-001",
+            "decision": "DENIED",
+            "eval_decision": "explicitDeny",
+            "missing_context": [],
+            "note": "Denied at hop 2: Action 'rule_target:RULE-IAM-SEC-001' on target 'arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/master-key' explicitly denied by overlapping Deny statement in policy.",
+            "raw_ref": null
+          }
+        ],
+        "denying_hop_details": {
+          "denying_hop_index": 2,
+          "denying_hop_from": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "denying_hop_to": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/master-key",
+          "denying_action": "rule_target:RULE-IAM-SEC-001",
+          "denying_reason_type": "explicitDeny"
+        },
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": false,
+        "sandbox_execution_success": null,
+        "sandbox_failure_reason": "blocked_at_policy_simulator",
+        "sandbox_logs": [
+          "[MOCKED] Skipped sandbox execution: path blocked at policy simulator (POLICY_DENIED)."
+        ],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": null,
+        "sandbox_mode": "MOCKED"
+      },
+      "limitations": [
+        "local_evaluator, not AWS",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/session policies not evaluated"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": null,
+        "sandbox_time_ms": null
+      }
+    },
+    {
+      "path_id": "7b5199db21f88895",
+      "status": "POLICY_DENIED",
+      "confidence_tier": "POLICY_DENIED",
+      "status_reason": "Hop 2 ('rule_target:RULE-IAM-SEC-001') denied by simulator (explicitDeny)",
+      "verification_scope": "policy_simulated_only",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+          "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "action_used": "rule_target:RULE-IAM-010",
+          "matched_rule_id": "RULE-IAM-010",
+          "edge_id": "edge:APPLIES_TO:t5-01",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:t5-02",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/deny-trap-secret",
+          "action_used": "rule_target:RULE-IAM-SEC-001",
+          "matched_rule_id": "RULE-IAM-SEC-001",
+          "edge_id": "edge:APPLIES_TO:t5-05",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "deny_present"
+          ]
+        }
+      ],
+      "assumptions": [
+        "deny_present",
+        "trust_structural_only"
+      ],
+      "queue_rank": 10,
+      "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
+      "evidence": {
+        "policy_simulator_result": "DENIED",
+        "policy_simulator_source": "local_evaluator",
+        "simulator_mode": "MOCKED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+            "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "action_used": "rule_target:RULE-IAM-010",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 0: Action 'rule_target:RULE-IAM-010' permitted from 'arn:aws:iam::111122223333:user/user-entrypoint' to target 'arn:aws:iam::111122223333:role/WAFAppRole'.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "action_used": "sts:AssumeRole",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 1: Trust relationship between 'arn:aws:iam::111122223333:role/WAFAppRole' and 'arn:aws:iam::111122223333:role/CustomerDataRole' verified structurally.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/deny-trap-secret",
+            "action_used": "rule_target:RULE-IAM-SEC-001",
+            "decision": "DENIED",
+            "eval_decision": "explicitDeny",
+            "missing_context": [],
+            "note": "Denied at hop 2: Action 'rule_target:RULE-IAM-SEC-001' on target 'arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/deny-trap-secret' explicitly denied by overlapping Deny statement in policy.",
+            "raw_ref": null
+          }
+        ],
+        "denying_hop_details": {
+          "denying_hop_index": 2,
+          "denying_hop_from": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "denying_hop_to": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/deny-trap-secret",
+          "denying_action": "rule_target:RULE-IAM-SEC-001",
+          "denying_reason_type": "explicitDeny"
+        },
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": false,
+        "sandbox_execution_success": null,
+        "sandbox_failure_reason": "blocked_at_policy_simulator",
+        "sandbox_logs": [
+          "[MOCKED] Skipped sandbox execution: path blocked at policy simulator (POLICY_DENIED)."
+        ],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": null,
+        "sandbox_mode": "MOCKED"
+      },
+      "limitations": [
+        "local_evaluator, not AWS",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/session policies not evaluated"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": null,
+        "sandbox_time_ms": null
+      }
+    },
+    {
+      "path_id": "ad5cd2e0df841a6d",
+      "status": "POLICY_DENIED",
+      "confidence_tier": "POLICY_DENIED",
+      "status_reason": "Hop 2 ('rule_target:RULE-IAM-SEC-001') denied by simulator (explicitDeny)",
+      "verification_scope": "policy_simulated_only",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+          "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "action_used": "rule_target:RULE-IAM-010",
+          "matched_rule_id": "RULE-IAM-010",
+          "edge_id": "edge:APPLIES_TO:t5-01",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:t5-02",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/master-key",
+          "action_used": "rule_target:RULE-IAM-SEC-001",
+          "matched_rule_id": "RULE-IAM-SEC-001",
+          "edge_id": "edge:APPLIES_TO:t5-04",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "deny_present"
+          ]
+        }
+      ],
+      "assumptions": [
+        "deny_present",
+        "trust_structural_only"
+      ],
+      "queue_rank": 11,
+      "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
+      "evidence": {
+        "policy_simulator_result": "DENIED",
+        "policy_simulator_source": "local_evaluator",
+        "simulator_mode": "MOCKED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+            "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "action_used": "rule_target:RULE-IAM-010",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 0: Action 'rule_target:RULE-IAM-010' permitted from 'arn:aws:iam::111122223333:user/user-entrypoint' to target 'arn:aws:iam::111122223333:role/WAFAppRole'.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "action_used": "sts:AssumeRole",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 1: Trust relationship between 'arn:aws:iam::111122223333:role/WAFAppRole' and 'arn:aws:iam::111122223333:role/CustomerDataRole' verified structurally.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/master-key",
+            "action_used": "rule_target:RULE-IAM-SEC-001",
+            "decision": "DENIED",
+            "eval_decision": "explicitDeny",
+            "missing_context": [],
+            "note": "Denied at hop 2: Action 'rule_target:RULE-IAM-SEC-001' on target 'arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/master-key' explicitly denied by overlapping Deny statement in policy.",
+            "raw_ref": null
+          }
+        ],
+        "denying_hop_details": {
+          "denying_hop_index": 2,
+          "denying_hop_from": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "denying_hop_to": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/master-key",
+          "denying_action": "rule_target:RULE-IAM-SEC-001",
+          "denying_reason_type": "explicitDeny"
+        },
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": false,
+        "sandbox_execution_success": null,
+        "sandbox_failure_reason": "blocked_at_policy_simulator",
+        "sandbox_logs": [
+          "[MOCKED] Skipped sandbox execution: path blocked at policy simulator (POLICY_DENIED)."
+        ],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": null,
+        "sandbox_mode": "MOCKED"
+      },
+      "limitations": [
+        "local_evaluator, not AWS",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/session policies not evaluated"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": null,
+        "sandbox_time_ms": null
+      }
+    },
+    {
+      "path_id": "d49e8284ccb3f3b6",
+      "status": "POLICY_DENIED",
+      "confidence_tier": "POLICY_DENIED",
+      "status_reason": "Hop 2 ('rule_target:RULE-IAM-SEC-001') denied by simulator (explicitDeny)",
+      "verification_scope": "policy_simulated_only",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+          "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:t5-01",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "action_used": "rule_target:RULE-IAM-011",
+          "matched_rule_id": "RULE-IAM-011",
+          "edge_id": "edge:APPLIES_TO:t5-02",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/deny-trap-secret",
+          "action_used": "rule_target:RULE-IAM-SEC-001",
+          "matched_rule_id": "RULE-IAM-SEC-001",
+          "edge_id": "edge:APPLIES_TO:t5-05",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "deny_present"
+          ]
+        }
+      ],
+      "assumptions": [
+        "deny_present",
+        "trust_structural_only"
+      ],
+      "queue_rank": 12,
+      "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
+      "evidence": {
+        "policy_simulator_result": "DENIED",
+        "policy_simulator_source": "local_evaluator",
+        "simulator_mode": "MOCKED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+            "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "action_used": "sts:AssumeRole",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 0: Trust relationship between 'arn:aws:iam::111122223333:user/user-entrypoint' and 'arn:aws:iam::111122223333:role/WAFAppRole' verified structurally.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "action_used": "rule_target:RULE-IAM-011",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 1: Action 'rule_target:RULE-IAM-011' permitted from 'arn:aws:iam::111122223333:role/WAFAppRole' to target 'arn:aws:iam::111122223333:role/CustomerDataRole'.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "to_node": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/deny-trap-secret",
+            "action_used": "rule_target:RULE-IAM-SEC-001",
+            "decision": "DENIED",
+            "eval_decision": "explicitDeny",
+            "missing_context": [],
+            "note": "Denied at hop 2: Action 'rule_target:RULE-IAM-SEC-001' on target 'arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/deny-trap-secret' explicitly denied by overlapping Deny statement in policy.",
+            "raw_ref": null
+          }
+        ],
+        "denying_hop_details": {
+          "denying_hop_index": 2,
+          "denying_hop_from": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "denying_hop_to": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/deny-trap-secret",
+          "denying_action": "rule_target:RULE-IAM-SEC-001",
+          "denying_reason_type": "explicitDeny"
+        },
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": false,
+        "sandbox_execution_success": null,
+        "sandbox_failure_reason": "blocked_at_policy_simulator",
+        "sandbox_logs": [
+          "[MOCKED] Skipped sandbox execution: path blocked at policy simulator (POLICY_DENIED)."
+        ],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": null,
+        "sandbox_mode": "MOCKED"
+      },
+      "limitations": [
+        "local_evaluator, not AWS",
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/session policies not evaluated"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": null,
+        "sandbox_time_ms": null
+      }
+    }
+  ],
+  "runtime_metrics": {
+    "graph_time_ms": null,
+    "policy_sim_time_ms": null,
+    "sandbox_time_ms": null,
+    "total_ms": null,
+    "load_time_ms": null,
+    "policy_sim_backend": "local_evaluator",
+    "policy_sim_timing_representative": false,
+    "sandbox_breakdown_ms": {
+      "deploy": null,
+      "execute": null,
+      "destroy": null
+    }
+  },
+  "stats": {
+    "paths_total": 12,
+    "by_status": {
+      "VERIFIED_EXPLOITABLE": 4,
+      "POLICY_DENIED": 8
+    },
+    "by_confidence_tier": {
+      "FULL_CHAIN_VERIFIED": 4,
+      "POLICY_DENIED": 8
+    }
+  },
+  "warnings": []
+}

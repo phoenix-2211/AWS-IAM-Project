@@ -37,22 +37,31 @@ class Stage6Assembler:
             sim_res = sim_map.get(path_id)
             sb_res = sb_map.get(path_id)
 
-            # Decision logic for final status (VERIFIED_EXPLOITABLE | POLICY_DENIED | SANDBOX_FAILED)
+            # Decision logic for final status & confidence tier
             if sim_res and sim_res.status == "POLICY_DENIED":
                 status = "POLICY_DENIED"
+                confidence_tier = "POLICY_DENIED"
                 status_reason = sim_res.status_reason
                 verification_scope = "policy_simulated_only"
             elif sb_res and sb_res.status == "VERIFIED_EXPLOITABLE":
                 status = "VERIFIED_EXPLOITABLE"
-                status_reason = "Exploit successfully verified in CloudGoat sandbox."
+                confidence_tier = "FULL_CHAIN_VERIFIED"
+                status_reason = "Every hop policy-checked and exploit successfully verified in CloudGoat sandbox."
                 verification_scope = "live_verified"
             elif sb_res and sb_res.sandbox_attempted:
                 status = "SANDBOX_FAILED"
-                status_reason = sb_res.reason or "Sandbox execution failed."
+                confidence_tier = "SANDBOX_EXECUTION_FAILED"
+                status_reason = sb_res.reason or "Sandbox execution attempted but failed."
                 verification_scope = "sandbox_attempted"
+            elif sim_res and sim_res.status == "POLICY_ALLOWED" and (not sb_res or sb_res.sandbox_scenario_name is None):
+                status = "POLICY_VERIFIED_NO_SANDBOX"
+                confidence_tier = "POLICY_VERIFIED_NO_SANDBOX"
+                status_reason = "All policy hops allowed by simulator, but no matching CloudGoat sandbox scenario is available for live execution."
+                verification_scope = "policy_simulated_only"
             else:
                 status = "SANDBOX_FAILED"
-                status_reason = "Path structurally allowed by local evaluator; unverified against live AWS policy simulator or sandbox."
+                confidence_tier = "SANDBOX_EXECUTION_FAILED"
+                status_reason = "Path unverified against live policy simulator or sandbox."
                 verification_scope = "policy_simulated_only"
 
             status_counts[status] = status_counts.get(status, 0) + 1
@@ -71,14 +80,40 @@ class Stage6Assembler:
                     }
                 )
 
+            # Detailed per-hop policy simulator evidence
+            sim_details = []
+            if sim_res and sim_res.hop_results:
+                for h_res in sim_res.hop_results:
+                    sim_details.append(
+                        {
+                            "hop_index": h_res.hop_index,
+                            "from_node": h_res.from_node,
+                            "to_node": h_res.to_node,
+                            "action_used": h_res.action_used,
+                            "decision": h_res.decision,
+                            "eval_decision": h_res.eval_decision,
+                            "missing_context": h_res.missing_context,
+                            "note": h_res.note,
+                            "raw_ref": h_res.raw_ref,
+                        }
+                    )
+
             evidence_obj = {
                 "policy_simulator_result": "ALLOWED" if status != "POLICY_DENIED" else "DENIED",
                 "policy_simulator_source": sim_res.source if sim_res else "local_evaluator",
                 "simulator_mode": "MOCKED",
-                "policy_simulator_details": [h.model_dump() for h in (sim_res.hop_results if sim_res else [])],
+                "policy_simulator_details": sim_details,
+                "denying_hop_details": {
+                    "denying_hop_index": sim_res.denying_hop_index if sim_res else None,
+                    "denying_hop_from": sim_res.denying_hop_from if sim_res else None,
+                    "denying_hop_to": sim_res.denying_hop_to if sim_res else None,
+                    "denying_action": sim_res.denying_action if sim_res else None,
+                    "denying_reason_type": sim_res.denying_reason_type if sim_res else None,
+                } if status == "POLICY_DENIED" else None,
                 "sandbox_scenario_name": sb_res.sandbox_scenario_name if sb_res else None,
                 "sandbox_attempted": sb_res.sandbox_attempted if sb_res else False,
                 "sandbox_execution_success": sb_res.sandbox_execution_success if sb_res else None,
+                "sandbox_failure_reason": (sb_res.reason if sb_res and not sb_res.sandbox_execution_success else None),
                 "sandbox_logs": sb_res.sandbox_logs if sb_res else [],
                 "sandbox_logs_redacted": True,
                 "sandbox_evidence_ref": sb_res.sandbox_evidence_ref if sb_res else None,
@@ -95,6 +130,7 @@ class Stage6Assembler:
                 {
                     "path_id": path_id,
                     "status": status,
+                    "confidence_tier": confidence_tier,
                     "status_reason": status_reason,
                     "verification_scope": verification_scope,
                     "hops": hops_formatted,
@@ -153,6 +189,10 @@ class Stage6Assembler:
             "stats": {
                 "paths_total": len(final_paths),
                 "by_status": status_counts,
+                "by_confidence_tier": {
+                    p["confidence_tier"]: sum(1 for fp in final_paths if fp.get("confidence_tier") == p["confidence_tier"])
+                    for p in final_paths
+                },
             },
             "warnings": [w for w in load_res.warnings],
         }

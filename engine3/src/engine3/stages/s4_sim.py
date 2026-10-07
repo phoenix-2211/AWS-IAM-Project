@@ -11,6 +11,9 @@ from engine3.stages.s3_queue import QueuedPath
 
 class HopSimResult(BaseModel):
     hop_index: int
+    from_node: str = ""
+    to_node: str = ""
+    action_used: str = ""
     decision: str  # ALLOWED, DENIED, UNKNOWN
     eval_decision: str  # allowed, explicitDeny, implicitDeny
     missing_context: list[str] = Field(default_factory=list)
@@ -22,6 +25,11 @@ class PathSimResult(BaseModel):
     path_id: str
     status: str  # POLICY_ALLOWED, POLICY_DENIED
     status_reason: str
+    denying_hop_index: int | None = None
+    denying_hop_from: str | None = None
+    denying_hop_to: str | None = None
+    denying_action: str | None = None
+    denying_reason_type: str | None = None  # explicitDeny, implicitDeny
     hop_results: list[HopSimResult] = Field(default_factory=list)
     source: str = "local_evaluator"
     limitations: list[str] = Field(default_factory=list)
@@ -47,6 +55,10 @@ class LocalPolicySimulator:
         hop_results: list[HopSimResult] = []
         path_denied = False
         denying_hop_idx = -1
+        denying_hop_from = None
+        denying_hop_to = None
+        denying_action = None
+        denying_reason_type = None
 
         for idx, hop in enumerate(hops):
             # Trust hops checked structurally
@@ -55,22 +67,32 @@ class LocalPolicySimulator:
                     path_denied = True
                     if denying_hop_idx == -1:
                         denying_hop_idx = idx
+                        denying_hop_from = hop.from_node
+                        denying_hop_to = hop.to_node
+                        denying_action = hop.action_used
+                        denying_reason_type = "explicitDeny"
                     hop_results.append(
                         HopSimResult(
                             hop_index=idx,
+                            from_node=hop.from_node,
+                            to_node=hop.to_node,
+                            action_used=hop.action_used,
                             decision="DENIED",
                             eval_decision="explicitDeny",
                             missing_context=["aws:MultiFactorAuthPresent"],
-                            note="Trust condition (e.g. MFA requirement) unsatisfied in local evaluation",
+                            note=f"Denied at hop {idx}: Trust policy condition constraint (aws:MultiFactorAuthPresent) unsatisfied for '{hop.from_node}' assuming role '{hop.to_node}'.",
                         )
                     )
                 else:
                     hop_results.append(
                         HopSimResult(
                             hop_index=idx,
+                            from_node=hop.from_node,
+                            to_node=hop.to_node,
+                            action_used=hop.action_used,
                             decision="ALLOWED",
                             eval_decision="allowed",
-                            note="Trust checked structurally, simulator does not evaluate trust policies",
+                            note=f"Allowed at hop {idx}: Trust relationship between '{hop.from_node}' and '{hop.to_node}' verified structurally.",
                         )
                     )
                 continue
@@ -80,12 +102,19 @@ class LocalPolicySimulator:
                 path_denied = True
                 if denying_hop_idx == -1:
                     denying_hop_idx = idx
+                    denying_hop_from = hop.from_node
+                    denying_hop_to = hop.to_node
+                    denying_action = hop.action_used
+                    denying_reason_type = "explicitDeny"
                 hop_results.append(
                     HopSimResult(
                         hop_index=idx,
+                        from_node=hop.from_node,
+                        to_node=hop.to_node,
+                        action_used=hop.action_used,
                         decision="DENIED",
                         eval_decision="explicitDeny",
-                        note="Hop action denied by explicit Deny permission statement in graph policy",
+                        note=f"Denied at hop {idx}: Action '{hop.action_used}' on target '{hop.to_node}' explicitly denied by overlapping Deny statement in policy.",
                     )
                 )
                 continue
@@ -98,7 +127,6 @@ class LocalPolicySimulator:
                 eval_dec = data.get("EvalDecision", "allowed")
                 missing = data.get("MissingContextKeys", [])
             else:
-                # Default local evaluator response
                 eval_dec = "allowed"
                 missing = []
 
@@ -106,21 +134,34 @@ class LocalPolicySimulator:
                 hop_results.append(
                     HopSimResult(
                         hop_index=idx,
+                        from_node=hop.from_node,
+                        to_node=hop.to_node,
+                        action_used=hop.action_used,
                         decision="ALLOWED",
                         eval_decision=eval_dec,
                         missing_context=missing,
+                        note=f"Allowed at hop {idx}: Action '{hop.action_used}' permitted from '{hop.from_node}' to target '{hop.to_node}'.",
                         raw_ref=str(resp_file) if resp_file.exists() else None,
                     )
                 )
             else:
                 path_denied = True
-                denying_hop_idx = idx
+                if denying_hop_idx == -1:
+                    denying_hop_idx = idx
+                    denying_hop_from = hop.from_node
+                    denying_hop_to = hop.to_node
+                    denying_action = hop.action_used
+                    denying_reason_type = eval_dec
                 hop_results.append(
                     HopSimResult(
                         hop_index=idx,
+                        from_node=hop.from_node,
+                        to_node=hop.to_node,
+                        action_used=hop.action_used,
                         decision="DENIED",
                         eval_decision=eval_dec,
                         missing_context=missing,
+                        note=f"Denied at hop {idx} ({eval_dec}): Action '{hop.action_used}' from '{hop.from_node}' to '{hop.to_node}' rejected by policy simulator.",
                         raw_ref=str(resp_file) if resp_file.exists() else None,
                     )
                 )
@@ -129,7 +170,12 @@ class LocalPolicySimulator:
             return PathSimResult(
                 path_id=queued_path.path_id,
                 status="POLICY_DENIED",
-                status_reason=f"Hop {denying_hop_idx} denied by simulator",
+                status_reason=f"Hop {denying_hop_idx} ('{denying_action}') denied by simulator ({denying_reason_type})",
+                denying_hop_index=denying_hop_idx,
+                denying_hop_from=denying_hop_from,
+                denying_hop_to=denying_hop_to,
+                denying_action=denying_action,
+                denying_reason_type=denying_reason_type,
                 hop_results=hop_results,
                 source="local_evaluator",
                 limitations=["local_evaluator, not AWS"],
