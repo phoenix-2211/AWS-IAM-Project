@@ -75,6 +75,21 @@ class LocalPolicySimulator:
                     )
                 continue
 
+            # Check for deny_present or explicit_deny in hop flags
+            if "deny_present" in hop.flags or "explicit_deny" in hop.flags:
+                path_denied = True
+                if denying_hop_idx == -1:
+                    denying_hop_idx = idx
+                hop_results.append(
+                    HopSimResult(
+                        hop_index=idx,
+                        decision="DENIED",
+                        eval_decision="explicitDeny",
+                        note="Hop action denied by explicit Deny permission statement in graph policy",
+                    )
+                )
+                continue
+
             # Load offline evaluator response if available
             resp_file = self.fixtures_dir / f"hop_{idx}.json"
             if resp_file.exists():
