@@ -115,3 +115,30 @@ def test_end_to_end_all_sample_trees(tmp_path):
     vr_tree_5 = runner.run(fixtures_dir / "tree_5_critical.json", rulebook_path, tmp_path / "t5")
     assert vr_tree_5["stats"]["paths_total"] > 1
 
+
+def test_final_verification_results_handoff_deliverable():
+    final_vr_path = Path("runs/final_verification_results.json")
+    schema_path = Path("schemas/verification_result_v0.1.schema.json")
+
+    assert final_vr_path.exists(), "runs/final_verification_results.json deliverable file must exist"
+
+    with open(final_vr_path, "r", encoding="utf-8") as f:
+        doc = json.load(f)
+    with open(schema_path, "r", encoding="utf-8") as f:
+        schema = json.load(f)
+
+    # Validate against Engine 4 VerificationResult v0.1 schema
+    jsonschema.validate(instance=doc, schema=schema)
+
+    assert doc["contract_name"] == "VerificationResult"
+    assert doc["contract_version"] == "0.1"
+    assert doc["run"]["sandbox_mode"] == "MOCKED"
+    assert doc["run"]["simulator_mode"] == "MOCKED"
+
+    # Assert path evidence contains MOCKED tags throughout
+    for path_obj in doc["paths"]:
+        ev = path_obj["evidence"]
+        assert ev["simulator_mode"] == "MOCKED"
+        assert ev["sandbox_mode"] == "MOCKED"
+
+
