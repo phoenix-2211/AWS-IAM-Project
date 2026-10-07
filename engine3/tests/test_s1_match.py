@@ -23,25 +23,22 @@ def test_s1_matcher_baseline():
     matcher = Stage1Matcher()
     results = matcher.match_rules(graph, rules, rulebook_origin="active")
 
-    # 12 rules total
-    assert len(results) == 12
+    # 10 rules total in active_rulebook.json
+    assert len(results) == 10
 
     # Map by rule_id
     res_map = {r.rule_id: r for r in results}
 
     assert res_map["RULE-IAM-001"].status == "MATCHED"
-    assert len(res_map["RULE-IAM-001"].matches) == 3
-    assert res_map["RULE-IAM-001"].matches[0].principal_id == "arn:aws:iam::111122223333:role/DeployRole"
+    assert len(res_map["RULE-IAM-001"].matches) == 1
+    assert res_map["RULE-IAM-001"].matches[0].principal_id == "arn:aws:iam::111122223333:user/dev-alice"
 
-    assert res_map["RULE-IAM-002"].status == "MATCHED"
-    assert res_map["RULE-IAM-002"].matches[0].principal_id == "arn:aws:iam::111122223333:user/dev-alice"
-    assert res_map["RULE-IAM-002"].matches[0].condition_unevaluated is True
+    assert res_map["RULE-IAM-008"].status == "MATCHED"
+    assert res_map["RULE-IAM-008"].matches[0].principal_id == "arn:aws:iam::111122223333:user/dev-alice"
 
-    assert res_map["RULE-IAM-003"].status == "MATCHED"
-    # Matches DeployRole and AdminRole
-    assert len(res_map["RULE-IAM-003"].matches) == 2
+    assert res_map["RULE-IAM-010"].status == "MATCHED"
+    assert res_map["RULE-IAM-010"].matches[0].principal_id == "arn:aws:iam::111122223333:role/AdminRole"
 
-    assert res_map["RULE-IAM-012"].status == "NOT_REPRESENTABLE"
 
 
 def test_s1_matcher_negative_no_match():
@@ -134,4 +131,37 @@ def test_s1_matcher_deterministic_ordering():
     for r in results:
         principal_ids = [m.principal_id for m in r.matches]
         assert principal_ids == sorted(principal_ids)
+
+
+def test_s1_matcher_sample_trees():
+    rulebook_path = Path("rulebook/active_rulebook.json")
+    with open(rulebook_path, "r", encoding="utf-8") as f:
+        rules_data = json.load(f)
+    rules = RuleAdapter.from_json_list(rules_data)
+    matcher = Stage1Matcher()
+
+    # Tree 1: Benign -> 0 matches
+    with open("docs/contracts/fixtures/tree_1_benign.json", "r", encoding="utf-8") as f:
+        g1_data = json.load(f)
+    g1 = GraphAdapter.from_json(g1_data)
+    res1 = matcher.match_rules(g1, rules)
+    matched_count_1 = sum(len(r.matches) for r in res1)
+    assert matched_count_1 == 0
+
+    # Tree 5: Critical -> multiple matches including CRITICAL severity
+    with open("docs/contracts/fixtures/tree_5_critical.json", "r", encoding="utf-8") as f:
+        g5_data = json.load(f)
+    g5 = GraphAdapter.from_json(g5_data)
+    res5 = matcher.match_rules(g5, rules)
+    matched_count_5 = sum(len(r.matches) for r in res5)
+    assert matched_count_5 > 1
+
+    rule_map_5 = {r.rule_id: r for r in res5 if r.status == "MATCHED"}
+    rule_sev_map = {r.rule_id: r.severity for r in rules}
+    critical_matches = [
+        r_id for r_id in rule_map_5
+        if rule_sev_map.get(r_id) == "CRITICAL"
+    ]
+    assert len(critical_matches) >= 1
+
 

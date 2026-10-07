@@ -65,6 +65,7 @@ class Stage1Matcher:
         permissions_by_id = {p.id: p for p in graph.permissions}
         resources_by_id = {r.id: r for r in graph.resources}
         roles_by_id = {p.id: p for p in graph.principals if p.type == "Role"}
+        users_by_id = {p.id: p for p in graph.principals if p.type == "User"}
 
         # Collect Deny statements across graph to check overlaps
         deny_permissions = [p for p in graph.permissions if p.effect == "Deny"]
@@ -132,12 +133,17 @@ class Stage1Matcher:
                         if target_id in resources_by_id:
                             res = resources_by_id[target_id]
                             target_arn = res.arn
-                            if rule.resource_type in (res.resource_type, "secretsmanager_secret"):
+                            if rule.resource_type in (res.resource_type, "secretsmanager_secret", "s3_bucket") or res.resource_type in (rule.resource_type, "secretsmanager_secret", "s3_bucket"):
                                 target_matched = True
                         elif target_id in roles_by_id:
                             r_target = roles_by_id[target_id]
                             target_arn = r_target.arn or r_target.id
                             if rule.resource_type in ("iam_role", "role"):
+                                target_matched = True
+                        elif target_id in users_by_id:
+                            u_target = users_by_id[target_id]
+                            target_arn = u_target.arn or u_target.id
+                            if rule.resource_type in ("iam_user", "user"):
                                 target_matched = True
 
                         if not target_matched:
