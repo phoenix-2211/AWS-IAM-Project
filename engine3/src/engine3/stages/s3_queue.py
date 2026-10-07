@@ -9,6 +9,8 @@ from engine3.stages.s2_path import CandidatePath
 class QueuedPath(BaseModel):
     queue_rank: int
     path_id: str
+    source_tree: str = "unknown"
+    severity: str = "LOW"
     status: str = "SANDBOX_FAILED"
     queue_reason: str
     sandbox_group_key: str = "NOT_MAPPED"
@@ -32,7 +34,7 @@ class Stage3Prioritizer:
     }
 
     def prioritize_paths(
-        self, paths: list[CandidatePath], active_rules: list[Rule]
+        self, paths: list[CandidatePath], active_rules: list[Rule], source_tree: str = "unknown"
     ) -> Stage3QueueResult:
         if not paths:
             return Stage3QueueResult(
@@ -73,6 +75,8 @@ class Stage3Prioritizer:
                 QueuedPath(
                     queue_rank=rank,
                     path_id=p.path_id,
+                    source_tree=source_tree,
+                    severity=max_sev,
                     status="SANDBOX_FAILED",
                     queue_reason=reason,
                     sandbox_group_key="NOT_MAPPED",

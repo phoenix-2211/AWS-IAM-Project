@@ -74,6 +74,7 @@ class Stage6Assembler:
             evidence_obj = {
                 "policy_simulator_result": "ALLOWED" if status != "POLICY_DENIED" else "DENIED",
                 "policy_simulator_source": sim_res.source if sim_res else "local_evaluator",
+                "simulator_mode": "MOCKED",
                 "policy_simulator_details": [h.model_dump() for h in (sim_res.hop_results if sim_res else [])],
                 "sandbox_scenario_name": sb_res.sandbox_scenario_name if sb_res else None,
                 "sandbox_attempted": sb_res.sandbox_attempted if sb_res else False,

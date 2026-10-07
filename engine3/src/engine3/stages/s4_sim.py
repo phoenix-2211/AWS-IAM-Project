@@ -51,14 +51,28 @@ class LocalPolicySimulator:
         for idx, hop in enumerate(hops):
             # Trust hops checked structurally
             if hop.edge_type == "TRUSTED_BY":
-                hop_results.append(
-                    HopSimResult(
-                        hop_index=idx,
-                        decision="ALLOWED",
-                        eval_decision="allowed",
-                        note="Trust checked structurally, simulator does not evaluate trust policies",
+                if "condition_unevaluated" in hop.flags:
+                    path_denied = True
+                    if denying_hop_idx == -1:
+                        denying_hop_idx = idx
+                    hop_results.append(
+                        HopSimResult(
+                            hop_index=idx,
+                            decision="DENIED",
+                            eval_decision="explicitDeny",
+                            missing_context=["aws:MultiFactorAuthPresent"],
+                            note="Trust condition (e.g. MFA requirement) unsatisfied in local evaluation",
+                        )
                     )
-                )
+                else:
+                    hop_results.append(
+                        HopSimResult(
+                            hop_index=idx,
+                            decision="ALLOWED",
+                            eval_decision="allowed",
+                            note="Trust checked structurally, simulator does not evaluate trust policies",
+                        )
+                    )
                 continue
 
             # Load offline evaluator response if available
