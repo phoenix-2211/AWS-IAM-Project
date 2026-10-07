@@ -82,6 +82,7 @@ class Stage6Assembler:
                 "sandbox_logs": sb_res.sandbox_logs if sb_res else [],
                 "sandbox_logs_redacted": True,
                 "sandbox_evidence_ref": sb_res.sandbox_evidence_ref if sb_res else None,
+                "sandbox_mode": "MOCKED",
             }
 
             path_limitations = list(q_p.path.limitations)
@@ -120,7 +121,7 @@ class Stage6Assembler:
                 "git_sha": None,
                 "mode": "offline_fixture",
                 "simulator_backend": "local_evaluator",
-                "sandbox_mode": "none",
+                "sandbox_mode": "MOCKED",
                 "enrichment": "off",
             },
             "inputs": {
