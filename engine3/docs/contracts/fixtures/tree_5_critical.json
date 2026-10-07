@@ -3,7 +3,7 @@
   "contract_version": "0.1",
   "x_provenance": {
     "authored_by": "ENGINE3-SAMPLE-FIXTURES",
-    "basis": "Tree 5 Critical Capital One Breach Pattern Escalation"
+    "basis": "Tree 5 Critical Capital One Breach Pattern Escalation with Explicit Deny Trap"
   },
   "snapshot": {
     "snapshot_id": "TREE-5-CRITICAL-001",
@@ -93,6 +93,16 @@
       "resource_type": "secretsmanager_secret",
       "arn": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/master-key",
       "name": "prod/master-key",
+      "metadata": {
+        "region": "us-east-1"
+      }
+    },
+    {
+      "id": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/deny-trap-secret",
+      "type": "Resource",
+      "resource_type": "secretsmanager_secret",
+      "arn": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/deny-trap-secret",
+      "name": "prod/deny-trap-secret",
       "metadata": {
         "region": "us-east-1"
       }
@@ -192,6 +202,54 @@
         "policy_type": "inline",
         "policy_name": "get-master-key"
       }
+    },
+    {
+      "id": "perm:CustomerDataRole:get-deny-trap:0",
+      "type": "Permission",
+      "effect": "Allow",
+      "actions": [
+        "secretsmanager:GetSecretValue"
+      ],
+      "resources": [
+        "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/deny-trap-secret"
+      ],
+      "raw_statement": {
+        "Effect": "Allow",
+        "Action": [
+          "secretsmanager:GetSecretValue"
+        ],
+        "Resource": [
+          "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/deny-trap-secret"
+        ]
+      },
+      "provenance": {
+        "policy_type": "inline",
+        "policy_name": "get-deny-trap"
+      }
+    },
+    {
+      "id": "perm:CustomerDataRole:explicit-deny-trap:0",
+      "type": "Permission",
+      "effect": "Deny",
+      "actions": [
+        "secretsmanager:GetSecretValue"
+      ],
+      "resources": [
+        "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/deny-trap-secret"
+      ],
+      "raw_statement": {
+        "Effect": "Deny",
+        "Action": [
+          "secretsmanager:GetSecretValue"
+        ],
+        "Resource": [
+          "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/deny-trap-secret"
+        ]
+      },
+      "provenance": {
+        "policy_type": "inline",
+        "policy_name": "explicit-deny-trap"
+      }
     }
   ],
   "edges": [
@@ -262,6 +320,30 @@
       "type": "APPLIES_TO",
       "source": "perm:CustomerDataRole:get-master-key:0",
       "target": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/master-key"
+    },
+    {
+      "id": "edge:HAS_PERMISSION:t5-05",
+      "type": "HAS_PERMISSION",
+      "source": "arn:aws:iam::111122223333:role/CustomerDataRole",
+      "target": "perm:CustomerDataRole:get-deny-trap:0"
+    },
+    {
+      "id": "edge:APPLIES_TO:t5-05",
+      "type": "APPLIES_TO",
+      "source": "perm:CustomerDataRole:get-deny-trap:0",
+      "target": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/deny-trap-secret"
+    },
+    {
+      "id": "edge:HAS_PERMISSION:t5-06",
+      "type": "HAS_PERMISSION",
+      "source": "arn:aws:iam::111122223333:role/CustomerDataRole",
+      "target": "perm:CustomerDataRole:explicit-deny-trap:0"
+    },
+    {
+      "id": "edge:APPLIES_TO:t5-06",
+      "type": "APPLIES_TO",
+      "source": "perm:CustomerDataRole:explicit-deny-trap:0",
+      "target": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/deny-trap-secret"
     }
   ],
   "warnings": []
