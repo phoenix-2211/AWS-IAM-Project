@@ -11,6 +11,7 @@ from engine3.stages.s0_load import Stage0Loader
 from engine3.stages.s1_match import Stage1Matcher
 from engine3.stages.s2_path import Stage2PathFinder
 from engine3.stages.s3_queue import Stage3Prioritizer
+from engine3.sandbox.s5_sandbox import MockCloudGoatSandboxRunner
 from engine3.stages.s4_sim import LocalPolicySimulator
 
 
@@ -60,19 +61,29 @@ class PipelineRunner:
         sim_results = [sim.evaluate_path(q_p) for q_p in queue_res.queue]
         t_s4_end = time.time()
 
+        # S5: Sandbox Evaluator (Mock)
+        t_s5_start = time.time()
+        sandbox_evaluator = MockCloudGoatSandboxRunner()
+        sandbox_results = [
+            sandbox_evaluator.evaluate_sandbox_path(q_p, sim_status=s_r.status)
+            for q_p, s_r in zip(queue_res.queue, sim_results)
+        ]
+        t_s5_end = time.time()
+
         # S6: Assemble VerificationResult
         assembler = Stage6Assembler()
         metrics = {
             "load_time_ms": (t_s0_end - t_s0_start) * 1000,
             "graph_time_ms": (t_graph_end - t_graph_start) * 1000,
             "policy_sim_time_ms": (t_s4_end - t_s4_start) * 1000,
-            "sandbox_time_ms": 0.0,
+            "sandbox_time_ms": (t_s5_end - t_s5_start) * 1000,
             "total_ms": (time.time() - t0) * 1000,
         }
         vr_doc = assembler.assemble(
             load_res=load_res,
             queue_paths=queue_res.queue,
             sim_results=sim_results,
+            sandbox_results=sandbox_results,
             rulebook_origin="active",
             metrics_dict=metrics,
         )
