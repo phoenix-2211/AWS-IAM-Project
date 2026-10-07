@@ -3,7 +3,12 @@
   "contract_version": "0.1",
   "x_provenance": {
     "authored_by": "ENGINE3-SAMPLE-FIXTURES",
-    "basis": "Tree 5 Critical Capital One Breach Pattern Escalation with Explicit Deny Trap"
+    "basis": "Tree 5 Critical Capital One Breach Pattern Escalation with Explicit Deny Trap",
+    "pathfinding_visualization_reference": {
+      "path_ids": ["iam-001", "iam-002", "ec2-001"],
+      "source": "pathfinding.cloud (DataDog)",
+      "graph_structure": "User -> EC2 Instance (iam:PassRole + ec2:RunInstances) -> Metadata Credentials -> S3 / SecretsManager"
+    }
   },
   "snapshot": {
     "snapshot_id": "TREE-5-CRITICAL-001",

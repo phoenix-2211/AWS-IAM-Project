@@ -111,7 +111,7 @@ class Stage2PathFinder:
                     }
                 )
 
-        # Identify start nodes (Users)
+        # Identify start nodes (Users) and target nodes (Resources)
         start_nodes = [p.id for p in graph.principals if p.type == "User"]
         target_nodes = {r.id for r in graph.resources}
 
@@ -121,7 +121,7 @@ class Stage2PathFinder:
             if len(current_hops) >= self.max_depth:
                 return
 
-            if current_node in target_nodes:
+            if current_node in target_nodes and len(current_hops) > 0:
                 start_n = current_hops[0].from_node
                 if current_node == start_n:
                     return  # Filter out self-loops (path starting and ending at same node)

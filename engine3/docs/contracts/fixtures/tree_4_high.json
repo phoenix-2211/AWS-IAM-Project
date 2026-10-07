@@ -3,7 +3,12 @@
   "contract_version": "0.1",
   "x_provenance": {
     "authored_by": "ENGINE3-SAMPLE-FIXTURES",
-    "basis": "Tree 4 High Severity Multi-hop Escalation Path"
+    "basis": "Tree 4 High Severity Multi-hop Escalation Path",
+    "pathfinding_visualization_reference": {
+      "path_ids": ["iam-001", "iam-008"],
+      "source": "pathfinding.cloud (DataDog)",
+      "graph_structure": "User -> AttachedPolicy -> Admin (iam:CreatePolicyVersion & iam:AttachUserPolicy)"
+    }
   },
   "snapshot": {
     "snapshot_id": "TREE-4-HIGH-001",

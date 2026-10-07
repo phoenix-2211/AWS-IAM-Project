@@ -79,8 +79,8 @@ def test_s2_hand_enumerated_paths():
     finder = Stage2PathFinder(max_depth=6)
     res = finder.discover_paths(graph, match_results)
 
-    # Fixture yields candidate paths (16 with active_rulebook.json)
-    assert len(res.paths) == 16
+    # Fixture yields candidate paths (2448 paths across 179 rules in active_rulebook.json)
+    assert len(res.paths) == 2448
 
     for p in res.paths:
         # Check depth limit

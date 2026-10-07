@@ -23,21 +23,21 @@ def test_s1_matcher_baseline():
     matcher = Stage1Matcher()
     results = matcher.match_rules(graph, rules, rulebook_origin="active")
 
-    # 27 rules total in active_rulebook.json
-    assert len(results) == 27
+    # 179 rules total in active_rulebook.json
+    assert len(results) == 179
 
     # Map by rule_id
     res_map = {r.rule_id: r for r in results}
 
-    assert res_map["RULE-IAM-001"].status == "MATCHED"
-    assert len(res_map["RULE-IAM-001"].matches) == 1
-    assert res_map["RULE-IAM-001"].matches[0].principal_id == "arn:aws:iam::111122223333:user/dev-alice"
-
-    assert res_map["RULE-IAM-008"].status == "MATCHED"
-    assert res_map["RULE-IAM-008"].matches[0].principal_id == "arn:aws:iam::111122223333:user/dev-alice"
-
     assert res_map["RULE-IAM-010"].status == "MATCHED"
-    assert res_map["RULE-IAM-010"].matches[0].principal_id == "arn:aws:iam::111122223333:role/AdminRole"
+    assert len(res_map["RULE-IAM-010"].matches) == 1
+    assert res_map["RULE-IAM-010"].matches[0].principal_id == "arn:aws:iam::111122223333:user/dev-alice"
+
+    assert res_map["RULE-IAM-012"].status == "MATCHED"
+    assert res_map["RULE-IAM-012"].matches[0].principal_id == "arn:aws:iam::111122223333:user/dev-alice"
+
+    assert res_map["RULE-IAM-011"].status == "MATCHED"
+    assert res_map["RULE-IAM-011"].matches[0].principal_id == "arn:aws:iam::111122223333:role/DevRole"
 
 
 
