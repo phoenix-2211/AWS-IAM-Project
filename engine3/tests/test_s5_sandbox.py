@@ -87,7 +87,7 @@ def test_mock_sandbox_policy_allowed_evaluates():
     res = mock_runner.evaluate_sandbox_path(dummy_path, sim_status="POLICY_ALLOWED")
 
     assert res.sandbox_attempted is True
-    assert res.sandbox_scenario_name == "iam_privesc_by_s3_exfiltration"
+    assert res.sandbox_scenario_name == "cloud_breach_s3"
     assert res.sandbox_mode == "MOCKED"
     assert len(res.sandbox_logs) > 0
     assert res.sandbox_logs[0].startswith("[MOCKED]")

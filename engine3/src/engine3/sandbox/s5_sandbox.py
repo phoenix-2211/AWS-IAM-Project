@@ -1,6 +1,8 @@
 """Stage 5 CloudGoat Sandbox Runner."""
 
 
+from typing import ClassVar
+
 from pydantic import BaseModel, Field
 
 from engine3.stages.s3_queue import QueuedPath
@@ -81,20 +83,58 @@ class CloudGoatSandboxRunner:
 class MockCloudGoatSandboxRunner:
     """Stage 5 Deterministic Mock Sandbox Evaluator for sample-based runs."""
 
-    @staticmethod
-    def map_scenario_name(queued_path: QueuedPath) -> str:
+    # Authoritative set of verified CloudGoat AWS scenario names on disk (cloudgoat/cloudgoat/scenarios/aws)
+    VERIFIED_CLOUDGOAT_SCENARIOS: ClassVar[set[str]] = {
+        "agentcore_identity_confusion",
+        "beanstalk_secrets",
+        "bedrock_agent_hijacking",
+        "cloud_breach_s3",
+        "codebuild_secrets",
+        "data_secrets",
+        "detection_evasion",
+        "ec2_ssrf",
+        "ecs_efs_attack",
+        "ecs_privesc_evade_protection",
+        "ecs_takeover",
+        "federated_console_takeover",
+        "glue_privesc",
+        "iam_enum_basics",
+        "iam_privesc_by_attachment",
+        "iam_privesc_by_ec2",
+        "iam_privesc_by_key_rotation",
+        "iam_privesc_by_rollback",
+        "lambda_privesc",
+        "rce_web_app",
+        "rds_snapshot",
+        "s3_version_rollback_via_cfn",
+        "secrets_in_the_cloud",
+        "sns_secrets",
+        "sqs_flag_shop",
+        "vulnerable_cognito",
+        "vulnerable_lambda",
+    }
+
+    @classmethod
+    def map_scenario_name(cls, queued_path: QueuedPath) -> str | None:
         actions = [h.action_used for h in queued_path.path.hops]
         actions_str = " ".join(actions).lower()
 
-        if "iam:attachuserpolicy" in actions_str or "iam:putrolepolicy" in actions_str:
+        if any(act in actions_str for act in ["iam:attachuserpolicy", "iam:attachrolepolicy", "iam:putuserpolicy", "iam:putrolepolicy", "iam:addusertogroup"]):
             return "iam_privesc_by_attachment"
-        if "iam:passrole" in actions_str:
+        if any(act in actions_str for act in ["iam:createpolicyversion", "iam:setdefaultpolicyversion"]):
             return "iam_privesc_by_rollback"
-        if "s3:getobject" in actions_str:
-            return "iam_privesc_by_s3_exfiltration"
-        if "secretsmanager:getsecretvalue" in actions_str:
-            return "iam_privesc_by_secretsmanager"
-        return "iam_privesc_by_assume_role"
+        if "iam:createaccesskey" in actions_str:
+            return "iam_privesc_by_key_rotation"
+        if "ec2:runinstances" in actions_str or ("iam:passrole" in actions_str and "ec2" in actions_str):
+            return "iam_privesc_by_ec2"
+        if any(act in actions_str for act in ["lambda:createfunction", "lambda:updatefunctioncode"]):
+            return "lambda_privesc"
+        if "glue:createdevendpoint" in actions_str:
+            return "glue_privesc"
+        if "s3:getobject" in actions_str or "s3:listbucket" in actions_str:
+            return "cloud_breach_s3"
+
+        return None
 
     def evaluate_sandbox_path(
         self, queued_path: QueuedPath, sim_status: str = "POLICY_ALLOWED"

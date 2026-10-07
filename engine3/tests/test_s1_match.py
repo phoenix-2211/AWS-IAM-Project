@@ -23,8 +23,8 @@ def test_s1_matcher_baseline():
     matcher = Stage1Matcher()
     results = matcher.match_rules(graph, rules, rulebook_origin="active")
 
-    # 10 rules total in active_rulebook.json
-    assert len(results) == 10
+    # 27 rules total in active_rulebook.json
+    assert len(results) == 27
 
     # Map by rule_id
     res_map = {r.rule_id: r for r in results}
