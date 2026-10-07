@@ -1,0 +1,202 @@
+{
+  "contract_name": "IAMGraph",
+  "contract_version": "0.1",
+  "x_provenance": {
+    "authored_by": "CANONICAL-INPUT-ADAPTER",
+    "basis": "Reference input format conversion"
+  },
+  "snapshot": {
+    "snapshot_id": "TREE-6-CANONICAL-001",
+    "account_id": "111122223333",
+    "collected_at": "2026-10-07T00:00:00Z",
+    "origin": "synthetic_fixture",
+    "collection_status": "complete",
+    "collected_resource_types": [
+      "s3_bucket"
+    ],
+    "coverage": [
+      {
+        "component": "iam",
+        "region": "global",
+        "status": "complete"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "id": "user-001",
+      "type": "User",
+      "arn": "arn:aws:iam::111122223333:user/user-001",
+      "name": "alice",
+      "permissions_boundary": null,
+      "is_admin": false,
+      "mfa_enabled": true,
+      "is_dormant": false
+    },
+    {
+      "id": "role-001",
+      "type": "Role",
+      "arn": "arn:aws:iam::111122223333:role/role-001",
+      "name": "DeveloperRole",
+      "permissions_boundary": null,
+      "is_admin": false,
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": []
+      }
+    },
+    {
+      "id": "role-002",
+      "type": "Role",
+      "arn": "arn:aws:iam::111122223333:role/role-002",
+      "name": "AdminRole",
+      "permissions_boundary": null,
+      "is_admin": true,
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": []
+      }
+    },
+    {
+      "id": "resource-001",
+      "type": "Resource",
+      "resource_type": "s3_bucket",
+      "arn": "arn:aws:s3:::resource-001",
+      "name": "ProductionBucket",
+      "metadata": {
+        "sensitivity": "high"
+      }
+    },
+    {
+      "id": "perm:user-001:assume:1",
+      "type": "Permission",
+      "effect": "Allow",
+      "actions": [
+        "sts:AssumeRole"
+      ],
+      "resources": [
+        "role-001"
+      ],
+      "raw_statement": {
+        "Effect": "Allow",
+        "Action": [
+          "sts:AssumeRole"
+        ],
+        "Resource": [
+          "role-001"
+        ]
+      },
+      "provenance": {
+        "policy_type": "inline",
+        "policy_name": "canonical-passrole"
+      }
+    },
+    {
+      "id": "perm:role-001:assume:2",
+      "type": "Permission",
+      "effect": "Allow",
+      "actions": [
+        "sts:AssumeRole"
+      ],
+      "resources": [
+        "role-002"
+      ],
+      "raw_statement": {
+        "Effect": "Allow",
+        "Action": [
+          "sts:AssumeRole"
+        ],
+        "Resource": [
+          "role-002"
+        ]
+      },
+      "provenance": {
+        "policy_type": "inline",
+        "policy_name": "canonical-passrole"
+      }
+    },
+    {
+      "id": "perm:role-002:access:3",
+      "type": "Permission",
+      "effect": "Allow",
+      "actions": [
+        "s3:GetObject"
+      ],
+      "resources": [
+        "arn:aws:s3:::resource-001"
+      ],
+      "raw_statement": {
+        "Effect": "Allow",
+        "Action": [
+          "s3:GetObject"
+        ],
+        "Resource": [
+          "arn:aws:s3:::resource-001"
+        ]
+      },
+      "provenance": {
+        "policy_type": "inline",
+        "policy_name": "canonical-access"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge:HAS_PERMISSION:c1",
+      "type": "HAS_PERMISSION",
+      "source": "user-001",
+      "target": "perm:user-001:assume:1"
+    },
+    {
+      "id": "edge:APPLIES_TO:c2",
+      "type": "APPLIES_TO",
+      "source": "perm:user-001:assume:1",
+      "target": "role-001"
+    },
+    {
+      "id": "edge:TRUSTED_BY:c3",
+      "type": "TRUSTED_BY",
+      "source": "user-001",
+      "target": "role-001",
+      "via": "principal_arn",
+      "has_condition": false,
+      "statement_index": 0,
+      "matched_principal": "user-001"
+    },
+    {
+      "id": "edge:HAS_PERMISSION:c4",
+      "type": "HAS_PERMISSION",
+      "source": "role-001",
+      "target": "perm:role-001:assume:2"
+    },
+    {
+      "id": "edge:APPLIES_TO:c5",
+      "type": "APPLIES_TO",
+      "source": "perm:role-001:assume:2",
+      "target": "role-002"
+    },
+    {
+      "id": "edge:TRUSTED_BY:c6",
+      "type": "TRUSTED_BY",
+      "source": "role-001",
+      "target": "role-002",
+      "via": "principal_arn",
+      "has_condition": false,
+      "statement_index": 0,
+      "matched_principal": "role-001"
+    },
+    {
+      "id": "edge:HAS_PERMISSION:c7",
+      "type": "HAS_PERMISSION",
+      "source": "role-002",
+      "target": "perm:role-002:access:3"
+    },
+    {
+      "id": "edge:APPLIES_TO:c8",
+      "type": "APPLIES_TO",
+      "source": "perm:role-002:access:3",
+      "target": "resource-001"
+    }
+  ],
+  "warnings": []
+}

@@ -142,3 +142,28 @@ def test_final_verification_results_handoff_deliverable():
         assert ev["sandbox_mode"] == "MOCKED"
 
 
+def test_canonical_reference_input_tree_6(tmp_path):
+    fixtures_dir = Path("docs/contracts/fixtures")
+    rulebook_path = Path("rulebook/active_rulebook.json")
+    schema_path = Path("schemas/verification_result_v0.1.schema.json")
+    with open(schema_path, "r", encoding="utf-8") as f:
+        schema = json.load(f)
+
+    runner = PipelineRunner()
+    vr_doc = runner.run(fixtures_dir / "tree_6_canonical.json", rulebook_path, tmp_path / "t6")
+
+    # Validate against Engine 3 v0.1 schema
+    jsonschema.validate(instance=vr_doc, schema=schema)
+    assert vr_doc["stats"]["paths_total"] == 1
+    assert vr_doc["paths"][0]["status"] == "VERIFIED_EXPLOITABLE"
+
+    # Test ReferenceHandoffAdapter
+    from engine3.adapters.canonical_adapter import ReferenceHandoffAdapter
+    ref_doc = ReferenceHandoffAdapter.to_reference_format(vr_doc)
+    assert "verification_results" in ref_doc
+    assert len(ref_doc["verification_results"]) == 1
+    assert ref_doc["verification_results"][0]["status"] == "VERIFIED"
+    assert ref_doc["verification_results"][0]["result_id"] == "VER-001"
+
+
+

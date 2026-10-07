@@ -1,9 +1,10 @@
-"""Runner script for processing all 5 sample trees S0->S8 and generating final_verification_results.json."""
+"""Runner script for processing all 6 sample trees S0->S8 and generating final_verification_results.json."""
 
 import json
 from pathlib import Path
 from typing import Any
 
+from engine3.adapters.canonical_adapter import ReferenceHandoffAdapter
 from engine3.adapters.rule_adapter import RuleAdapter
 from engine3.emit.s6_emit import Stage6Assembler
 from engine3.sandbox.s5_sandbox import MockCloudGoatSandboxRunner
@@ -34,6 +35,7 @@ def main():
         "tree_3_medium.json",
         "tree_4_high.json",
         "tree_5_critical.json",
+        "tree_6_canonical.json",
     ]
 
     all_queued_paths: list[QueuedPath] = []
@@ -98,6 +100,12 @@ def main():
         tree_out_dir.mkdir(parents=True, exist_ok=True)
         with open(tree_out_dir / "VerificationResult.json", "w", encoding="utf-8") as f:
             json.dump(vr_doc, f, indent=2)
+
+        # For tree_6_canonical, also generate reference handoff format file
+        if tree_file == "tree_6_canonical.json":
+            ref_handoff_doc = ReferenceHandoffAdapter.to_reference_format(vr_doc)
+            with open(runs_dir / "canonical_reference_handoff.json", "w", encoding="utf-8") as f:
+                json.dump(ref_handoff_doc, f, indent=2)
 
         # For tree_5_critical, also write main output/ VerificationResult.json & queue.json
         if tree_file == "tree_5_critical.json":
@@ -188,7 +196,7 @@ def main():
     with open(runs_dir / "summary_report.json", "w", encoding="utf-8") as f:
         json.dump(tree_summary_report, f, indent=2)
 
-    print("S0->S8 pipeline run completed successfully across all 5 trees.")
+    print("S0->S8 pipeline run completed successfully across all 6 trees.")
     print(json.dumps(tree_summary_report, indent=2))
 
 
