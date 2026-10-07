@@ -181,6 +181,16 @@ class LocalPolicySimulator:
                 limitations=["local_evaluator, not AWS"],
             )
 
+        if any("partial_chain" in h.flags or "verification_skipped" in h.flags for h in queued_path.path.hops):
+            return PathSimResult(
+                path_id=queued_path.path_id,
+                status="PARTIAL_CHAIN_VERIFIED",
+                status_reason="Multi-hop path partially verified; one or more hops skipped due to technical limitation.",
+                hop_results=hop_results,
+                source="local_evaluator",
+                limitations=["verification_skipped_for_later_hop"],
+            )
+
         return PathSimResult(
             path_id=queued_path.path_id,
             status="POLICY_ALLOWED",

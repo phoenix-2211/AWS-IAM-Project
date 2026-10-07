@@ -104,6 +104,59 @@
     },
     {
       "queue_rank": 3,
+      "path_id": "1662c604077ad678",
+      "source_tree": "tree_5_critical",
+      "severity": "CRITICAL",
+      "status": "SANDBOX_FAILED",
+      "queue_reason": "severity CRITICAL, 3 hops, 1 assumption",
+      "sandbox_group_key": "NOT_MAPPED",
+      "path": {
+        "path_id": "1662c604077ad678",
+        "hops": [
+          {
+            "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+            "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "action_used": "rule_target:RULE-IAM-010",
+            "matched_rule_id": "RULE-IAM-010",
+            "edge_id": "edge:APPLIES_TO:t5-01",
+            "edge_type": "APPLIES_TO",
+            "flags": []
+          },
+          {
+            "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "action_used": "rule_target:RULE-IAM-011",
+            "matched_rule_id": "RULE-IAM-011",
+            "edge_id": "edge:APPLIES_TO:t5-02",
+            "edge_type": "APPLIES_TO",
+            "flags": []
+          },
+          {
+            "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "to_node": "arn:aws:s3:::customer-audit-logs",
+            "action_used": "rule_target:RULE-IAM-S3-001",
+            "matched_rule_id": "RULE-IAM-S3-001",
+            "edge_id": "edge:APPLIES_TO:t5-07",
+            "edge_type": "APPLIES_TO",
+            "flags": [
+              "soft_condition_failed"
+            ]
+          }
+        ],
+        "assumptions": [
+          "soft_condition_failed"
+        ],
+        "limitations": [
+          "SCP/RCP/session policies not evaluated",
+          "Permissions boundaries beyond ARN not checked"
+        ],
+        "degraded": false,
+        "target_node": "arn:aws:s3:::customer-audit-logs",
+        "start_node": "arn:aws:iam::111122223333:user/user-entrypoint"
+      }
+    },
+    {
+      "queue_rank": 4,
       "path_id": "2169950ff0260de4",
       "source_tree": "tree_5_critical",
       "severity": "CRITICAL",
@@ -156,7 +209,7 @@
       }
     },
     {
-      "queue_rank": 4,
+      "queue_rank": 5,
       "path_id": "346ff0863ae8f1ce",
       "source_tree": "tree_5_critical",
       "severity": "CRITICAL",
@@ -211,7 +264,7 @@
       }
     },
     {
-      "queue_rank": 5,
+      "queue_rank": 6,
       "path_id": "9761c2bab5fa8f43",
       "source_tree": "tree_5_critical",
       "severity": "CRITICAL",
@@ -264,7 +317,7 @@
       }
     },
     {
-      "queue_rank": 6,
+      "queue_rank": 7,
       "path_id": "bf4f212700bc4559",
       "source_tree": "tree_5_critical",
       "severity": "CRITICAL",
@@ -317,7 +370,119 @@
       }
     },
     {
-      "queue_rank": 7,
+      "queue_rank": 8,
+      "path_id": "1a7336d58bb291b3",
+      "source_tree": "tree_5_critical",
+      "severity": "CRITICAL",
+      "status": "SANDBOX_FAILED",
+      "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
+      "sandbox_group_key": "NOT_MAPPED",
+      "path": {
+        "path_id": "1a7336d58bb291b3",
+        "hops": [
+          {
+            "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+            "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "action_used": "rule_target:RULE-IAM-010",
+            "matched_rule_id": "RULE-IAM-010",
+            "edge_id": "edge:APPLIES_TO:t5-01",
+            "edge_type": "APPLIES_TO",
+            "flags": []
+          },
+          {
+            "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "action_used": "sts:AssumeRole",
+            "matched_rule_id": null,
+            "edge_id": "edge:TRUSTED_BY:t5-02",
+            "edge_type": "TRUSTED_BY",
+            "flags": [
+              "trust_structural_only"
+            ]
+          },
+          {
+            "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "to_node": "arn:aws:s3:::customer-audit-logs",
+            "action_used": "rule_target:RULE-IAM-S3-001",
+            "matched_rule_id": "RULE-IAM-S3-001",
+            "edge_id": "edge:APPLIES_TO:t5-07",
+            "edge_type": "APPLIES_TO",
+            "flags": [
+              "soft_condition_failed"
+            ]
+          }
+        ],
+        "assumptions": [
+          "soft_condition_failed",
+          "trust_structural_only"
+        ],
+        "limitations": [
+          "SCP/RCP/session policies not evaluated",
+          "Permissions boundaries beyond ARN not checked"
+        ],
+        "degraded": false,
+        "target_node": "arn:aws:s3:::customer-audit-logs",
+        "start_node": "arn:aws:iam::111122223333:user/user-entrypoint"
+      }
+    },
+    {
+      "queue_rank": 9,
+      "path_id": "2ebb9c1e2cb3e06c",
+      "source_tree": "tree_5_critical",
+      "severity": "CRITICAL",
+      "status": "SANDBOX_FAILED",
+      "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
+      "sandbox_group_key": "NOT_MAPPED",
+      "path": {
+        "path_id": "2ebb9c1e2cb3e06c",
+        "hops": [
+          {
+            "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+            "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "action_used": "sts:AssumeRole",
+            "matched_rule_id": null,
+            "edge_id": "edge:TRUSTED_BY:t5-01",
+            "edge_type": "TRUSTED_BY",
+            "flags": [
+              "trust_structural_only"
+            ]
+          },
+          {
+            "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "action_used": "rule_target:RULE-IAM-011",
+            "matched_rule_id": "RULE-IAM-011",
+            "edge_id": "edge:APPLIES_TO:t5-02",
+            "edge_type": "APPLIES_TO",
+            "flags": []
+          },
+          {
+            "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "to_node": "arn:aws:s3:::customer-audit-logs",
+            "action_used": "rule_target:RULE-IAM-S3-001",
+            "matched_rule_id": "RULE-IAM-S3-001",
+            "edge_id": "edge:APPLIES_TO:t5-07",
+            "edge_type": "APPLIES_TO",
+            "flags": [
+              "soft_condition_failed"
+            ]
+          }
+        ],
+        "assumptions": [
+          "soft_condition_failed",
+          "trust_structural_only"
+        ],
+        "limitations": [
+          "SCP/RCP/session policies not evaluated",
+          "Permissions boundaries beyond ARN not checked"
+        ],
+        "degraded": false,
+        "target_node": "arn:aws:s3:::customer-audit-logs",
+        "start_node": "arn:aws:iam::111122223333:user/user-entrypoint"
+      }
+    },
+    {
+      "queue_rank": 10,
       "path_id": "4000e7cc9b62ebcb",
       "source_tree": "tree_5_critical",
       "severity": "CRITICAL",
@@ -375,7 +540,7 @@
       }
     },
     {
-      "queue_rank": 8,
+      "queue_rank": 11,
       "path_id": "645cd14e29ca9468",
       "source_tree": "tree_5_critical",
       "severity": "CRITICAL",
@@ -431,7 +596,7 @@
       }
     },
     {
-      "queue_rank": 9,
+      "queue_rank": 12,
       "path_id": "67120f903fb22bfa",
       "source_tree": "tree_5_critical",
       "severity": "CRITICAL",
@@ -489,7 +654,7 @@
       }
     },
     {
-      "queue_rank": 10,
+      "queue_rank": 13,
       "path_id": "7b5199db21f88895",
       "source_tree": "tree_5_critical",
       "severity": "CRITICAL",
@@ -545,7 +710,65 @@
       }
     },
     {
-      "queue_rank": 11,
+      "queue_rank": 14,
+      "path_id": "826e3e68d2d1bf2a",
+      "source_tree": "tree_5_critical",
+      "severity": "CRITICAL",
+      "status": "SANDBOX_FAILED",
+      "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
+      "sandbox_group_key": "NOT_MAPPED",
+      "path": {
+        "path_id": "826e3e68d2d1bf2a",
+        "hops": [
+          {
+            "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+            "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "action_used": "sts:AssumeRole",
+            "matched_rule_id": null,
+            "edge_id": "edge:TRUSTED_BY:t5-01",
+            "edge_type": "TRUSTED_BY",
+            "flags": [
+              "trust_structural_only"
+            ]
+          },
+          {
+            "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "action_used": "sts:AssumeRole",
+            "matched_rule_id": null,
+            "edge_id": "edge:TRUSTED_BY:t5-02",
+            "edge_type": "TRUSTED_BY",
+            "flags": [
+              "trust_structural_only"
+            ]
+          },
+          {
+            "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "to_node": "arn:aws:s3:::customer-audit-logs",
+            "action_used": "rule_target:RULE-IAM-S3-001",
+            "matched_rule_id": "RULE-IAM-S3-001",
+            "edge_id": "edge:APPLIES_TO:t5-07",
+            "edge_type": "APPLIES_TO",
+            "flags": [
+              "soft_condition_failed"
+            ]
+          }
+        ],
+        "assumptions": [
+          "soft_condition_failed",
+          "trust_structural_only"
+        ],
+        "limitations": [
+          "SCP/RCP/session policies not evaluated",
+          "Permissions boundaries beyond ARN not checked"
+        ],
+        "degraded": false,
+        "target_node": "arn:aws:s3:::customer-audit-logs",
+        "start_node": "arn:aws:iam::111122223333:user/user-entrypoint"
+      }
+    },
+    {
+      "queue_rank": 15,
       "path_id": "ad5cd2e0df841a6d",
       "source_tree": "tree_5_critical",
       "severity": "CRITICAL",
@@ -601,7 +824,7 @@
       }
     },
     {
-      "queue_rank": 12,
+      "queue_rank": 16,
       "path_id": "d49e8284ccb3f3b6",
       "source_tree": "tree_5_critical",
       "severity": "CRITICAL",
@@ -657,6 +880,6 @@
       }
     }
   ],
-  "total_paths": 12,
+  "total_paths": 16,
   "message": "Queue successfully generated."
 }

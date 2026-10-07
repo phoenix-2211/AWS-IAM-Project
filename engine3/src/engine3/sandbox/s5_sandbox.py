@@ -133,6 +133,8 @@ class MockCloudGoatSandboxRunner:
             return "glue_privesc"
         if "s3:getobject" in actions_str or "s3:listbucket" in actions_str:
             return "cloud_breach_s3"
+        if any(act in actions_str for act in ["sts:assumerole", "can_pass_role", "iam:passrole"]):
+            return "iam_privesc_by_attachment"
 
         return None
 

@@ -103,6 +103,16 @@
       }
     },
     {
+      "id": "arn:aws:s3:::customer-audit-logs",
+      "type": "Resource",
+      "resource_type": "s3_bucket",
+      "arn": "arn:aws:s3:::customer-audit-logs",
+      "name": "customer-audit-logs",
+      "metadata": {
+        "region": "us-east-1"
+      }
+    },
+    {
       "id": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/deny-trap-secret",
       "type": "Resource",
       "resource_type": "secretsmanager_secret",
@@ -255,6 +265,24 @@
         "policy_type": "inline",
         "policy_name": "explicit-deny-trap"
       }
+    },
+    {
+      "id": "perm:CustomerDataRole:sandbox-fail-trap:0",
+      "type": "Permission",
+      "effect": "Allow",
+      "actions": [
+        "s3:GetObject"
+      ],
+      "resources": [
+        "arn:aws:s3:::customer-audit-logs"
+      ],
+      "flags": [
+        "soft_condition_failed"
+      ],
+      "provenance": {
+        "policy_type": "inline",
+        "policy_name": "sandbox-fail-trap"
+      }
     }
   ],
   "edges": [
@@ -349,6 +377,18 @@
       "type": "APPLIES_TO",
       "source": "perm:CustomerDataRole:explicit-deny-trap:0",
       "target": "arn:aws:secretsmanager:us-east-1:111122223333:secret:prod/deny-trap-secret"
+    },
+    {
+      "id": "edge:HAS_PERMISSION:t5-07",
+      "type": "HAS_PERMISSION",
+      "source": "arn:aws:iam::111122223333:role/CustomerDataRole",
+      "target": "perm:CustomerDataRole:sandbox-fail-trap:0"
+    },
+    {
+      "id": "edge:APPLIES_TO:t5-07",
+      "type": "APPLIES_TO",
+      "source": "perm:CustomerDataRole:sandbox-fail-trap:0",
+      "target": "arn:aws:s3:::customer-audit-logs"
     }
   ],
   "warnings": []

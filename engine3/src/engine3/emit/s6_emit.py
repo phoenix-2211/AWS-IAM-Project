@@ -43,7 +43,17 @@ class Stage6Assembler:
                 confidence_tier = "POLICY_DENIED"
                 status_reason = sim_res.status_reason
                 verification_scope = "policy_simulated_only"
-            elif sb_res and sb_res.status == "VERIFIED_EXPLOITABLE":
+            elif sim_res and sim_res.status == "PARTIAL_CHAIN_VERIFIED":
+                status = "PARTIAL_CHAIN_VERIFIED"
+                confidence_tier = "PARTIAL_CHAIN_VERIFIED"
+                status_reason = "Multi-hop path partially verified; one or more hops skipped due to technical limitation."
+                verification_scope = "policy_simulated_only"
+            elif sim_res and sim_res.status == "POLICY_ALLOWED" and (not sb_res or sb_res.sandbox_scenario_name is None):
+                status = "POLICY_VERIFIED_NO_SANDBOX"
+                confidence_tier = "POLICY_VERIFIED_NO_SANDBOX"
+                status_reason = "All policy hops allowed by simulator, but no matching CloudGoat sandbox scenario is available for live execution."
+                verification_scope = "policy_simulated_only"
+            elif sb_res and sb_res.status == "VERIFIED_EXPLOITABLE" and sb_res.sandbox_scenario_name is not None:
                 status = "VERIFIED_EXPLOITABLE"
                 confidence_tier = "FULL_CHAIN_VERIFIED"
                 status_reason = "Every hop policy-checked and exploit successfully verified in CloudGoat sandbox."
@@ -53,11 +63,6 @@ class Stage6Assembler:
                 confidence_tier = "SANDBOX_EXECUTION_FAILED"
                 status_reason = sb_res.reason or "Sandbox execution attempted but failed."
                 verification_scope = "sandbox_attempted"
-            elif sim_res and sim_res.status == "POLICY_ALLOWED" and (not sb_res or sb_res.sandbox_scenario_name is None):
-                status = "POLICY_VERIFIED_NO_SANDBOX"
-                confidence_tier = "POLICY_VERIFIED_NO_SANDBOX"
-                status_reason = "All policy hops allowed by simulator, but no matching CloudGoat sandbox scenario is available for live execution."
-                verification_scope = "policy_simulated_only"
             else:
                 status = "SANDBOX_FAILED"
                 confidence_tier = "SANDBOX_EXECUTION_FAILED"

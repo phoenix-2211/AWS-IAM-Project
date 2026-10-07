@@ -2,7 +2,7 @@
   "contract_name": "VerificationResult",
   "contract_version": "0.1",
   "run": {
-    "run_id": "run-1791363228",
+    "run_id": "run-1791366456",
     "origin": "engine3_pipeline",
     "started_at": null,
     "finished_at": null,
@@ -14,7 +14,7 @@
   },
   "inputs": {
     "iamgraph_snapshot_id": "TREE-5-CRITICAL-001",
-    "iamgraph_content_sha256": "c8e992ec33d0700b3067c0c1ee634c2553fb82df85e44890ceef2037ca7b45a2",
+    "iamgraph_content_sha256": "8166163b2d9819129ad8aa3e17c84c14a182df2cfd8c5dc56ddedc7e5df1eebf",
     "iamgraph_collection_status": "complete",
     "rulebook_sha256": "1b9af7a2b5740080d7aaaa300e184a4c8b173ea1904f483168572a82fe14e106",
     "rulebook_origin": "active",
@@ -26,10 +26,10 @@
   "paths": [
     {
       "path_id": "da75135d9ecbcc2b",
-      "status": "VERIFIED_EXPLOITABLE",
-      "confidence_tier": "FULL_CHAIN_VERIFIED",
-      "status_reason": "Every hop policy-checked and exploit successfully verified in CloudGoat sandbox.",
-      "verification_scope": "live_verified",
+      "status": "POLICY_VERIFIED_NO_SANDBOX",
+      "confidence_tier": "POLICY_VERIFIED_NO_SANDBOX",
+      "status_reason": "All policy hops allowed by simulator, but no matching CloudGoat sandbox scenario is available for live execution.",
+      "verification_scope": "policy_simulated_only",
       "hops": [
         {
           "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
@@ -119,11 +119,11 @@
         "sandbox_mode": "MOCKED"
       },
       "limitations": [
-        "Offline local evaluation, not independent verification",
-        "SCP/RCP/session policies not evaluated",
         "Permissions boundaries beyond ARN not checked",
         "SCP/RCP/Resource policies not evaluated",
-        "local_evaluator, not AWS"
+        "SCP/RCP/session policies not evaluated",
+        "local_evaluator, not AWS",
+        "Offline local evaluation, not independent verification"
       ],
       "runtime_metrics": {
         "policy_sim_time_ms": null,
@@ -212,12 +212,12 @@
           }
         ],
         "denying_hop_details": null,
-        "sandbox_scenario_name": null,
+        "sandbox_scenario_name": "iam_privesc_by_attachment",
         "sandbox_attempted": true,
         "sandbox_execution_success": true,
         "sandbox_failure_reason": null,
         "sandbox_logs": [
-          "[MOCKED] Initializing CloudGoat scenario: None",
+          "[MOCKED] Initializing CloudGoat scenario: iam_privesc_by_attachment",
           "[MOCKED] Target start node: arn:aws:iam::111122223333:user/user-entrypoint",
           "[MOCKED] Target end node: arn:aws:s3:::customer-credit-applications",
           "[MOCKED] Hop sequence: arn:aws:iam::111122223333:role/WAFAppRole -> arn:aws:iam::111122223333:role/CustomerDataRole -> arn:aws:s3:::customer-credit-applications",
@@ -229,11 +229,121 @@
         "sandbox_mode": "MOCKED"
       },
       "limitations": [
-        "Offline local evaluation, not independent verification",
-        "SCP/RCP/session policies not evaluated",
         "Permissions boundaries beyond ARN not checked",
         "SCP/RCP/Resource policies not evaluated",
-        "local_evaluator, not AWS"
+        "SCP/RCP/session policies not evaluated",
+        "local_evaluator, not AWS",
+        "Offline local evaluation, not independent verification"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": null,
+        "sandbox_time_ms": null
+      }
+    },
+    {
+      "path_id": "1662c604077ad678",
+      "status": "POLICY_VERIFIED_NO_SANDBOX",
+      "confidence_tier": "POLICY_VERIFIED_NO_SANDBOX",
+      "status_reason": "All policy hops allowed by simulator, but no matching CloudGoat sandbox scenario is available for live execution.",
+      "verification_scope": "policy_simulated_only",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+          "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "action_used": "rule_target:RULE-IAM-010",
+          "matched_rule_id": "RULE-IAM-010",
+          "edge_id": "edge:APPLIES_TO:t5-01",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "action_used": "rule_target:RULE-IAM-011",
+          "matched_rule_id": "RULE-IAM-011",
+          "edge_id": "edge:APPLIES_TO:t5-02",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "to_node": "arn:aws:s3:::customer-audit-logs",
+          "action_used": "rule_target:RULE-IAM-S3-001",
+          "matched_rule_id": "RULE-IAM-S3-001",
+          "edge_id": "edge:APPLIES_TO:t5-07",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "soft_condition_failed"
+          ]
+        }
+      ],
+      "assumptions": [
+        "soft_condition_failed"
+      ],
+      "queue_rank": 3,
+      "queue_reason": "severity CRITICAL, 3 hops, 1 assumption",
+      "evidence": {
+        "policy_simulator_result": "ALLOWED",
+        "policy_simulator_source": "local_evaluator",
+        "simulator_mode": "MOCKED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+            "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "action_used": "rule_target:RULE-IAM-010",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 0: Action 'rule_target:RULE-IAM-010' permitted from 'arn:aws:iam::111122223333:user/user-entrypoint' to target 'arn:aws:iam::111122223333:role/WAFAppRole'.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "action_used": "rule_target:RULE-IAM-011",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 1: Action 'rule_target:RULE-IAM-011' permitted from 'arn:aws:iam::111122223333:role/WAFAppRole' to target 'arn:aws:iam::111122223333:role/CustomerDataRole'.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "to_node": "arn:aws:s3:::customer-audit-logs",
+            "action_used": "rule_target:RULE-IAM-S3-001",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 2: Action 'rule_target:RULE-IAM-S3-001' permitted from 'arn:aws:iam::111122223333:role/CustomerDataRole' to target 'arn:aws:s3:::customer-audit-logs'.",
+            "raw_ref": null
+          }
+        ],
+        "denying_hop_details": null,
+        "sandbox_scenario_name": null,
+        "sandbox_attempted": true,
+        "sandbox_execution_success": false,
+        "sandbox_failure_reason": "Deterministic runtime assertion failed during mocked sandbox execution.",
+        "sandbox_logs": [
+          "[MOCKED] Initializing CloudGoat scenario: None",
+          "[MOCKED] Target start node: arn:aws:iam::111122223333:user/user-entrypoint",
+          "[MOCKED] Target end node: arn:aws:s3:::customer-audit-logs",
+          "[MOCKED] Hop sequence: arn:aws:iam::111122223333:role/WAFAppRole -> arn:aws:iam::111122223333:role/CustomerDataRole -> arn:aws:s3:::customer-audit-logs",
+          "[MOCKED] Execution result: FAILURE (ASSERTION_FAILED)",
+          "[MOCKED] Teardown verified cleanly; sandbox destroyed."
+        ],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": "mocked-evidence-1662c604",
+        "sandbox_mode": "MOCKED"
+      },
+      "limitations": [
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/Resource policies not evaluated",
+        "SCP/RCP/session policies not evaluated",
+        "local_evaluator, not AWS",
+        "Offline local evaluation, not independent verification"
       ],
       "runtime_metrics": {
         "policy_sim_time_ms": null,
@@ -280,7 +390,7 @@
       "assumptions": [
         "deny_present"
       ],
-      "queue_rank": 3,
+      "queue_rank": 4,
       "queue_reason": "severity CRITICAL, 3 hops, 1 assumption",
       "evidence": {
         "policy_simulator_result": "DENIED",
@@ -341,8 +451,8 @@
       },
       "limitations": [
         "local_evaluator, not AWS",
-        "Permissions boundaries beyond ARN not checked",
-        "SCP/RCP/session policies not evaluated"
+        "SCP/RCP/session policies not evaluated",
+        "Permissions boundaries beyond ARN not checked"
       ],
       "runtime_metrics": {
         "policy_sim_time_ms": null,
@@ -391,7 +501,7 @@
       "assumptions": [
         "trust_structural_only"
       ],
-      "queue_rank": 4,
+      "queue_rank": 5,
       "queue_reason": "severity CRITICAL, 3 hops, 1 assumption",
       "evidence": {
         "policy_simulator_result": "ALLOWED",
@@ -433,12 +543,12 @@
           }
         ],
         "denying_hop_details": null,
-        "sandbox_scenario_name": null,
+        "sandbox_scenario_name": "iam_privesc_by_attachment",
         "sandbox_attempted": true,
         "sandbox_execution_success": true,
         "sandbox_failure_reason": null,
         "sandbox_logs": [
-          "[MOCKED] Initializing CloudGoat scenario: None",
+          "[MOCKED] Initializing CloudGoat scenario: iam_privesc_by_attachment",
           "[MOCKED] Target start node: arn:aws:iam::111122223333:user/user-entrypoint",
           "[MOCKED] Target end node: arn:aws:s3:::customer-credit-applications",
           "[MOCKED] Hop sequence: arn:aws:iam::111122223333:role/WAFAppRole -> arn:aws:iam::111122223333:role/CustomerDataRole -> arn:aws:s3:::customer-credit-applications",
@@ -450,11 +560,11 @@
         "sandbox_mode": "MOCKED"
       },
       "limitations": [
-        "Offline local evaluation, not independent verification",
-        "SCP/RCP/session policies not evaluated",
         "Permissions boundaries beyond ARN not checked",
         "SCP/RCP/Resource policies not evaluated",
-        "local_evaluator, not AWS"
+        "SCP/RCP/session policies not evaluated",
+        "local_evaluator, not AWS",
+        "Offline local evaluation, not independent verification"
       ],
       "runtime_metrics": {
         "policy_sim_time_ms": null,
@@ -501,7 +611,7 @@
       "assumptions": [
         "deny_present"
       ],
-      "queue_rank": 5,
+      "queue_rank": 6,
       "queue_reason": "severity CRITICAL, 3 hops, 1 assumption",
       "evidence": {
         "policy_simulator_result": "DENIED",
@@ -562,8 +672,8 @@
       },
       "limitations": [
         "local_evaluator, not AWS",
-        "Permissions boundaries beyond ARN not checked",
-        "SCP/RCP/session policies not evaluated"
+        "SCP/RCP/session policies not evaluated",
+        "Permissions boundaries beyond ARN not checked"
       ],
       "runtime_metrics": {
         "policy_sim_time_ms": null,
@@ -610,7 +720,7 @@
       "assumptions": [
         "trust_structural_only"
       ],
-      "queue_rank": 6,
+      "queue_rank": 7,
       "queue_reason": "severity CRITICAL, 3 hops, 1 assumption",
       "evidence": {
         "policy_simulator_result": "ALLOWED",
@@ -652,12 +762,12 @@
           }
         ],
         "denying_hop_details": null,
-        "sandbox_scenario_name": null,
+        "sandbox_scenario_name": "iam_privesc_by_attachment",
         "sandbox_attempted": true,
         "sandbox_execution_success": true,
         "sandbox_failure_reason": null,
         "sandbox_logs": [
-          "[MOCKED] Initializing CloudGoat scenario: None",
+          "[MOCKED] Initializing CloudGoat scenario: iam_privesc_by_attachment",
           "[MOCKED] Target start node: arn:aws:iam::111122223333:user/user-entrypoint",
           "[MOCKED] Target end node: arn:aws:s3:::customer-credit-applications",
           "[MOCKED] Hop sequence: arn:aws:iam::111122223333:role/WAFAppRole -> arn:aws:iam::111122223333:role/CustomerDataRole -> arn:aws:s3:::customer-credit-applications",
@@ -669,11 +779,237 @@
         "sandbox_mode": "MOCKED"
       },
       "limitations": [
-        "Offline local evaluation, not independent verification",
-        "SCP/RCP/session policies not evaluated",
         "Permissions boundaries beyond ARN not checked",
         "SCP/RCP/Resource policies not evaluated",
-        "local_evaluator, not AWS"
+        "SCP/RCP/session policies not evaluated",
+        "local_evaluator, not AWS",
+        "Offline local evaluation, not independent verification"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": null,
+        "sandbox_time_ms": null
+      }
+    },
+    {
+      "path_id": "1a7336d58bb291b3",
+      "status": "SANDBOX_FAILED",
+      "confidence_tier": "SANDBOX_EXECUTION_FAILED",
+      "status_reason": "Deterministic runtime assertion failed during mocked sandbox execution.",
+      "verification_scope": "sandbox_attempted",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+          "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "action_used": "rule_target:RULE-IAM-010",
+          "matched_rule_id": "RULE-IAM-010",
+          "edge_id": "edge:APPLIES_TO:t5-01",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:t5-02",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "to_node": "arn:aws:s3:::customer-audit-logs",
+          "action_used": "rule_target:RULE-IAM-S3-001",
+          "matched_rule_id": "RULE-IAM-S3-001",
+          "edge_id": "edge:APPLIES_TO:t5-07",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "soft_condition_failed"
+          ]
+        }
+      ],
+      "assumptions": [
+        "soft_condition_failed",
+        "trust_structural_only"
+      ],
+      "queue_rank": 8,
+      "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
+      "evidence": {
+        "policy_simulator_result": "ALLOWED",
+        "policy_simulator_source": "local_evaluator",
+        "simulator_mode": "MOCKED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+            "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "action_used": "rule_target:RULE-IAM-010",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 0: Action 'rule_target:RULE-IAM-010' permitted from 'arn:aws:iam::111122223333:user/user-entrypoint' to target 'arn:aws:iam::111122223333:role/WAFAppRole'.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "action_used": "sts:AssumeRole",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 1: Trust relationship between 'arn:aws:iam::111122223333:role/WAFAppRole' and 'arn:aws:iam::111122223333:role/CustomerDataRole' verified structurally.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "to_node": "arn:aws:s3:::customer-audit-logs",
+            "action_used": "rule_target:RULE-IAM-S3-001",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 2: Action 'rule_target:RULE-IAM-S3-001' permitted from 'arn:aws:iam::111122223333:role/CustomerDataRole' to target 'arn:aws:s3:::customer-audit-logs'.",
+            "raw_ref": null
+          }
+        ],
+        "denying_hop_details": null,
+        "sandbox_scenario_name": "iam_privesc_by_attachment",
+        "sandbox_attempted": true,
+        "sandbox_execution_success": false,
+        "sandbox_failure_reason": "Deterministic runtime assertion failed during mocked sandbox execution.",
+        "sandbox_logs": [
+          "[MOCKED] Initializing CloudGoat scenario: iam_privesc_by_attachment",
+          "[MOCKED] Target start node: arn:aws:iam::111122223333:user/user-entrypoint",
+          "[MOCKED] Target end node: arn:aws:s3:::customer-audit-logs",
+          "[MOCKED] Hop sequence: arn:aws:iam::111122223333:role/WAFAppRole -> arn:aws:iam::111122223333:role/CustomerDataRole -> arn:aws:s3:::customer-audit-logs",
+          "[MOCKED] Execution result: FAILURE (ASSERTION_FAILED)",
+          "[MOCKED] Teardown verified cleanly; sandbox destroyed."
+        ],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": "mocked-evidence-1a7336d5",
+        "sandbox_mode": "MOCKED"
+      },
+      "limitations": [
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/Resource policies not evaluated",
+        "SCP/RCP/session policies not evaluated",
+        "local_evaluator, not AWS",
+        "Offline local evaluation, not independent verification"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": null,
+        "sandbox_time_ms": null
+      }
+    },
+    {
+      "path_id": "2ebb9c1e2cb3e06c",
+      "status": "SANDBOX_FAILED",
+      "confidence_tier": "SANDBOX_EXECUTION_FAILED",
+      "status_reason": "Deterministic runtime assertion failed during mocked sandbox execution.",
+      "verification_scope": "sandbox_attempted",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+          "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:t5-01",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "action_used": "rule_target:RULE-IAM-011",
+          "matched_rule_id": "RULE-IAM-011",
+          "edge_id": "edge:APPLIES_TO:t5-02",
+          "edge_type": "APPLIES_TO",
+          "flags": []
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "to_node": "arn:aws:s3:::customer-audit-logs",
+          "action_used": "rule_target:RULE-IAM-S3-001",
+          "matched_rule_id": "RULE-IAM-S3-001",
+          "edge_id": "edge:APPLIES_TO:t5-07",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "soft_condition_failed"
+          ]
+        }
+      ],
+      "assumptions": [
+        "soft_condition_failed",
+        "trust_structural_only"
+      ],
+      "queue_rank": 9,
+      "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
+      "evidence": {
+        "policy_simulator_result": "ALLOWED",
+        "policy_simulator_source": "local_evaluator",
+        "simulator_mode": "MOCKED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+            "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "action_used": "sts:AssumeRole",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 0: Trust relationship between 'arn:aws:iam::111122223333:user/user-entrypoint' and 'arn:aws:iam::111122223333:role/WAFAppRole' verified structurally.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "action_used": "rule_target:RULE-IAM-011",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 1: Action 'rule_target:RULE-IAM-011' permitted from 'arn:aws:iam::111122223333:role/WAFAppRole' to target 'arn:aws:iam::111122223333:role/CustomerDataRole'.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "to_node": "arn:aws:s3:::customer-audit-logs",
+            "action_used": "rule_target:RULE-IAM-S3-001",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 2: Action 'rule_target:RULE-IAM-S3-001' permitted from 'arn:aws:iam::111122223333:role/CustomerDataRole' to target 'arn:aws:s3:::customer-audit-logs'.",
+            "raw_ref": null
+          }
+        ],
+        "denying_hop_details": null,
+        "sandbox_scenario_name": "iam_privesc_by_attachment",
+        "sandbox_attempted": true,
+        "sandbox_execution_success": false,
+        "sandbox_failure_reason": "Deterministic runtime assertion failed during mocked sandbox execution.",
+        "sandbox_logs": [
+          "[MOCKED] Initializing CloudGoat scenario: iam_privesc_by_attachment",
+          "[MOCKED] Target start node: arn:aws:iam::111122223333:user/user-entrypoint",
+          "[MOCKED] Target end node: arn:aws:s3:::customer-audit-logs",
+          "[MOCKED] Hop sequence: arn:aws:iam::111122223333:role/WAFAppRole -> arn:aws:iam::111122223333:role/CustomerDataRole -> arn:aws:s3:::customer-audit-logs",
+          "[MOCKED] Execution result: FAILURE (ASSERTION_FAILED)",
+          "[MOCKED] Teardown verified cleanly; sandbox destroyed."
+        ],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": "mocked-evidence-2ebb9c1e",
+        "sandbox_mode": "MOCKED"
+      },
+      "limitations": [
+        "Permissions boundaries beyond ARN not checked",
+        "SCP/RCP/Resource policies not evaluated",
+        "SCP/RCP/session policies not evaluated",
+        "local_evaluator, not AWS",
+        "Offline local evaluation, not independent verification"
       ],
       "runtime_metrics": {
         "policy_sim_time_ms": null,
@@ -725,7 +1061,7 @@
         "deny_present",
         "trust_structural_only"
       ],
-      "queue_rank": 7,
+      "queue_rank": 10,
       "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
       "evidence": {
         "policy_simulator_result": "DENIED",
@@ -786,8 +1122,8 @@
       },
       "limitations": [
         "local_evaluator, not AWS",
-        "Permissions boundaries beyond ARN not checked",
-        "SCP/RCP/session policies not evaluated"
+        "SCP/RCP/session policies not evaluated",
+        "Permissions boundaries beyond ARN not checked"
       ],
       "runtime_metrics": {
         "policy_sim_time_ms": null,
@@ -837,7 +1173,7 @@
         "deny_present",
         "trust_structural_only"
       ],
-      "queue_rank": 8,
+      "queue_rank": 11,
       "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
       "evidence": {
         "policy_simulator_result": "DENIED",
@@ -898,8 +1234,8 @@
       },
       "limitations": [
         "local_evaluator, not AWS",
-        "Permissions boundaries beyond ARN not checked",
-        "SCP/RCP/session policies not evaluated"
+        "SCP/RCP/session policies not evaluated",
+        "Permissions boundaries beyond ARN not checked"
       ],
       "runtime_metrics": {
         "policy_sim_time_ms": null,
@@ -951,7 +1287,7 @@
         "deny_present",
         "trust_structural_only"
       ],
-      "queue_rank": 9,
+      "queue_rank": 12,
       "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
       "evidence": {
         "policy_simulator_result": "DENIED",
@@ -1012,8 +1348,8 @@
       },
       "limitations": [
         "local_evaluator, not AWS",
-        "Permissions boundaries beyond ARN not checked",
-        "SCP/RCP/session policies not evaluated"
+        "SCP/RCP/session policies not evaluated",
+        "Permissions boundaries beyond ARN not checked"
       ],
       "runtime_metrics": {
         "policy_sim_time_ms": null,
@@ -1063,7 +1399,7 @@
         "deny_present",
         "trust_structural_only"
       ],
-      "queue_rank": 10,
+      "queue_rank": 13,
       "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
       "evidence": {
         "policy_simulator_result": "DENIED",
@@ -1124,8 +1460,123 @@
       },
       "limitations": [
         "local_evaluator, not AWS",
+        "SCP/RCP/session policies not evaluated",
+        "Permissions boundaries beyond ARN not checked"
+      ],
+      "runtime_metrics": {
+        "policy_sim_time_ms": null,
+        "sandbox_time_ms": null
+      }
+    },
+    {
+      "path_id": "826e3e68d2d1bf2a",
+      "status": "SANDBOX_FAILED",
+      "confidence_tier": "SANDBOX_EXECUTION_FAILED",
+      "status_reason": "Deterministic runtime assertion failed during mocked sandbox execution.",
+      "verification_scope": "sandbox_attempted",
+      "hops": [
+        {
+          "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+          "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:t5-01",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+          "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "action_used": "sts:AssumeRole",
+          "matched_rule_id": null,
+          "edge_id": "edge:TRUSTED_BY:t5-02",
+          "edge_type": "TRUSTED_BY",
+          "flags": [
+            "trust_structural_only"
+          ]
+        },
+        {
+          "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+          "to_node": "arn:aws:s3:::customer-audit-logs",
+          "action_used": "rule_target:RULE-IAM-S3-001",
+          "matched_rule_id": "RULE-IAM-S3-001",
+          "edge_id": "edge:APPLIES_TO:t5-07",
+          "edge_type": "APPLIES_TO",
+          "flags": [
+            "soft_condition_failed"
+          ]
+        }
+      ],
+      "assumptions": [
+        "soft_condition_failed",
+        "trust_structural_only"
+      ],
+      "queue_rank": 14,
+      "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
+      "evidence": {
+        "policy_simulator_result": "ALLOWED",
+        "policy_simulator_source": "local_evaluator",
+        "simulator_mode": "MOCKED",
+        "policy_simulator_details": [
+          {
+            "hop_index": 0,
+            "from_node": "arn:aws:iam::111122223333:user/user-entrypoint",
+            "to_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "action_used": "sts:AssumeRole",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 0: Trust relationship between 'arn:aws:iam::111122223333:user/user-entrypoint' and 'arn:aws:iam::111122223333:role/WAFAppRole' verified structurally.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 1,
+            "from_node": "arn:aws:iam::111122223333:role/WAFAppRole",
+            "to_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "action_used": "sts:AssumeRole",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 1: Trust relationship between 'arn:aws:iam::111122223333:role/WAFAppRole' and 'arn:aws:iam::111122223333:role/CustomerDataRole' verified structurally.",
+            "raw_ref": null
+          },
+          {
+            "hop_index": 2,
+            "from_node": "arn:aws:iam::111122223333:role/CustomerDataRole",
+            "to_node": "arn:aws:s3:::customer-audit-logs",
+            "action_used": "rule_target:RULE-IAM-S3-001",
+            "decision": "ALLOWED",
+            "eval_decision": "allowed",
+            "missing_context": [],
+            "note": "Allowed at hop 2: Action 'rule_target:RULE-IAM-S3-001' permitted from 'arn:aws:iam::111122223333:role/CustomerDataRole' to target 'arn:aws:s3:::customer-audit-logs'.",
+            "raw_ref": null
+          }
+        ],
+        "denying_hop_details": null,
+        "sandbox_scenario_name": "iam_privesc_by_attachment",
+        "sandbox_attempted": true,
+        "sandbox_execution_success": false,
+        "sandbox_failure_reason": "Deterministic runtime assertion failed during mocked sandbox execution.",
+        "sandbox_logs": [
+          "[MOCKED] Initializing CloudGoat scenario: iam_privesc_by_attachment",
+          "[MOCKED] Target start node: arn:aws:iam::111122223333:user/user-entrypoint",
+          "[MOCKED] Target end node: arn:aws:s3:::customer-audit-logs",
+          "[MOCKED] Hop sequence: arn:aws:iam::111122223333:role/WAFAppRole -> arn:aws:iam::111122223333:role/CustomerDataRole -> arn:aws:s3:::customer-audit-logs",
+          "[MOCKED] Execution result: FAILURE (ASSERTION_FAILED)",
+          "[MOCKED] Teardown verified cleanly; sandbox destroyed."
+        ],
+        "sandbox_logs_redacted": true,
+        "sandbox_evidence_ref": "mocked-evidence-826e3e68",
+        "sandbox_mode": "MOCKED"
+      },
+      "limitations": [
         "Permissions boundaries beyond ARN not checked",
-        "SCP/RCP/session policies not evaluated"
+        "SCP/RCP/Resource policies not evaluated",
+        "SCP/RCP/session policies not evaluated",
+        "local_evaluator, not AWS",
+        "Offline local evaluation, not independent verification"
       ],
       "runtime_metrics": {
         "policy_sim_time_ms": null,
@@ -1175,7 +1626,7 @@
         "deny_present",
         "trust_structural_only"
       ],
-      "queue_rank": 11,
+      "queue_rank": 15,
       "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
       "evidence": {
         "policy_simulator_result": "DENIED",
@@ -1236,8 +1687,8 @@
       },
       "limitations": [
         "local_evaluator, not AWS",
-        "Permissions boundaries beyond ARN not checked",
-        "SCP/RCP/session policies not evaluated"
+        "SCP/RCP/session policies not evaluated",
+        "Permissions boundaries beyond ARN not checked"
       ],
       "runtime_metrics": {
         "policy_sim_time_ms": null,
@@ -1287,7 +1738,7 @@
         "deny_present",
         "trust_structural_only"
       ],
-      "queue_rank": 12,
+      "queue_rank": 16,
       "queue_reason": "severity CRITICAL, 3 hops, 2 assumptions",
       "evidence": {
         "policy_simulator_result": "DENIED",
@@ -1348,8 +1799,8 @@
       },
       "limitations": [
         "local_evaluator, not AWS",
-        "Permissions boundaries beyond ARN not checked",
-        "SCP/RCP/session policies not evaluated"
+        "SCP/RCP/session policies not evaluated",
+        "Permissions boundaries beyond ARN not checked"
       ],
       "runtime_metrics": {
         "policy_sim_time_ms": null,
@@ -1372,14 +1823,18 @@
     }
   },
   "stats": {
-    "paths_total": 12,
+    "paths_total": 16,
     "by_status": {
-      "VERIFIED_EXPLOITABLE": 4,
-      "POLICY_DENIED": 8
+      "POLICY_VERIFIED_NO_SANDBOX": 2,
+      "VERIFIED_EXPLOITABLE": 3,
+      "POLICY_DENIED": 8,
+      "SANDBOX_FAILED": 3
     },
     "by_confidence_tier": {
-      "FULL_CHAIN_VERIFIED": 4,
-      "POLICY_DENIED": 8
+      "POLICY_VERIFIED_NO_SANDBOX": 2,
+      "FULL_CHAIN_VERIFIED": 3,
+      "POLICY_DENIED": 8,
+      "SANDBOX_EXECUTION_FAILED": 3
     }
   },
   "warnings": []

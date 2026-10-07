@@ -161,6 +161,13 @@ class Stage1Matcher:
                             flags.append("condition_unevaluated")
                             cond_unevaluated = True
 
+                        # Extract any custom flags from extras
+                        for extra_obj in (perm_node.extras, hp_edge.extras, app_edge.extras):
+                            extra_flags = extra_obj.get("flags", [])
+                            for f in extra_flags:
+                                if f not in flags:
+                                    flags.append(f)
+
                         # Check overlapping Deny statements
                         deny_present = False
                         for deny_p in deny_permissions:
