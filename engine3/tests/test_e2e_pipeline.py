@@ -81,3 +81,37 @@ def test_schema_rejects_non_enum_status():
 
     with pytest.raises(jsonschema.ValidationError):
         jsonschema.validate(instance=invalid_doc, schema=schema)
+
+
+def test_end_to_end_all_sample_trees(tmp_path):
+    fixtures_dir = Path("docs/contracts/fixtures")
+    rulebook_path = Path("rulebook/active_rulebook.json")
+    schema_path = Path("schemas/verification_result_v0.1.schema.json")
+    with open(schema_path, "r", encoding="utf-8") as f:
+        schema = json.load(f)
+
+    runner = PipelineRunner()
+    tree_files = [
+        "tree_1_benign.json",
+        "tree_2_low.json",
+        "tree_3_medium.json",
+        "tree_4_high.json",
+        "tree_5_critical.json",
+    ]
+
+    for tree_file in tree_files:
+        tree_path = fixtures_dir / tree_file
+        tree_out_dir = tmp_path / Path(tree_file).stem
+        vr_doc = runner.run(tree_path, rulebook_path, tree_out_dir)
+
+        # Validate schema compliance
+        jsonschema.validate(instance=vr_doc, schema=schema)
+        assert vr_doc["contract_name"] == "VerificationResult"
+
+    # Specific tree assertions
+    vr_tree_1 = runner.run(fixtures_dir / "tree_1_benign.json", rulebook_path, tmp_path / "t1")
+    assert vr_tree_1["stats"]["paths_total"] == 0
+
+    vr_tree_5 = runner.run(fixtures_dir / "tree_5_critical.json", rulebook_path, tmp_path / "t5")
+    assert vr_tree_5["stats"]["paths_total"] > 1
+
