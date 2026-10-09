@@ -133,13 +133,13 @@ def test_final_verification_results_handoff_deliverable():
     assert doc["contract_name"] == "VerificationResult"
     assert doc["contract_version"] == "0.1"
     assert doc["run"]["sandbox_mode"] == "MOCKED"
-    assert doc["run"]["simulator_mode"] == "MOCKED"
+    assert doc["run"]["simulator_backend"] == "local_evaluator"
 
-    # Assert path evidence contains MOCKED tags throughout
+    # Assert path evidence contains valid contract fields
     for path_obj in doc["paths"]:
         ev = path_obj["evidence"]
-        assert ev["simulator_mode"] == "MOCKED"
-        assert ev["sandbox_mode"] == "MOCKED"
+        assert ev["policy_simulator_result"] in ("ALLOWED", "DENIED")
+        assert ev["policy_simulator_source"] == "local_evaluator"
 
 
 def test_canonical_reference_input_tree_6(tmp_path):

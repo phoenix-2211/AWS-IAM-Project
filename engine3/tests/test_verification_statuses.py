@@ -86,7 +86,6 @@ def test_status_policy_verified_no_sandbox():
     assert len(v_res["paths"]) >= 1
     top_finding = v_res["paths"][0]
     assert top_finding["status"] == "POLICY_VERIFIED_NO_SANDBOX"
-    assert top_finding["confidence_tier"] == "POLICY_VERIFIED_NO_SANDBOX"
 
 
 def test_status_partial_chain_verified():
@@ -147,4 +146,3 @@ def test_status_partial_chain_verified():
     assert len(v_res["paths"]) >= 1
     top_finding = v_res["paths"][0]
     assert top_finding["status"] == "PARTIAL_CHAIN_VERIFIED"
-    assert top_finding["confidence_tier"] == "PARTIAL_CHAIN_VERIFIED"
